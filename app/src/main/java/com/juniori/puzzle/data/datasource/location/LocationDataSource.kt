@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.location
+package com.juniori.puzzle.data.datasource.location
 
 import android.location.Address
 import androidx.core.location.LocationListenerCompat

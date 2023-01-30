@@ -1,6 +1,5 @@
-package com.juniori.puzzle.network
+package com.juniori.puzzle.data.datasource.weather
 
-import com.juniori.puzzle.data.weather.WeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.firebase.dto
+package com.juniori.puzzle.data.datasource.firebasedatasource.response
 
 import com.google.gson.annotations.SerializedName
 import com.juniori.puzzle.domain.entity.VideoInfoEntity

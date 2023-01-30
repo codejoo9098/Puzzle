@@ -1,8 +1,7 @@
 package com.juniori.puzzle.util
 
-import com.juniori.puzzle.data.weather.WeatherResponse
+import com.juniori.puzzle.data.datasource.weather.WeatherResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
-import java.util.*
 import kotlin.math.roundToInt
 
 fun WeatherResponse.toItem(): List<WeatherEntity> {

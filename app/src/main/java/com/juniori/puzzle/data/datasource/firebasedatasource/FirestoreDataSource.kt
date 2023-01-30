@@ -1,16 +1,16 @@
-package com.juniori.puzzle.data.firebase
+package com.juniori.puzzle.data.datasource.firebasedatasource
 
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.data.firebase.dto.ArrayValue
-import com.juniori.puzzle.data.firebase.dto.BooleanValue
-import com.juniori.puzzle.data.firebase.dto.IntegerValue
-import com.juniori.puzzle.data.firebase.dto.RunQueryRequestDTO
-import com.juniori.puzzle.data.firebase.dto.StringValue
-import com.juniori.puzzle.data.firebase.dto.StringValues
-import com.juniori.puzzle.data.firebase.dto.UserDetail
-import com.juniori.puzzle.data.firebase.dto.VideoDetail
-import com.juniori.puzzle.data.firebase.dto.getVideoInfoEntity
-import com.juniori.puzzle.data.firebase.dto.toStringValues
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.ArrayValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.BooleanValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.IntegerValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.RunQueryRequestDTO
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValues
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserDetail
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoDetail
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.getVideoInfoEntity
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.toStringValues
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.util.GCS_OPEN_URL

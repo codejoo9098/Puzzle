@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource
+package com.juniori.puzzle.data.datasource.firebaseauth
 
 import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

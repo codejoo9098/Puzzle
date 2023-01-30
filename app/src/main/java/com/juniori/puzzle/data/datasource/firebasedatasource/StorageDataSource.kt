@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.firebase
+package com.juniori.puzzle.data.datasource.firebasedatasource
 
 import okhttp3.MediaType
 import okhttp3.RequestBody

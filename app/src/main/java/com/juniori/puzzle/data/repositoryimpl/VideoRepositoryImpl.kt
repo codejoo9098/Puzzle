@@ -1,8 +1,8 @@
-package com.juniori.puzzle.data.video
+package com.juniori.puzzle.data.repositoryimpl
 
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.data.firebase.FirestoreDataSource
-import com.juniori.puzzle.data.firebase.StorageDataSource
+import com.juniori.puzzle.data.datasource.firebasedatasource.FirestoreDataSource
+import com.juniori.puzzle.data.datasource.firebasedatasource.StorageDataSource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository

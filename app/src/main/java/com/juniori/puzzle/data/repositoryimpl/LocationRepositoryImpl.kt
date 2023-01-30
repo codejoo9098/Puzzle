@@ -1,9 +1,10 @@
-package com.juniori.puzzle.data.location
+package com.juniori.puzzle.data.repositoryimpl
 
 import android.location.Address
 import androidx.core.location.LocationListenerCompat
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.data.weather.WeatherDataSource
+import com.juniori.puzzle.data.datasource.location.LocationDataSource
+import com.juniori.puzzle.data.datasource.weather.WeatherDataSource
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.repository.LocationRepository
 import javax.inject.Inject

@@ -1,18 +1,18 @@
 package com.juniori.puzzle.util
 
 
-import com.juniori.puzzle.data.firebase.dto.BooleanFieldFilter
-import com.juniori.puzzle.data.firebase.dto.BooleanValue
-import com.juniori.puzzle.data.firebase.dto.CompositeFilter
-import com.juniori.puzzle.data.firebase.dto.FieldReference
-import com.juniori.puzzle.data.firebase.dto.Filter
-import com.juniori.puzzle.data.firebase.dto.IntegerFieldFilter
-import com.juniori.puzzle.data.firebase.dto.IntegerValue
-import com.juniori.puzzle.data.firebase.dto.Order
-import com.juniori.puzzle.data.firebase.dto.StringFieldFilter
-import com.juniori.puzzle.data.firebase.dto.StringValue
-import com.juniori.puzzle.data.firebase.dto.StructuredQuery
-import com.juniori.puzzle.data.firebase.dto.Where
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.BooleanFieldFilter
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.BooleanValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.CompositeFilter
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.FieldReference
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.Filter
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.IntegerFieldFilter
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.IntegerValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.Order
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringFieldFilter
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValue
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.StructuredQuery
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.Where
 
 object QueryUtil {
     fun getMyVideoQuery(uid: String, offset: Int?, limit: Int?) = StructuredQuery(

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.weather
+package com.juniori.puzzle.data.datasource.weather
 
 import com.google.gson.annotations.SerializedName
 

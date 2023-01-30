@@ -1,7 +1,7 @@
 package com.juniori.puzzle.data.repositoryimpl
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.juniori.puzzle.data.datasource.AuthDataSource
+import com.juniori.puzzle.data.datasource.firebaseauth.AuthDataSource
 import com.juniori.puzzle.domain.repository.AuthRepository
 import javax.inject.Inject
 
