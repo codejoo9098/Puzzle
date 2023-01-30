@@ -1,6 +1,6 @@
 package com.juniori.puzzle.data.firebase
 
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.firebase.dto.ArrayValue
 import com.juniori.puzzle.data.firebase.dto.BooleanValue
 import com.juniori.puzzle.data.firebase.dto.IntegerValue
@@ -22,17 +22,17 @@ import javax.inject.Inject
 class FirestoreDataSource @Inject constructor(
     private val service: FirestoreService
 ) {
-    suspend fun deleteVideoItem(documentId: String): Resource<Unit> {
+    suspend fun deleteVideoItem(documentId: String): APIResponse<Unit> {
         return try {
-            Resource.Success(service.deleteVideoItemDocument(documentId))
+            APIResponse.Success(service.deleteVideoItemDocument(documentId))
         } catch (e: Exception) {
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
     suspend fun changeVideoItemPrivacy(
         documentInfo: VideoInfoEntity
-    ): Resource<VideoInfoEntity> {
+    ): APIResponse<VideoInfoEntity> {
         return try {
             service.patchVideoItemDocument(
                 documentInfo.documentId,
@@ -53,18 +53,18 @@ class FirestoreDataSource @Inject constructor(
                     }
                 )
             ).let {
-                Resource.Success(it.getVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
     suspend fun addVideoItemLike(
         documentInfo: VideoInfoEntity,
         uid: String
-    ): Resource<VideoInfoEntity> {
+    ): APIResponse<VideoInfoEntity> {
         return try {
             service.patchVideoItemDocument(
                 documentInfo.documentId,
@@ -85,18 +85,18 @@ class FirestoreDataSource @Inject constructor(
                     }
                 )
             ).let {
-                Resource.Success(it.getVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
     suspend fun removeVideoItemLike(
         documentInfo: VideoInfoEntity,
         uid: String
-    ): Resource<VideoInfoEntity> {
+    ): APIResponse<VideoInfoEntity> {
         return try {
             service.patchVideoItemDocument(
                 documentInfo.documentId,
@@ -117,11 +117,11 @@ class FirestoreDataSource @Inject constructor(
                     }
                 )
             ).let {
-                Resource.Success(it.getVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -131,7 +131,7 @@ class FirestoreDataSource @Inject constructor(
         isPrivate: Boolean,
         location: String,
         memo: String
-    ): Resource<VideoInfoEntity> {
+    ): APIResponse<VideoInfoEntity> {
         return try {
             service.createVideoItemDocument(
                 videoName,
@@ -150,11 +150,11 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                Resource.Success(it.getVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -162,9 +162,9 @@ class FirestoreDataSource @Inject constructor(
         uid: String,
         offset: Int? = null,
         limit: Int? = null
-    ): Resource<List<VideoInfoEntity>> {
+    ): APIResponse<List<VideoInfoEntity>> {
         return try {
-            Resource.Success(
+            APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
                         QueryUtil.getMyVideoQuery(uid, offset, limit)
@@ -173,7 +173,7 @@ class FirestoreDataSource @Inject constructor(
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -183,9 +183,9 @@ class FirestoreDataSource @Inject constructor(
         keyword: String,
         offset: Int?,
         limit: Int?
-    ): Resource<List<VideoInfoEntity>> {
+    ): APIResponse<List<VideoInfoEntity>> {
         return try {
-            Resource.Success(
+            APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
                         QueryUtil.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
@@ -194,7 +194,7 @@ class FirestoreDataSource @Inject constructor(
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -203,9 +203,9 @@ class FirestoreDataSource @Inject constructor(
         latestData: Long?,
         offset: Int? = null,
         limit: Int? = null,
-    ): Resource<List<VideoInfoEntity>> {
+    ): APIResponse<List<VideoInfoEntity>> {
         return try {
-            Resource.Success(
+            APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
                         QueryUtil.getPublicVideoQuery(
@@ -219,7 +219,7 @@ class FirestoreDataSource @Inject constructor(
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -230,9 +230,9 @@ class FirestoreDataSource @Inject constructor(
         latestData: Long?,
         offset: Int? = null,
         limit: Int? = null
-    ): Resource<List<VideoInfoEntity>> {
+    ): APIResponse<List<VideoInfoEntity>> {
         return try {
-            Resource.Success(
+            APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
                         QueryUtil.getPublicVideoWithKeywordQuery(
@@ -248,20 +248,20 @@ class FirestoreDataSource @Inject constructor(
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
     suspend fun getUserItem(
         uid: String
-    ): Resource<UserInfoEntity> {
+    ): APIResponse<UserInfoEntity> {
         return try {
             service.getUserItemDocument(uid).let {
-                Resource.Success(it.getUserInfoEntity())
+                APIResponse.Success(it.getUserInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -269,7 +269,7 @@ class FirestoreDataSource @Inject constructor(
         uid: String,
         nickname: String,
         profileImage: String
-    ): Resource<UserInfoEntity> {
+    ): APIResponse<UserInfoEntity> {
         return try {
             service.createUserItemDocument(
                 uid,
@@ -280,11 +280,11 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                Resource.Success(it.getUserInfoEntity())
+                APIResponse.Success(it.getUserInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
@@ -292,7 +292,7 @@ class FirestoreDataSource @Inject constructor(
         uid: String,
         newNickname: String,
         profileImage: String
-    ): Resource<UserInfoEntity> {
+    ): APIResponse<UserInfoEntity> {
         return try {
             service.patchUserItemDocument(
                 uid,
@@ -303,11 +303,11 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                Resource.Success(it.getUserInfoEntity())
+                APIResponse.Success(it.getUserInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.juniori.puzzle.domain.usecase
 
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.repository.AuthRepository
 import com.juniori.puzzle.domain.repository.VideoRepository
@@ -12,19 +12,19 @@ class UpdateNicknameUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     private val videoRepository: VideoRepository
 ){
-    suspend operator fun invoke(newNickname: String): Resource<UserInfoEntity> {
+    suspend operator fun invoke(newNickname: String): APIResponse<UserInfoEntity> {
         if (newNickname.isBlank()) {
-            return Resource.Failure(Exception())
+            return APIResponse.Failure(Exception())
         }
 
         val newInfo = withContext(Dispatchers.IO) {
             authRepository.updateNickname(newNickname)
         }
 
-        return if (newInfo is Resource.Success) {
+        return if (newInfo is APIResponse.Success) {
             videoRepository.updateServerNickname(newInfo.result)
         } else {
-            Resource.Failure(Exception())
+            APIResponse.Failure(Exception())
         }
     }
 }

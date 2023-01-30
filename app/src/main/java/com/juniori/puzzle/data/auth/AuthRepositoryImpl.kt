@@ -5,7 +5,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.repository.AuthRepository
 import com.juniori.puzzle.util.await
@@ -15,7 +15,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
-    override suspend fun updateNickname(newNickname: String): Resource<UserInfoEntity> {
+    override suspend fun updateNickname(newNickname: String): APIResponse<UserInfoEntity> {
         val newProfile = UserProfileChangeRequest.Builder()
             .setDisplayName(newNickname)
             .build()
@@ -27,53 +27,53 @@ class AuthRepositoryImpl @Inject constructor(
             val profileUrl = firebaseAuth.currentUser?.photoUrl?.toString() ?: ""
             val userInfoEntity = UserInfoEntity(uid, newNickname, profileUrl)
 
-            Resource.Success(userInfoEntity)
-        } ?: kotlin.run { Resource.Failure(Exception()) }
+            APIResponse.Success(userInfoEntity)
+        } ?: kotlin.run { APIResponse.Failure(Exception()) }
     }
 
-    override fun getCurrentUserInfo(): Resource<UserInfoEntity> {
+    override fun getCurrentUserInfo(): APIResponse<UserInfoEntity> {
         return firebaseAuth.currentUser?.let { firebaseUser ->
-            Resource.Success(
+            APIResponse.Success(
                 UserInfoEntity(
                     firebaseUser.uid,
                     firebaseUser.displayName ?: "",
                     firebaseUser.photoUrl?.toString() ?: ""
                 )
             )
-        } ?: kotlin.run { Resource.Failure(Exception()) }
+        } ?: kotlin.run { APIResponse.Failure(Exception()) }
     }
 
-    override suspend fun requestLogin(acct: GoogleSignInAccount): Resource<UserInfoEntity> {
+    override suspend fun requestLogin(acct: GoogleSignInAccount): APIResponse<UserInfoEntity> {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
 
         return try {
             val result = firebaseAuth.signInWithCredential(credential).await()
 
             result.user?.let { firebaseUser ->
-                Resource.Success(
+                APIResponse.Success(
                     UserInfoEntity(
                         firebaseUser.uid,
                         firebaseUser.displayName ?: "",
                         firebaseUser.photoUrl?.toString() ?: ""
                     )
                 )
-            }  ?: kotlin.run { Resource.Failure(Exception()) }
+            }  ?: kotlin.run { APIResponse.Failure(Exception()) }
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Failure(e)
+            APIResponse.Failure(e)
         }
     }
 
-    override suspend fun requestLogout(): Resource<Unit> {
+    override suspend fun requestLogout(): APIResponse<Unit> {
         return try {
             firebaseAuth.signOut()
-            Resource.Success(Unit)
+            APIResponse.Success(Unit)
         } catch (exception: Exception) {
-            Resource.Failure(exception)
+            APIResponse.Failure(exception)
         }
     }
 
-    override suspend fun requestWithdraw(acct: GoogleSignInAccount): Resource<Unit> {
+    override suspend fun requestWithdraw(acct: GoogleSignInAccount): APIResponse<Unit> {
         return try {
             val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
             firebaseAuth.currentUser?.reauthenticate(credential)?.await()
@@ -88,10 +88,10 @@ class AuthRepositoryImpl @Inject constructor(
                     }
                 } ?: throw java.lang.Exception()
 
-            Resource.Success(Unit)
+            APIResponse.Success(Unit)
         }
         catch (e: java.lang.Exception) {
-            Resource.Failure(Exception())
+            APIResponse.Failure(Exception())
         }
     }
 }

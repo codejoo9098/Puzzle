@@ -1,7 +1,6 @@
 package com.juniori.puzzle.ui.mypage
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.juniori.puzzle.R
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentMypageBinding
 import com.juniori.puzzle.ui.login.LoginActivity
 import com.juniori.puzzle.util.PuzzleDialog
@@ -81,16 +80,16 @@ class MyPageFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.requestLogoutFlow.collect { result ->
                 when(result) {
-                    is Resource.Success<Unit> -> {
+                    is APIResponse.Success<Unit> -> {
                         stateManager.dismissLoadingDialog()
                         val intent = Intent(context, LoginActivity::class.java)
                         activity?.finishAffinity()
                         startActivity(intent)
                     }
-                    is Resource.Loading -> {
+                    is APIResponse.Loading -> {
                         stateManager.showLoadingDialog()
                     }
-                    is Resource.Failure -> {
+                    is APIResponse.Failure -> {
                         stateManager.dismissLoadingDialog()
                     }
                 }
@@ -100,14 +99,14 @@ class MyPageFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.requestWithdrawFlow.collect { result ->
                 when(result) {
-                    is Resource.Success<Unit> -> {
+                    is APIResponse.Success<Unit> -> {
                         stateManager.dismissLoadingDialog()
                         activity?.finishAffinity()
                     }
-                    is Resource.Loading -> {
+                    is APIResponse.Loading -> {
                         stateManager.showLoadingDialog()
                     }
-                    is Resource.Failure -> {
+                    is APIResponse.Failure -> {
                         stateManager.dismissLoadingDialog()
                     }
                 }

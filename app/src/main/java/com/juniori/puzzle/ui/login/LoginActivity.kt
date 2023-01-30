@@ -17,7 +17,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.juniori.puzzle.MainActivity
 import com.juniori.puzzle.R
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginFlow.collectLatest {
-                    if (it is Resource.Success) {
+                    if (it is APIResponse.Success) {
                         binding.signInBtn.isVisible = false
                         moveToMainActivity()
                     } else {

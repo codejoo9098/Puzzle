@@ -2,7 +2,7 @@ package com.juniori.puzzle.data.location
 
 import android.location.Address
 import androidx.core.location.LocationListenerCompat
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.weather.WeatherDataSource
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.repository.LocationRepository
@@ -24,7 +24,7 @@ class LocationRepositoryImpl @Inject constructor(
         return locationDataSource.getCurrentAddress(lat, long)
     }
 
-    override suspend fun getWeatherInfo(lat: Double, long: Double): Resource<List<WeatherEntity>> {
+    override suspend fun getWeatherInfo(lat: Double, long: Double): APIResponse<List<WeatherEntity>> {
         return weatherDataSource.getWeather(lat, long)
     }
 }

@@ -1,6 +1,6 @@
 package com.juniori.puzzle.domain.usecase
 
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository
 import com.juniori.puzzle.util.SortType
@@ -12,6 +12,6 @@ class GetSearchedSocialVideoListUseCase @Inject constructor(private val videoRep
         keyword: String,
         order: SortType,
         latestData: Long? = null
-    ): Resource<List<VideoInfoEntity>> =
+    ): APIResponse<List<VideoInfoEntity>> =
         videoRepository.getSearchedSocialVideoList(index, order, keyword, latestData)
 }

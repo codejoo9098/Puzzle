@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.arthenica.mobileffmpeg.Config
 import com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS
 import com.arthenica.mobileffmpeg.FFmpeg
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.PostVideoUseCase
@@ -49,8 +49,8 @@ class UploadViewModel @Inject constructor(
     private val _compressFlow = MutableStateFlow(-1)
     val compressFlow: StateFlow<Int> = _compressFlow
 
-    private val _uploadFlow = MutableStateFlow<Resource<VideoInfoEntity>?>(null)
-    val uploadFlow: StateFlow<Resource<VideoInfoEntity>?> = _uploadFlow
+    private val _uploadFlow = MutableStateFlow<APIResponse<VideoInfoEntity>?>(null)
+    val uploadFlow: StateFlow<APIResponse<VideoInfoEntity>?> = _uploadFlow
 
     fun initializeMediaData(videoFilePath: String, thumbnailBytes: ByteArray) {
         this.videoFilePath = videoFilePath
@@ -88,7 +88,7 @@ class UploadViewModel @Inject constructor(
                     uploadVideo()
                 }
                 else -> {
-                    _uploadFlow.value = Resource.Failure(Exception("Compress Failed"))
+                    _uploadFlow.value = APIResponse.Failure(Exception("Compress Failed"))
                 }
             }
         }
@@ -98,8 +98,8 @@ class UploadViewModel @Inject constructor(
         "-i $inputPath -c:v mpeg4 -crf 18 -preset veryfast $outputPath"
 
     private fun uploadVideo() = viewModelScope.launch {
-        if (_uploadFlow.value == Resource.Loading) return@launch
-        _uploadFlow.emit(Resource.Loading)
+        if (_uploadFlow.value == APIResponse.Loading) return@launch
+        _uploadFlow.emit(APIResponse.Loading)
 
         val uid = getUid() ?: return@launch
         val videoName = "${uid}_${System.currentTimeMillis()}"
@@ -118,7 +118,7 @@ class UploadViewModel @Inject constructor(
 
     private fun getUid(): String? {
         val currentUserInfo = getUserInfoUseCase()
-        return if (currentUserInfo is Resource.Success) {
+        return if (currentUserInfo is APIResponse.Success) {
             currentUserInfo.result.uid
         } else {
             null

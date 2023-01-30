@@ -1,14 +1,12 @@
 package com.juniori.puzzle.adapter
 
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.juniori.puzzle.R
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import java.util.Calendar
 import java.util.Date
@@ -22,8 +20,8 @@ fun <T> setAdapter(view: RecyclerView, itemList: List<T>) {
 }
 
 @BindingAdapter("setLikeCount")
-fun setLikeCount(view: MaterialButton, updateFlow: Resource<VideoInfoEntity>?) {
-    if (updateFlow is Resource.Success) {
+fun setLikeCount(view: MaterialButton, updateFlow: APIResponse<VideoInfoEntity>?) {
+    if (updateFlow is APIResponse.Success) {
         view.text = updateFlow.result.likedCount.toString()
     }
 }

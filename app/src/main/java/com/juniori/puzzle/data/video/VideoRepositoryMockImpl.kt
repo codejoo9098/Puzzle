@@ -1,6 +1,6 @@
 package com.juniori.puzzle.data.video
 
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository
@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<VideoInfoEntity>) :
     VideoRepository {
-    override suspend fun getMyVideoList(uid: String, index: Int): Resource<List<VideoInfoEntity>> {
-        return Resource.Success(
+    override suspend fun getMyVideoList(uid: String, index: Int): APIResponse<List<VideoInfoEntity>> {
+        return APIResponse.Success(
             videoList.filter { videoInfoEntity -> videoInfoEntity.ownerUid == uid }
         )
     }
@@ -19,8 +19,8 @@ class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<Vi
         uid: String,
         index: Int,
         keyword: String
-    ): Resource<List<VideoInfoEntity>> {
-        return Resource.Success(
+    ): APIResponse<List<VideoInfoEntity>> {
+        return APIResponse.Success(
             videoList.filter { videoInfoEntity -> videoInfoEntity.ownerUid == uid }
                 .filter { videoInfoEntity -> videoInfoEntity.location == keyword }
         )
@@ -30,7 +30,7 @@ class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<Vi
         index: Int,
         sortType: SortType,
         latestData: Long?
-    ): Resource<List<VideoInfoEntity>> {
+    ): APIResponse<List<VideoInfoEntity>> {
         TODO("Not yet implemented")
     }
 
@@ -39,7 +39,7 @@ class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<Vi
         sortType: SortType,
         keyword: String,
         latestData: Long?
-    ): Resource<List<VideoInfoEntity>> {
+    ): APIResponse<List<VideoInfoEntity>> {
         TODO("Not yet implemented")
     }
 
@@ -47,15 +47,15 @@ class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<Vi
         documentInfo: VideoInfoEntity,
         uid: String,
         isLiked: Boolean
-    ): Resource<VideoInfoEntity> {
+    ): APIResponse<VideoInfoEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteVideo(documentId: String): Resource<Unit> {
+    override suspend fun deleteVideo(documentId: String): APIResponse<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun changeVideoScope(documentInfo: VideoInfoEntity): Resource<VideoInfoEntity> {
+    override suspend fun changeVideoScope(documentInfo: VideoInfoEntity): APIResponse<VideoInfoEntity> {
         TODO("Not yet implemented")
     }
 
@@ -67,11 +67,11 @@ class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<Vi
         memo: String,
         videoByteArray: ByteArray,
         imageByteArray: ByteArray
-    ): Resource<VideoInfoEntity> {
+    ): APIResponse<VideoInfoEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserInfoByUidUseCase(uid: String): Resource<UserInfoEntity> {
+    override suspend fun getUserInfoByUidUseCase(uid: String): APIResponse<UserInfoEntity> {
         TODO("Not yet implemented")
     }
 
@@ -79,11 +79,11 @@ class VideoRepositoryMockImpl @Inject constructor(private val videoList: List<Vi
         uid: String,
         nickname: String,
         profileImage: String
-    ): Resource<UserInfoEntity> {
+    ): APIResponse<UserInfoEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): Resource<UserInfoEntity> {
+    override suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): APIResponse<UserInfoEntity> {
         TODO("Not yet implemented")
     }
 }

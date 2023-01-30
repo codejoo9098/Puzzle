@@ -1,6 +1,6 @@
 package com.juniori.puzzle.ui.mypage
 
-import com.juniori.puzzle.data.Resource
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.repository.AuthRepository
 import com.juniori.puzzle.domain.repository.VideoRepository
@@ -38,11 +38,11 @@ class UpdateNicknameUseCaseTest {
         mockAuthRepository = Mockito.mock(AuthRepository::class.java)
         mockVideoRepository = Mockito.mock(VideoRepository::class.java)
 
-        Mockito.`when`(mockAuthRepository.updateNickname(testNickname)).thenReturn(Resource.Success(testUserInfoEntity))
-        Mockito.`when`(mockVideoRepository.updateServerNickname(testUserInfoEntity)).thenReturn(Resource.Success(testUserInfoEntity))
+        Mockito.`when`(mockAuthRepository.updateNickname(testNickname)).thenReturn(APIResponse.Success(testUserInfoEntity))
+        Mockito.`when`(mockVideoRepository.updateServerNickname(testUserInfoEntity)).thenReturn(APIResponse.Success(testUserInfoEntity))
 
         updateNicknameUseCase = UpdateNicknameUseCase(mockAuthRepository, mockVideoRepository)
-        assertEquals(Resource.Success(testUserInfoEntity) ,updateNicknameUseCase(testNickname))
+        assertEquals(APIResponse.Success(testUserInfoEntity) ,updateNicknameUseCase(testNickname))
     }
 
     @Test
@@ -50,11 +50,11 @@ class UpdateNicknameUseCaseTest {
         mockAuthRepository = Mockito.mock(AuthRepository::class.java)
         mockVideoRepository = Mockito.mock(VideoRepository::class.java)
 
-        Mockito.`when`(mockAuthRepository.updateNickname(testNickname)).thenReturn(Resource.Failure(Exception()))
-        Mockito.`when`(mockVideoRepository.updateServerNickname(testUserInfoEntity)).thenReturn(Resource.Success(testUserInfoEntity))
+        Mockito.`when`(mockAuthRepository.updateNickname(testNickname)).thenReturn(APIResponse.Failure(Exception()))
+        Mockito.`when`(mockVideoRepository.updateServerNickname(testUserInfoEntity)).thenReturn(APIResponse.Success(testUserInfoEntity))
 
         updateNicknameUseCase = UpdateNicknameUseCase(mockAuthRepository, mockVideoRepository)
-        assertTrue(updateNicknameUseCase(testNickname) is Resource.Failure)
+        assertTrue(updateNicknameUseCase(testNickname) is APIResponse.Failure)
     }
 
     @Test
@@ -62,11 +62,11 @@ class UpdateNicknameUseCaseTest {
         mockAuthRepository = Mockito.mock(AuthRepository::class.java)
         mockVideoRepository = Mockito.mock(VideoRepository::class.java)
 
-        Mockito.`when`(mockAuthRepository.updateNickname(testNickname)).thenReturn(Resource.Success(testUserInfoEntity))
-        Mockito.`when`(mockVideoRepository.updateServerNickname(testUserInfoEntity)).thenReturn(Resource.Failure(Exception()))
+        Mockito.`when`(mockAuthRepository.updateNickname(testNickname)).thenReturn(APIResponse.Success(testUserInfoEntity))
+        Mockito.`when`(mockVideoRepository.updateServerNickname(testUserInfoEntity)).thenReturn(APIResponse.Failure(Exception()))
 
         updateNicknameUseCase = UpdateNicknameUseCase(mockAuthRepository, mockVideoRepository)
-        assertTrue(updateNicknameUseCase(testNickname) is Resource.Failure)
+        assertTrue(updateNicknameUseCase(testNickname) is APIResponse.Failure)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
