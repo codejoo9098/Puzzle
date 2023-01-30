@@ -1,9 +1,9 @@
 package com.juniori.puzzle.di
 
-import com.juniori.puzzle.data.datasource.location.LocationDataSource
-import com.juniori.puzzle.data.datasource.location.LocationDataSourceImpl
-import com.juniori.puzzle.data.repositoryimpl.LocationRepositoryImpl
-import com.juniori.puzzle.domain.repository.LocationRepository
+import com.juniori.puzzle.data.datasource.position.PositionDataSource
+import com.juniori.puzzle.data.datasource.position.PositionDataSourceImpl
+import com.juniori.puzzle.data.repositoryimpl.LocationStateRepositoryImpl
+import com.juniori.puzzle.domain.repository.LocationStateRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +17,10 @@ object LocationModule {
 
     @Singleton
     @Provides
-    fun providesLocationRepository(impl: LocationRepositoryImpl): LocationRepository = impl
+    fun providesLocationRepository(impl: LocationStateRepositoryImpl): LocationStateRepository = impl
 
     @Singleton
     @Provides
-    fun providesLocationDataSource(impl: LocationDataSourceImpl): LocationDataSource = impl
+    fun providesLocationDataSource(impl: PositionDataSourceImpl): PositionDataSource = impl
 
 }
