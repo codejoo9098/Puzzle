@@ -6,7 +6,7 @@ import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
-import com.juniori.puzzle.mock.getVideoListMockData
+import com.juniori.puzzle.getVideoListMockData
 import com.juniori.puzzle.util.getOrAwaitValue
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
