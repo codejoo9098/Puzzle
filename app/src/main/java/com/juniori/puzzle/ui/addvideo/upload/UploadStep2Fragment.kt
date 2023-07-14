@@ -1,9 +1,11 @@
 package com.juniori.puzzle.ui.addvideo.upload
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -14,9 +16,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentUploadStep2Binding
-import com.juniori.puzzle.util.ProgressDialog
-import com.juniori.puzzle.util.PuzzleDialog
-import com.juniori.puzzle.util.StateManager
+import com.juniori.puzzle.app.util.ProgressDialog
+import com.juniori.puzzle.app.util.PuzzleDialog
+import com.juniori.puzzle.app.util.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -57,6 +59,7 @@ class UploadStep2Fragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initOnClickListener()

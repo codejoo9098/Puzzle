@@ -1,10 +1,10 @@
-package com.juniori.puzzle.di
+package com.juniori.puzzle.app.di
 
 import com.google.gson.Gson
 import com.juniori.puzzle.data.datasource.weather.WeatherDataSource
 import com.juniori.puzzle.data.datasource.weather.WeatherDataSourceImpl
 import com.juniori.puzzle.data.datasource.weather.WeatherService
-import com.juniori.puzzle.util.WEATHER_BASE_URL
+import com.juniori.puzzle.app.util.WEATHER_BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

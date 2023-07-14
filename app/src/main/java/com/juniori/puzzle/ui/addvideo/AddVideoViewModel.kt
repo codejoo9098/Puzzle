@@ -1,7 +1,7 @@
 package com.juniori.puzzle.ui.addvideo
 
 import androidx.lifecycle.ViewModel
-import com.juniori.puzzle.util.VideoMetaDataUtil
+import com.juniori.puzzle.app.util.VideoMetaDataUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

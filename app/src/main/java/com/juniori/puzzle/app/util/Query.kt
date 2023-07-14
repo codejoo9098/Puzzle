@@ -1,4 +1,4 @@
-package com.juniori.puzzle.util
+package com.juniori.puzzle.app.util
 
 
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.BooleanFieldFilter

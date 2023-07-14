@@ -1,4 +1,4 @@
-package com.juniori.puzzle.util
+package com.juniori.puzzle.app.util
 
 object PlayResultConst {
     const val RESULT_NOTTING = 0

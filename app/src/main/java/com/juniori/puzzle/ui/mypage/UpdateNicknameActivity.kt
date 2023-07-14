@@ -11,7 +11,7 @@ import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityUpdateNicknameBinding
 import com.juniori.puzzle.domain.entity.UserInfoEntity
-import com.juniori.puzzle.util.StateManager
+import com.juniori.puzzle.app.util.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

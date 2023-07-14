@@ -1,4 +1,4 @@
-package com.juniori.puzzle.di
+package com.juniori.puzzle.app.di
 
 import com.juniori.puzzle.data.datasource.position.PositionDataSource
 import com.juniori.puzzle.data.datasource.position.PositionDataSourceImpl

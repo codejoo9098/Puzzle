@@ -3,7 +3,7 @@ package com.juniori.puzzle.domain.usecase
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository
-import com.juniori.puzzle.util.SortType
+import com.juniori.puzzle.app.util.SortType
 import javax.inject.Inject
 
 class GetSocialVideoListUseCase @Inject constructor(private val videoRepository: VideoRepository) {

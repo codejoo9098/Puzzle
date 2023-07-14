@@ -1,4 +1,4 @@
-package com.juniori.puzzle.di
+package com.juniori.puzzle.app.di
 
 import android.content.Context
 import dagger.Module

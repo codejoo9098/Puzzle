@@ -1,4 +1,4 @@
-package com.juniori.puzzle.util
+package com.juniori.puzzle.app.util
 
 import android.content.Context
 import android.view.View
@@ -40,7 +40,7 @@ class PuzzleDialog @Inject constructor(
         return this
     }
 
-    fun buildListPopup(anchorView: View, items:Array<String>):PuzzleDialog{
+    fun buildListPopup(anchorView: View, items:Array<String>): PuzzleDialog {
         listPopupWindow.anchorView = anchorView
 
         val spinnerAdapter =

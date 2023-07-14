@@ -1,4 +1,4 @@
-package com.juniori.puzzle.util
+package com.juniori.puzzle.app.util
 
 import android.annotation.SuppressLint
 import android.location.Address

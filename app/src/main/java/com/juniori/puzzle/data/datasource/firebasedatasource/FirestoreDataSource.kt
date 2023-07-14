@@ -13,10 +13,10 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.getVideoIn
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.toStringValues
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
-import com.juniori.puzzle.util.GCS_OPEN_URL
-import com.juniori.puzzle.util.QueryUtil
-import com.juniori.puzzle.util.SortType
-import com.juniori.puzzle.util.toLocationKeyword
+import com.juniori.puzzle.app.util.GCS_OPEN_URL
+import com.juniori.puzzle.app.util.QueryUtil
+import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.app.util.toLocationKeyword
 import javax.inject.Inject
 
 class FirestoreDataSource @Inject constructor(

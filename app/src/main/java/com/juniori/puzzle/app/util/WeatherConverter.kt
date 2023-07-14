@@ -1,4 +1,4 @@
-package com.juniori.puzzle.util
+package com.juniori.puzzle.app.util
 
 import com.juniori.puzzle.data.datasource.weather.WeatherResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
@@ -13,7 +13,7 @@ fun WeatherResponse.toItem(): List<WeatherEntity> {
             minTemp = it.main.tempMin.roundToInt(),
             maxTemp = it.main.tempMax.roundToInt(),
             description = it.weather[0].description,
-            icon = "${WEATHER_ICON_URL}/${it.weather[0].icon}@2x.png"
+            icon = "$WEATHER_ICON_URL/${it.weather[0].icon}@2x.png"
         )
     }
 }
