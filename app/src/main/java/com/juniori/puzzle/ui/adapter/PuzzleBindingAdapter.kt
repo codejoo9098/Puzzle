@@ -1,4 +1,4 @@
-package com.juniori.puzzle.adapter
+package com.juniori.puzzle.ui.adapter
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

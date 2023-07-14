@@ -1,9 +1,10 @@
-package com.juniori.puzzle.adapter
+package com.juniori.puzzle.ui.adapter
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.databinding.BindingAdapter
 import androidx.palette.graphics.Palette
@@ -45,15 +46,15 @@ fun setDrawableLeft(view: TextView, url: String?) {
                     resource: Drawable,
                     transition: Transition<in Drawable>?
                 ) {
-                    resource.setBounds(0, 0, (DRAWABLE_WIDTH*0.7).toInt(),
-                        (DRAWABLE_HEIGHT*0.7).toInt()
+                    resource.setBounds(0, 0, (DRAWABLE_WIDTH *0.7).toInt(),
+                        (DRAWABLE_HEIGHT *0.7).toInt()
                     )
                     view.setCompoundDrawables(resource, null, null, null)
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
-                    placeholder?.setBounds(0, 0, (DRAWABLE_WIDTH*0.7).toInt(),
-                        (DRAWABLE_HEIGHT*0.7).toInt())
+                    placeholder?.setBounds(0, 0, (DRAWABLE_WIDTH *0.7).toInt(),
+                        (DRAWABLE_HEIGHT *0.7).toInt())
                     view.setCompoundDrawablesWithIntrinsicBounds(placeholder, null, null, null)
                 }
             })
@@ -66,14 +67,14 @@ fun setDrawableLeft(view: TextView, url: String?) {
                     resource: Drawable,
                     transition: Transition<in Drawable>?
                 ) {
-                    resource.setBounds(0, 0, (DRAWABLE_WIDTH*0.7).toInt(),
-                        (DRAWABLE_HEIGHT*0.7).toInt())
+                    resource.setBounds(0, 0, (DRAWABLE_WIDTH *0.7).toInt(),
+                        (DRAWABLE_HEIGHT *0.7).toInt())
                     view.setCompoundDrawables(resource, null, null, null)
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
-                    placeholder?.setBounds(0, 0, (DRAWABLE_WIDTH*0.7).toInt(),
-                        (DRAWABLE_HEIGHT*0.7).toInt())
+                    placeholder?.setBounds(0, 0, (DRAWABLE_WIDTH *0.7).toInt(),
+                        (DRAWABLE_HEIGHT *0.7).toInt())
                     view.setCompoundDrawablesWithIntrinsicBounds(placeholder, null, null, null)
                 }
             })
@@ -123,7 +124,7 @@ fun setImageByPalette(view: ImageView, url: String?) {
                             palette?.let {
                                 view.setBackgroundColor(
                                     ColorUtils.setAlphaComponent(
-                                        it.dominantSwatch?.rgb ?: R.color.disabled_color, 128
+                                        it.dominantSwatch?.rgb ?: ContextCompat.getColor(view.context, R.color.disabled_color), 128
                                     )
                                 )
                             }
