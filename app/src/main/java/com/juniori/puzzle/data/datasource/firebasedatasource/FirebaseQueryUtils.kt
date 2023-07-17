@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util
+package com.juniori.puzzle.data.datasource.firebasedatasource
 
 
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.BooleanFieldFilter
@@ -15,7 +15,7 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.Structured
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.Where
 import com.juniori.puzzle.domain.customtype.GallerySortType
 
-object QueryUtil {
+object FirebaseQueryUtils {
     fun getMyVideoQuery(uid: String, offset: Int?, limit: Int?) = StructuredQuery(
         where = Filter(
             fieldFilter = StringFieldFilter(

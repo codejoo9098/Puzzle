@@ -14,7 +14,6 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.toStringVa
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.GCS_OPEN_URL
-import com.juniori.puzzle.app.util.QueryUtil
 import com.juniori.puzzle.domain.customtype.GallerySortType
 import com.juniori.puzzle.app.util.extensions.toLocationKeyword
 import javax.inject.Inject
@@ -167,7 +166,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        QueryUtil.getMyVideoQuery(uid, offset, limit)
+                        FirebaseQueryUtils.getMyVideoQuery(uid, offset, limit)
                     )
                 ).getVideoInfoEntity()
             )
@@ -188,7 +187,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        QueryUtil.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
+                        FirebaseQueryUtils.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
                     )
                 ).getVideoInfoEntity()
             )
@@ -208,7 +207,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        QueryUtil.getPublicVideoQuery(
+                        FirebaseQueryUtils.getPublicVideoQuery(
                             orderBy = orderBy,
                             latestData = latestData,
                             offset = offset,
@@ -235,7 +234,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        QueryUtil.getPublicVideoWithKeywordQuery(
+                        FirebaseQueryUtils.getPublicVideoWithKeywordQuery(
                             orderBy,
                             toSearch,
                             keyword,
