@@ -28,7 +28,7 @@
             android:exported="false"
             android:theme="@style/Theme.Puzzle" />
         <activity
-            android:name=".ui.playvideo.PlayVideoActivity"
+            android:name=".ui.videoplayer.playvideo.PlayVideoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Puzzle" />
@@ -37,7 +37,7 @@
             android:exported="false"
             android:theme="@style/Theme.Puzzle" />
         <activity
-            android:name=".ui.addvideo.camera.CameraActivity"
+            android:name=".ui.videoplayer.addvideo.camera.CameraActivity"
             android:exported="true"
             android:theme="@style/Theme.Puzzle" />
         <activity

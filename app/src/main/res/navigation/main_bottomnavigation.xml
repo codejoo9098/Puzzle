@@ -19,7 +19,7 @@
 
     <dialog
         android:id="@+id/bottomsheet_main_addvideo"
-        android:name="com.juniori.puzzle.ui.addvideo.AddVideoBottomSheet"
+        android:name="com.juniori.puzzle.ui.videoplayer.addvideo.AddVideoBottomSheet"
         android:label="@string/main_addvideo"
         tools:layout="@layout/bottomsheet_addvideo">
 
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/fragment_upload_step1"
-        android:name="com.juniori.puzzle.ui.addvideo.upload.UploadStep1Fragment"
+        android:name="com.juniori.puzzle.ui.videoplayer.addvideo.upload.UploadStep1Fragment"
         android:label="UploadStep1Fragment"
         tools:layout="@layout/fragment_upload_step1">
 
@@ -53,6 +53,6 @@
 
     <fragment
         android:id="@+id/fragment_upload_step2"
-        android:name="com.juniori.puzzle.ui.addvideo.upload.UploadStep2Fragment"
+        android:name="com.juniori.puzzle.ui.videoplayer.addvideo.upload.UploadStep2Fragment"
         android:label="UploadStep2Fragment" />
 </navigation>

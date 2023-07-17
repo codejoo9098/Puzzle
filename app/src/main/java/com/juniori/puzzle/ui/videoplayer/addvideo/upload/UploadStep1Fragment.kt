@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.addvideo.upload
+package com.juniori.puzzle.ui.videoplayer.addvideo.upload
 
 import android.os.Bundle
 import android.view.LayoutInflater

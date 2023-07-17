@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.juniori.puzzle.ui.addvideo.upload.UploadViewModel" />
+            type="com.juniori.puzzle.ui.videoplayer.addvideo.upload.UploadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

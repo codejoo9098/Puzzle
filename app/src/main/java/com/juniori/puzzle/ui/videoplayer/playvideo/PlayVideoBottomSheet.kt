@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.playvideo
+package com.juniori.puzzle.ui.videoplayer.playvideo
 
 import android.annotation.SuppressLint
 import android.os.Bundle

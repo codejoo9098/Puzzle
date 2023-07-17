@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.databinding.FragmentOthersgalleryBinding
-import com.juniori.puzzle.ui.playvideo.PlayVideoActivity
+import com.juniori.puzzle.ui.videoplayer.playvideo.PlayVideoActivity
 import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_DELETE
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_TO_PRIVATE
-import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
+import com.juniori.puzzle.ui.common_ui.PuzzleDialog
 import com.juniori.puzzle.domain.customtype.GallerySortType
 import dagger.hilt.android.AndroidEntryPoint
 

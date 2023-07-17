@@ -21,8 +21,8 @@ import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentMypageBinding
 import com.juniori.puzzle.ui.login.LoginActivity
-import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
-import com.juniori.puzzle.app.util.common_ui.StateManager
+import com.juniori.puzzle.ui.common_ui.PuzzleDialog
+import com.juniori.puzzle.ui.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

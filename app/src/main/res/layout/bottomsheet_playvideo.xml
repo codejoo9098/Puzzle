@@ -17,7 +17,7 @@
         android:paddingEnd="@dimen/card_padding"
         android:paddingTop="@dimen/large_component_corner_radius"
         android:paddingBottom="@dimen/large_component_corner_radius"
-        tools:context=".ui.addvideo.AddVideoBottomSheet">
+        tools:context=".ui.videoplayer.addvideo.AddVideoBottomSheet">
 
         <include
             android:id="@+id/item_location"

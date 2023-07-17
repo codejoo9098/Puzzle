@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/text_vertical_margin"
-        tools:context=".ui.addvideo.AddVideoBottomSheet">
+        tools:context=".ui.videoplayer.addvideo.AddVideoBottomSheet">
 
         <Button
             android:id="@+id/button_search_gallery"

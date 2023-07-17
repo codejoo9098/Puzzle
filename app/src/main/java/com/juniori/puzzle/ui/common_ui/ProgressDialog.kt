@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util.common_ui
+package com.juniori.puzzle.ui.common_ui
 
 import android.annotation.SuppressLint
 import android.app.Dialog

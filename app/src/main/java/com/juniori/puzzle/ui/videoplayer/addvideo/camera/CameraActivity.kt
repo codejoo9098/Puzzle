@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.addvideo.camera
+package com.juniori.puzzle.ui.videoplayer.addvideo.camera
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -24,7 +24,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.databinding.ActivityCameraBinding
-import com.juniori.puzzle.ui.addvideo.AddVideoBottomSheet
+import com.juniori.puzzle.ui.videoplayer.addvideo.AddVideoBottomSheet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
