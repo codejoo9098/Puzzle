@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util
+package com.juniori.puzzle.app.util.common_ui
 
 import android.content.Context
 import android.view.View
