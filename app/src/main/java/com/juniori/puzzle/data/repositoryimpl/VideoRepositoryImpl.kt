@@ -7,7 +7,7 @@ import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository
 import com.juniori.puzzle.domain.constant.PagingConst.ITEM_CNT
-import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.domain.customtype.GallerySortType
 import javax.inject.Inject
 
 class VideoRepositoryImpl @Inject constructor(
@@ -45,14 +45,14 @@ class VideoRepositoryImpl @Inject constructor(
 
     /** 공개 상태인 비디오 목록 가져오기
      * @param index: 가져오기 시작할 바디오 index
-     * @param sortType: 정렬 타입 */
+     * @param gallerySortType: 정렬 타입 */
     override suspend fun getSocialVideoList(
         index: Int,
-        sortType: SortType,
+        gallerySortType: GallerySortType,
         latestData: Long?
     ): APIResponse<List<VideoInfoEntity>> {
         return firestoreDataSource.getPublicVideoItemsOrderBy(
-            orderBy = sortType,
+            orderBy = gallerySortType,
             latestData = latestData,
             offset = index,
             limit = ITEM_CNT
@@ -61,16 +61,16 @@ class VideoRepositoryImpl @Inject constructor(
 
     /** 검색을 통해 공개 상태인 비디오 목록 가져오기
      * @param index: 가져오기 시작할 바디오 index
-     * @param sortType: 정렬 타입
+     * @param gallerySortType: 정렬 타입
      * @param keyword: 검색할 단어*/
     override suspend fun getSearchedSocialVideoList(
         index: Int,
-        sortType: SortType,
+        gallerySortType: GallerySortType,
         keyword: String,
         latestData: Long?
     ): APIResponse<List<VideoInfoEntity>> {
         return firestoreDataSource.getPublicVideoItemsWithKeywordOrderBy(
-            orderBy = sortType,
+            orderBy = gallerySortType,
             toSearch = "location_keyword",
             keyword = keyword,
             latestData = latestData,

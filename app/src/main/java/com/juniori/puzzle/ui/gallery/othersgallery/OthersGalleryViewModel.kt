@@ -11,7 +11,7 @@ import com.juniori.puzzle.domain.usecase.GetSocialVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PagingConst.ITEM_CNT
-import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.domain.customtype.GallerySortType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,7 +37,7 @@ class OthersGalleryViewModel @Inject constructor(
         get() = _state
 
     var query = ""
-    var sortType = SortType.NEW
+    var gallerySortType = GallerySortType.NEW
 
     private var lastLikeCount = Long.MAX_VALUE
     private var lastTime = Long.MAX_VALUE
@@ -72,7 +72,7 @@ class OthersGalleryViewModel @Inject constructor(
             val data = getSearchedSocialVideoListUseCase(
                 index = 0,
                 keyword = query,
-                order = sortType
+                order = gallerySortType
             )
 
             if (data is APIResponse.Success) {
@@ -105,7 +105,7 @@ class OthersGalleryViewModel @Inject constructor(
             _refresh.value = true
             val data = getSocialVideoList(
                 index = 0,
-                order = sortType
+                order = gallerySortType
             )
 
             if (data is APIResponse.Success) {
@@ -136,20 +136,20 @@ class OthersGalleryViewModel @Inject constructor(
             val data = if (query.isBlank()) {
                 getSocialVideoList(
                     index = lastOffset,
-                    order = sortType,
-                    latestData = when (sortType) {
-                        SortType.LIKE -> lastLikeCount
-                        SortType.NEW -> lastTime
+                    order = gallerySortType,
+                    latestData = when (gallerySortType) {
+                        GallerySortType.LIKE -> lastLikeCount
+                        GallerySortType.NEW -> lastTime
                     }
                 )
             } else {
                 getSearchedSocialVideoListUseCase(
                     index = list.value?.size ?: 0,
                     keyword = query,
-                    order = sortType,
-                    latestData = when (sortType) {
-                        SortType.LIKE -> lastLikeCount
-                        SortType.NEW -> lastTime
+                    order = gallerySortType,
+                    latestData = when (gallerySortType) {
+                        GallerySortType.LIKE -> lastLikeCount
+                        GallerySortType.NEW -> lastTime
                     }
                 )
             }
@@ -201,9 +201,9 @@ class OthersGalleryViewModel @Inject constructor(
     }
 
     private fun setLastData(time: Long, like: Long, offset: Int) {
-        if (sortType == SortType.NEW && lastTime == time) {
+        if (gallerySortType == GallerySortType.NEW && lastTime == time) {
             lastOffset += offset
-        } else if (sortType == SortType.LIKE && lastLikeCount == like) {
+        } else if (gallerySortType == GallerySortType.LIKE && lastLikeCount == like) {
             lastOffset += offset
         } else {
             lastOffset = offset
@@ -212,9 +212,9 @@ class OthersGalleryViewModel @Inject constructor(
         lastLikeCount = like
     }
 
-    fun setOrderType(type: SortType): Boolean {
-        if (sortType != type) {
-            sortType = type
+    fun setOrderType(type: GallerySortType): Boolean {
+        if (gallerySortType != type) {
+            gallerySortType = type
 
             if (query.isBlank()) {
                 getMainData()
@@ -229,7 +229,7 @@ class OthersGalleryViewModel @Inject constructor(
     }
 
     private fun List<VideoInfoEntity>.countWith(base: VideoInfoEntity): Int {
-        if (sortType == SortType.NEW) {
+        if (gallerySortType == GallerySortType.NEW) {
             var cnt = 0
             this.forEach {
                 if (it.updateTime == base.updateTime) {

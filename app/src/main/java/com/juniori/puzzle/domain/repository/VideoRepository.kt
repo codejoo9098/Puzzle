@@ -3,7 +3,7 @@ package com.juniori.puzzle.domain.repository
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
-import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.domain.customtype.GallerySortType
 
 interface VideoRepository {
     suspend fun getMyVideoList(uid: String, index: Int): APIResponse<List<VideoInfoEntity>>
@@ -11,13 +11,13 @@ interface VideoRepository {
 
     suspend fun getSocialVideoList(
         index: Int,
-        sortType: SortType,
+        gallerySortType: GallerySortType,
         latestData: Long?
     ): APIResponse<List<VideoInfoEntity>>
 
     suspend fun getSearchedSocialVideoList(
         index: Int,
-        sortType: SortType,
+        gallerySortType: GallerySortType,
         keyword: String,
         latestData: Long?
     ): APIResponse<List<VideoInfoEntity>>
