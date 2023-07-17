@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util
+package com.juniori.puzzle.domain.constant
 
 object PlayResultConst {
     const val RESULT_NOTTING = 0
