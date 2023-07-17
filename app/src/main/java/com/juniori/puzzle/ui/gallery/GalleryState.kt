@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util
+package com.juniori.puzzle.ui.gallery
 
 enum class GalleryState {
     NONE,

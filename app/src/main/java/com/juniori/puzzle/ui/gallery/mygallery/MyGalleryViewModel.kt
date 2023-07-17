@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.mygallery
+package com.juniori.puzzle.ui.gallery.mygallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
-import com.juniori.puzzle.app.util.GalleryState
+import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.app.util.PagingConst.ITEM_CNT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
