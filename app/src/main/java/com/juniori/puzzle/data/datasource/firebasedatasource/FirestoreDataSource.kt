@@ -16,7 +16,7 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.GCS_OPEN_URL
 import com.juniori.puzzle.app.util.QueryUtil
 import com.juniori.puzzle.app.util.SortType
-import com.juniori.puzzle.app.util.toLocationKeyword
+import com.juniori.puzzle.app.util.extensions.toLocationKeyword
 import javax.inject.Inject
 
 class FirestoreDataSource @Inject constructor(

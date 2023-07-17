@@ -20,8 +20,8 @@ import com.juniori.puzzle.databinding.BottomsheetAddvideoBinding
 import com.juniori.puzzle.ui.addvideo.camera.CameraActivity
 import com.juniori.puzzle.ui.addvideo.upload.UploadStep1Fragment.Companion.THUMBNAIL_BYTE_ARRAY
 import com.juniori.puzzle.ui.addvideo.upload.UploadStep1Fragment.Companion.VIDEO_FILE_PATH_KEY
-import com.juniori.puzzle.app.util.readBytes
-import com.juniori.puzzle.app.util.saveInFile
+import com.juniori.puzzle.app.util.extensions.readBytes
+import com.juniori.puzzle.app.util.extensions.saveInFile
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

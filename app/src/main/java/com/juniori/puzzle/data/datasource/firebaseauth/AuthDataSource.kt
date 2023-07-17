@@ -7,7 +7,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
-import com.juniori.puzzle.app.util.await
+import com.juniori.puzzle.app.util.extensions.await
 import javax.inject.Inject
 
 class AuthDataSource @Inject constructor(

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util
+package com.juniori.puzzle.app.util.extensions
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
