@@ -3,7 +3,6 @@ package com.juniori.puzzle.data.datasource.weather
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.app.util.WEATHER_SERVICE_KEY
-import com.juniori.puzzle.app.util.toItem
 import java.util.*
 import javax.inject.Inject
 
