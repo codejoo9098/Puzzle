@@ -1,5 +1,6 @@
 package com.juniori.puzzle.data.firebase.dto
 
+import com.juniori.puzzle.data.converter.toVideoInfoEntity
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.*
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import org.junit.Assert.*
@@ -47,7 +48,7 @@ class VideoItemConvertTest {
 
     @Test
     fun normalConvertTest() {
-        val testVideoInfoEntity = videoItem.getVideoInfoEntity()
+        val testVideoInfoEntity = videoItem.toVideoInfoEntity()
 
         assertEquals(videoInfoEntity, testVideoInfoEntity)
     }
@@ -60,7 +61,7 @@ class VideoItemConvertTest {
         )
         val testVideoItem = videoItem.copy(videoDetail = testVideoDetail)
 
-        val testVideoEntity = testVideoItem.getVideoInfoEntity()
+        val testVideoEntity = testVideoItem.toVideoInfoEntity()
         val targetVideoEntity = videoInfoEntity.copy(likedCount = 0, likedUserUidList = emptyList())
 
         assertEquals(targetVideoEntity, testVideoEntity)
