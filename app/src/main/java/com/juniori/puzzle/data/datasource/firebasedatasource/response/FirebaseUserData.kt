@@ -1,16 +1,15 @@
 package com.juniori.puzzle.data.datasource.firebasedatasource.response
 
 import com.google.gson.annotations.SerializedName
-import com.juniori.puzzle.domain.entity.UserInfoEntity
 
-data class UserItem(
+data class FirebaseUserItem(
     @SerializedName("name") val uid: String,
-    @SerializedName("fields") val userDetail: UserDetail,
+    @SerializedName("fields") val firebaseUserDetail: FirebaseUserDetail,
     @SerializedName("createTime") val createTime: String? = null,
     @SerializedName("updateTime") val updateTime: String? = null
 )
 
-data class UserDetail(
+data class FirebaseUserDetail(
     @SerializedName("user_display_name") val nickname: StringValue,
     @SerializedName("profile_image") val profileImage: StringValue,
 )

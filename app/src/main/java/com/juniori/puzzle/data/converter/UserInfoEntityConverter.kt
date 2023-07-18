@@ -1,13 +1,13 @@
 package com.juniori.puzzle.data.converter
 
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserItem
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.FirebaseUserItem
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 
-fun UserItem.toUserInfoEntity(): UserInfoEntity {
+fun FirebaseUserItem.toUserInfoEntity(): UserInfoEntity {
     return UserInfoEntity(
         uid.substringAfter("userReal/"),
-        userDetail.nickname.stringValue,
-        userDetail.profileImage.stringValue,
+        firebaseUserDetail.nickname.stringValue,
+        firebaseUserDetail.profileImage.stringValue,
         null
     )
 }

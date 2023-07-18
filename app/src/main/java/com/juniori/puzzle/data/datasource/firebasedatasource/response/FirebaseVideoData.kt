@@ -1,7 +1,6 @@
 package com.juniori.puzzle.data.datasource.firebasedatasource.response
 
 import com.google.gson.annotations.SerializedName
-import com.juniori.puzzle.domain.entity.VideoInfoEntity
 
 data class VideoItem(
     @SerializedName("name") val videoName: String,
