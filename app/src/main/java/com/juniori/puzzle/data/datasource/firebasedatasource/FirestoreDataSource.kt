@@ -168,7 +168,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getMyVideoQuery(uid, offset, limit)
+                        FirebaseQueryFactory.getMyVideoQuery(uid, offset, limit)
                     )
                 ).toVideoInfoEntityList()
             )
@@ -189,7 +189,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
+                        FirebaseQueryFactory.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
                     )
                 ).toVideoInfoEntityList()
             )
@@ -209,7 +209,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getPublicVideoQuery(
+                        FirebaseQueryFactory.getPublicVideoQuery(
                             orderBy = orderBy,
                             latestData = latestData,
                             offset = offset,
@@ -236,7 +236,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getPublicVideoWithKeywordQuery(
+                        FirebaseQueryFactory.getPublicVideoWithKeywordQuery(
                             orderBy,
                             toSearch,
                             keyword,
