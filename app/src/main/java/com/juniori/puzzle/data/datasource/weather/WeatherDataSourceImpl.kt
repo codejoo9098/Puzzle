@@ -3,6 +3,7 @@ package com.juniori.puzzle.data.datasource.weather
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.app.util.WEATHER_SERVICE_KEY
+import com.juniori.puzzle.data.converter.toWeatherEntity
 import java.util.*
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class WeatherDataSourceImpl @Inject constructor(
 
         return try {
             val response = service.getWeather(lat, lon, WEATHER_SERVICE_KEY, language)
-            val result = response.body()?.toItem() ?: emptyList()
+            val result = response.body()?.toWeatherEntity() ?: emptyList()
             if (result.size >= 3) {
                 APIResponse.Success(result)
             } else {
