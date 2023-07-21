@@ -81,7 +81,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val welcomeTextArray = resources.getStringArray(R.array.welcome_text)
         adapter = WeatherRecyclerViewAdapter()
         checkPermission()
 
@@ -117,7 +116,6 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-
         }
 
         homeViewModel.weatherFailTextId.observe(viewLifecycleOwner) { id ->
@@ -125,7 +123,8 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.run {
-            setWelcomeText(welcomeTextArray.random(random))
+            val welcomeTextArray = resources.getStringArray(R.array.welcome_text)
+            setWelcomeText(welcomeTextArray)
             setDisplayName()
         }
     }
