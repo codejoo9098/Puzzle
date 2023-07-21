@@ -6,13 +6,13 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionDataSource
 import com.juniori.puzzle.data.datasource.weather.WeatherDataSource
 import com.juniori.puzzle.domain.entity.WeatherEntity
-import com.juniori.puzzle.domain.repository.LocationStateRepository
+import com.juniori.puzzle.domain.repository.WeatherRepository
 import javax.inject.Inject
 
-class LocationStateRepositoryImpl @Inject constructor(
+class WeatherRepositoryImpl @Inject constructor(
     private val positionDataSource: PositionDataSource,
     private val weatherDataSource: WeatherDataSource,
-) : LocationStateRepository {
+) : WeatherRepository {
     override fun registerLocationListener(listener: LocationListenerCompat): Boolean {
         return positionDataSource.registerLocationListener(listener)
     }

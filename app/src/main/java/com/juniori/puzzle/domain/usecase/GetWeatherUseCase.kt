@@ -1,13 +1,13 @@
 package com.juniori.puzzle.domain.usecase
 
-import com.juniori.puzzle.domain.repository.LocationStateRepository
+import com.juniori.puzzle.domain.repository.WeatherRepository
 import javax.inject.Inject
 
 class GetWeatherUseCase @Inject constructor(
-    private val locationStateRepository: LocationStateRepository
+    private val weatherRepository: WeatherRepository
 ) {
     suspend operator fun invoke(lat: Double, long: Double) =
-        locationStateRepository.getWeatherInfo(lat, long)
+        weatherRepository.getWeatherInfo(lat, long)
 
 }
 
