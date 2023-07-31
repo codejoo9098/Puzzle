@@ -44,9 +44,9 @@ class HomeViewModelTest {
     @Test
     fun negativeLocationTest(): Unit = runBlocking {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NEGATIVE_LOCATION, NEGATIVE_LOCATION))
-        homeViewModel.getWeather().join()
+        homeViewModel.getNewWeatherData().join()
 
-        assertTrue(homeViewModel.uiState.value is APIResponse.Failure)
+        assertTrue(homeViewModel.weatherState.value is APIResponse.Failure)
     }
 
     @Test
@@ -57,7 +57,7 @@ class HomeViewModelTest {
         val mockWeatherList = listOf(mockWeatherEntity, mockWeatherEntity, mockWeatherEntity, mockWeatherEntity)
         Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Success(mockWeatherList))
 
-        assertEquals(APIResponse.Success(mockWeatherList), homeViewModel.uiState.value)
+        assertEquals(APIResponse.Success(mockWeatherList), homeViewModel.weatherState.value)
     }
 
     @Test
@@ -65,8 +65,8 @@ class HomeViewModelTest {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
         Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Success(emptyList()))
 
-        homeViewModel.getWeather().join()
-        assertTrue(homeViewModel.uiState.value is APIResponse.Failure)
+        homeViewModel.getNewWeatherData().join()
+        assertTrue(homeViewModel.weatherState.value is APIResponse.Failure)
     }
 
     @Test
@@ -74,8 +74,8 @@ class HomeViewModelTest {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
         Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Failure(Exception()))
 
-        homeViewModel.getWeather().join()
-        assertTrue(homeViewModel.uiState.value is APIResponse.Failure)
+        homeViewModel.getNewWeatherData().join()
+        assertTrue(homeViewModel.weatherState.value is APIResponse.Failure)
     }
 
     @Test
@@ -86,8 +86,8 @@ class HomeViewModelTest {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
         Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Success(mockWeatherList))
 
-        homeViewModel.getWeather().join()
-        assertTrue(homeViewModel.uiState.value is APIResponse.Success)
+        homeViewModel.getNewWeatherData().join()
+        assertTrue(homeViewModel.weatherState.value is APIResponse.Success)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

@@ -1,7 +1,5 @@
 package com.juniori.puzzle.app.di
 
-import com.juniori.puzzle.data.datasource.position.PositionDataSource
-import com.juniori.puzzle.data.datasource.position.PositionDataSourceImpl
 import com.juniori.puzzle.data.repositoryimpl.WeatherRepositoryImpl
 import com.juniori.puzzle.domain.repository.WeatherRepository
 import dagger.Module
@@ -18,9 +16,4 @@ object LocationModule {
     @Singleton
     @Provides
     fun providesLocationRepository(impl: WeatherRepositoryImpl): WeatherRepository = impl
-
-    @Singleton
-    @Provides
-    fun providesLocationDataSource(impl: PositionDataSourceImpl): PositionDataSource = impl
-
 }

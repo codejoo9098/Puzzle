@@ -75,12 +75,21 @@
     <string name="upload_location_empty">You should write a golf course name</string>
     <string name="upload_location_overflow">You can write golf course until 50 characters</string>
 
+    <!--unknown error-->
+    <string name="unknown_error">Unknown error occurred</string>
+
+    <!--weather server-->
+    <string name="weather_server_error">Cannot get weather data from weather server</string>
+
     <!--network-->
     <string name="network_fail">Network communication failed.</string>
 
+    <!--location-->
+    <string name="location_fail">Failed to get location information</string>
+
     <!--permission-->
     <string name="location_permission">Please allow location permission.\nYou can allow permission at \nSetting->Application->Puzzle</string>
-    <string name="location_service_off">Please connect network and location services.</string>
+    <string name="location_service_off">Please turn on location service</string>
 
     <!--description-->
     <string name="weather_icon_description">%d degrees Celsius %s</string>
