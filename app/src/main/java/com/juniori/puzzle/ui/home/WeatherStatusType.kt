@@ -1,0 +1,5 @@
+package com.juniori.puzzle.ui.home
+
+enum class WeatherStatusType {
+    SUCCESS, LOADING, PERMISSION_DENIED, LOCATION_SERVICE_OFF, WRONG_LOCATION, SERVER_ERROR, NETWORK_ERROR, UNKNOWN_ERROR
+}

@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
+import com.juniori.puzzle.domain.APIErrorType
+import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.customtype.WeatherException
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
@@ -25,8 +27,8 @@ class HomeViewModel @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
-    private val _weatherState = MutableStateFlow<APIResponse<Unit>>(APIResponse.Loading)
-    val weatherState: StateFlow<APIResponse<Unit>> = _weatherState
+    private val _weatherState = MutableStateFlow(WeatherStatusType.LOADING)
+    val weatherState: StateFlow<WeatherStatusType> = _weatherState
 
     private val _welcomeText = MutableStateFlow("")
     val welcomeText: StateFlow<String> = _welcomeText
@@ -59,34 +61,36 @@ class HomeViewModel @Inject constructor(
 
     fun getNewWeatherData(position: PositionResponse) {
         viewModelScope.launch {
-            _weatherState.value = APIResponse.Loading
+            setWeatherStateLoading()
 
-            when (val weatherInfo = getCurrentWeatherUseCase(position)) {
-                is APIResponse.Success<Pair<WeatherEntity, List<WeatherEntity>>> -> {
-                    _weatherMainInfo.value = weatherInfo.result.first
-                    _weatherSubList.value = weatherInfo.result.second
-                    _weatherState.value = APIResponse.Success(Unit)
+            when (val response = getCurrentWeatherUseCase(position)) {
+                is TempAPIResponse.Success<Pair<WeatherEntity, List<WeatherEntity>>> -> {
+                    _weatherMainInfo.value = response.data.first
+                    _weatherSubList.value = response.data.second
+                    setWeatherStateSuccess()
                 }
-                is APIResponse.Failure -> {
-                    _weatherState.value = weatherInfo
-                }
-                is APIResponse.Loading -> {
-                    _weatherState.value = APIResponse.Loading
+                is TempAPIResponse.Failure -> {
+                    when(response.errorType) {
+                        APIErrorType.NO_CONTENT -> setWeatherStateError(WeatherStatusType.SERVER_ERROR)
+                        APIErrorType.SERVER_ERROR -> setWeatherStateError(WeatherStatusType.SERVER_ERROR)
+                        APIErrorType.NOT_CONNECTED -> setWeatherStateError(WeatherStatusType.NETWORK_ERROR)
+                    }
                 }
             }
         }
     }
 
-    fun setWeatherStateSuccess() {
-        _weatherState.value = APIResponse.Success(Unit)
+    private fun setWeatherStateSuccess() {
+        _weatherState.value = WeatherStatusType.SUCCESS
     }
 
-    fun setWeatherStateError(exception: java.lang.Exception) {
-        _weatherState.value = APIResponse.Failure(exception)
+    fun setWeatherStateError(errorType: WeatherStatusType) {
+        if (errorType == WeatherStatusType.SUCCESS || errorType == WeatherStatusType.LOADING) _weatherState.value = WeatherStatusType.UNKNOWN_ERROR
+        else _weatherState.value = errorType
     }
 
     fun setWeatherStateLoading() {
-        _weatherState.value = APIResponse.Loading
+        _weatherState.value = WeatherStatusType.LOADING
     }
 
     fun setCurrentAddress(address: String) {

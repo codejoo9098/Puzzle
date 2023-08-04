@@ -4,8 +4,9 @@ import android.location.Address
 import androidx.core.location.LocationListenerCompat
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.weather.WeatherResponse
+import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 
 interface WeatherRepository {
-    suspend fun getWeatherInfo(lat: Double, long: Double): WeatherResponse?
+    suspend fun getWeatherInfo(lat: Double, long: Double): TempAPIResponse<WeatherResponse>
 }

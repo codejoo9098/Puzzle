@@ -25,6 +25,7 @@ import com.juniori.puzzle.ui.adapter.WeatherRecyclerViewAdapter
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.databinding.FragmentHomeBinding
+import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.customtype.WeatherException
 import com.juniori.puzzle.ui.sensor.SensorActivity
 import com.juniori.puzzle.ui.common_ui.StateManager
@@ -46,6 +47,11 @@ class HomeFragment : Fragment() {
 
     private val locationListener = object : LocationListenerCompat {
         override fun onLocationChanged(loc: Location) {
+            if (loc.latitude < -90 || loc.latitude > 90 || loc.longitude < -180 || loc.longitude > 180) {
+                homeViewModel.setWeatherStateError(WeatherStatusType.WRONG_LOCATION)
+                return
+            }
+
             currentPosition = PositionResponse(loc.latitude, loc.longitude)
             setCurrentAddress()
             homeViewModel.getNewWeatherData(currentPosition)
@@ -53,12 +59,12 @@ class HomeFragment : Fragment() {
 
         override fun onProviderDisabled(provider: String) {
             super.onProviderDisabled(provider)
-            homeViewModel.setWeatherStateError(WeatherException.LocationServiceOffException)
+            homeViewModel.setWeatherStateError(WeatherStatusType.LOCATION_SERVICE_OFF)
         }
 
         override fun onProviderEnabled(provider: String) {
             super.onProviderEnabled(provider)
-            homeViewModel.setWeatherStateSuccess()
+            refreshWeatherData()
         }
     }
 
@@ -69,10 +75,10 @@ class HomeFragment : Fragment() {
         homeViewModel.setWeatherStateLoading()
 
         if (isPermitted.not()) {
-            homeViewModel.setWeatherStateError(WeatherException.PermissionOffException)
+            homeViewModel.setWeatherStateError(WeatherStatusType.PERMISSION_DENIED)
         } else {
-            if (registerLocationListener()) homeViewModel.setWeatherStateSuccess()
-            else homeViewModel.setWeatherStateError(WeatherException.LocationServiceOffException)
+            if (registerLocationListener()) refreshWeatherData()
+            else homeViewModel.setWeatherStateError(WeatherStatusType.LOCATION_SERVICE_OFF)
         }
     }
 
@@ -114,27 +120,18 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            homeViewModel.weatherState.collect { resource ->
-                when (resource) {
-                    is APIResponse.Success -> {
-                        stateManager.dismissLoadingDialog()
-                        showWeather()
-                    }
-                    is APIResponse.Failure -> {
-                        stateManager.dismissLoadingDialog()
+            homeViewModel.weatherState.collect { state ->
+                if (state != WeatherStatusType.LOADING) stateManager.dismissLoadingDialog()
 
-                        when (resource.exception) {
-                            is WeatherException.LocationErrorException -> hideWeather(getString(R.string.location_fail))
-                            is WeatherException.WeatherServerErrorException -> hideWeather(getString(R.string.weather_server_error))
-                            is WeatherException.NetworkErrorException -> hideWeather(getString(R.string.network_fail))
-                            is WeatherException.PermissionOffException -> hideWeather(getString(R.string.location_permission))
-                            is WeatherException.LocationServiceOffException -> hideWeather(getString(R.string.location_service_off))
-                            else -> hideWeather(getString(R.string.unknown_error))
-                        }
-                    }
-                    is APIResponse.Loading -> {
-                        stateManager.showLoadingDialog()
-                    }
+                when (state) {
+                    WeatherStatusType.SUCCESS -> showWeather()
+                    WeatherStatusType.PERMISSION_DENIED -> hideWeather(getString(R.string.location_permission))
+                    WeatherStatusType.LOCATION_SERVICE_OFF -> hideWeather(getString(R.string.location_service_off))
+                    WeatherStatusType.WRONG_LOCATION -> hideWeather(getString(R.string.location_fail))
+                    WeatherStatusType.SERVER_ERROR -> hideWeather(getString(R.string.weather_server_error))
+                    WeatherStatusType.NETWORK_ERROR -> hideWeather(getString(R.string.network_fail))
+                    WeatherStatusType.UNKNOWN_ERROR -> hideWeather(getString(R.string.unknown_error))
+                    WeatherStatusType.LOADING -> stateManager.showLoadingDialog()
                 }
             }
         }
@@ -203,18 +200,15 @@ class HomeFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            homeViewModel.setWeatherStateError(WeatherException.PermissionOffException)
+            homeViewModel.setWeatherStateError(WeatherStatusType.PERMISSION_DENIED)
             return
         }
         else if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            homeViewModel.setWeatherStateError(WeatherException.LocationServiceOffException)
-            return
-        }
-        else if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            homeViewModel.setWeatherStateError(WeatherException.NetworkErrorException)
+            homeViewModel.setWeatherStateError(WeatherStatusType.LOCATION_SERVICE_OFF)
             return
         }
 
+        setCurrentAddress()
         homeViewModel.getNewWeatherData(currentPosition)
     }
 
