@@ -8,12 +8,27 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.app.util.extensions.await
+import com.juniori.puzzle.domain.APIErrorType
+import com.juniori.puzzle.domain.TempAPIResponse
+import java.io.IOException
 import javax.inject.Inject
 
 class AuthDataSource @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
-    fun updateNickname(newNickname: String): APIResponse<UserInfoEntity> {
+    fun getCurrentUserInfo(): TempAPIResponse<UserInfoEntity> {
+        return firebaseAuth.currentUser?.let { firebaseUser ->
+            TempAPIResponse.Success(
+                UserInfoEntity(
+                    firebaseUser.uid,
+                    firebaseUser.displayName ?: "",
+                    firebaseUser.photoUrl?.toString() ?: ""
+                )
+            )
+        } ?: kotlin.run { TempAPIResponse.Failure(APIErrorType.NO_CONTENT) }
+    }
+
+    fun updateNickname(newNickname: String): TempAPIResponse<UserInfoEntity> {
         val newProfile = UserProfileChangeRequest.Builder()
             .setDisplayName(newNickname)
             .build()
@@ -25,40 +40,31 @@ class AuthDataSource @Inject constructor(
             val profileUrl = firebaseAuth.currentUser?.photoUrl?.toString() ?: ""
             val userInfoEntity = UserInfoEntity(uid, newNickname, profileUrl)
 
-            APIResponse.Success(userInfoEntity)
-        } ?: kotlin.run { APIResponse.Failure(Exception()) }
+            TempAPIResponse.Success(userInfoEntity)
+        } ?: kotlin.run { TempAPIResponse.Failure(APIErrorType.NO_CONTENT) }
     }
 
-    fun getCurrentUserInfo(): APIResponse<UserInfoEntity> {
-        return firebaseAuth.currentUser?.let { firebaseUser ->
-            APIResponse.Success(
-                UserInfoEntity(
-                    firebaseUser.uid,
-                    firebaseUser.displayName ?: "",
-                    firebaseUser.photoUrl?.toString() ?: ""
-                )
-            )
-        } ?: kotlin.run { APIResponse.Failure(Exception()) }
-    }
-
-    suspend fun requestLogin(acct: GoogleSignInAccount): APIResponse<UserInfoEntity> {
+    suspend fun requestLogin(acct: GoogleSignInAccount): TempAPIResponse<UserInfoEntity> {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
 
         return try {
             val result = firebaseAuth.signInWithCredential(credential).await()
 
             result.user?.let { firebaseUser ->
-                APIResponse.Success(
+                TempAPIResponse.Success(
                     UserInfoEntity(
                         firebaseUser.uid,
                         firebaseUser.displayName ?: "",
                         firebaseUser.photoUrl?.toString() ?: ""
                     )
                 )
-            }  ?: kotlin.run { APIResponse.Failure(Exception()) }
-        } catch (e: Exception) {
+            }  ?: kotlin.run { TempAPIResponse.Failure(APIErrorType.NO_CONTENT) }
+        } catch (e: IOException) {
             e.printStackTrace()
-            APIResponse.Failure(e)
+            TempAPIResponse.Failure(APIErrorType.NOT_CONNECTED)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            TempAPIResponse.Failure(APIErrorType.SERVER_ERROR)
         }
     }
 

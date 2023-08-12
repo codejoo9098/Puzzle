@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityPlayvideoBinding
+import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_DELETE
@@ -133,8 +134,8 @@ class PlayVideoActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getLoginInfoFlow.collectLatest { resource ->
-                    if (resource is APIResponse.Success) {
-                        currentUserInfo = resource.result
+                    if (resource is TempAPIResponse.Success) {
+                        currentUserInfo = resource.data
                         viewModel.setCurrentLikeStatus(currentVideoItem, currentUserInfo.uid)
                         setMenuItems()
                     }

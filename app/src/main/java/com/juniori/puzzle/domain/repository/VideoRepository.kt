@@ -1,6 +1,7 @@
 package com.juniori.puzzle.domain.repository
 
 import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.customtype.GallerySortType
@@ -47,5 +48,5 @@ interface VideoRepository {
         profileImage: String
     ): APIResponse<UserInfoEntity>
 
-    suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): APIResponse<UserInfoEntity>
+    suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): TempAPIResponse<UserInfoEntity>
 }

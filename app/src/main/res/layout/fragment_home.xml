@@ -76,7 +76,6 @@
         <TextView
             android:id="@+id/user_nickname_tv"
             style="@style/Theme.Puzzle.TextLarge.Bold"
-            setDisplayName="@{vm.displayName}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/text_vertical_margin"

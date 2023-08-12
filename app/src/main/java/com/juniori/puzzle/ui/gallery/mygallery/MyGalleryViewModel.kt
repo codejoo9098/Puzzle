@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
@@ -167,9 +168,9 @@ class MyGalleryViewModel @Inject constructor(
     }
 
     private fun getUid(): String? {
-        val userInfo = getUserInfoUseCase()
-        val uid: String? = if (userInfo is APIResponse.Success) {
-            userInfo.result.uid
+        val userInfo = getUserInfoUseCase().value
+        val uid: String? = if (userInfo is TempAPIResponse.Success) {
+            userInfo.data.uid
         } else {
             null
         }

@@ -27,6 +27,7 @@ import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.databinding.FragmentHomeBinding
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.customtype.WeatherException
+import com.juniori.puzzle.ui.adapter.setDisplayName
 import com.juniori.puzzle.ui.sensor.SensorActivity
 import com.juniori.puzzle.ui.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -136,10 +137,20 @@ class HomeFragment : Fragment() {
             }
         }
 
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.currentUserInfo.collect { userInfoEntity ->
+                if (userInfoEntity is TempAPIResponse.Success) {
+                    setDisplayName(binding.userNicknameTv, userInfoEntity.data.nickname)
+                }
+                else {
+                    setDisplayName(binding.userNicknameTv, "어라")
+                }
+            }
+        }
+
         homeViewModel.run {
             val welcomeTextArray = resources.getStringArray(R.array.welcome_text)
             setWelcomeText(welcomeTextArray)
-            setDisplayName()
         }
     }
 

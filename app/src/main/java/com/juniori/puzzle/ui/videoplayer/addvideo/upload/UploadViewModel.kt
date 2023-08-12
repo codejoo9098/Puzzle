@@ -15,6 +15,8 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.PostVideoUseCase
 import com.juniori.puzzle.app.util.extensions.deleteIfFileUri
+import com.juniori.puzzle.domain.TempAPIResponse
+import com.juniori.puzzle.domain.entity.UserInfoEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -117,9 +119,9 @@ class UploadViewModel @Inject constructor(
     }
 
     private fun getUid(): String? {
-        val currentUserInfo = getUserInfoUseCase()
-        return if (currentUserInfo is APIResponse.Success) {
-            currentUserInfo.result.uid
+        val currentUserInfo = getUserInfoUseCase().value
+        return if (currentUserInfo is TempAPIResponse.Success) {
+            currentUserInfo.data.uid
         } else {
             null
         }

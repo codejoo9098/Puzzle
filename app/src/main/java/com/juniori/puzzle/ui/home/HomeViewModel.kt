@@ -10,6 +10,7 @@ import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.customtype.WeatherException
+import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
 import com.juniori.puzzle.domain.usecase.home.GetCurrentWeatherUseCase
@@ -27,14 +28,14 @@ class HomeViewModel @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
+    private val _currentUserInfo = getUserInfoUseCase()
+    val currentUserInfo: StateFlow<TempAPIResponse<UserInfoEntity>> = _currentUserInfo
+
     private val _weatherState = MutableStateFlow(WeatherStatusType.LOADING)
     val weatherState: StateFlow<WeatherStatusType> = _weatherState
 
     private val _welcomeText = MutableStateFlow("")
     val welcomeText: StateFlow<String> = _welcomeText
-
-    private val _displayName = MutableStateFlow("")
-    val displayName: StateFlow<String> = _displayName
 
     private val _currentAddress = MutableStateFlow("")
     val currentAddress: StateFlow<String> = _currentAddress
@@ -45,15 +46,6 @@ class HomeViewModel @Inject constructor(
     private val _weatherMainInfo =
         MutableStateFlow(WeatherEntity(Date(), 0, 0, 0, 0, "", ""))
     val weatherMainInfo: StateFlow<WeatherEntity> = _weatherMainInfo
-
-    fun setDisplayName() {
-        val userInfo = getUserInfoUseCase()
-        if (userInfo is APIResponse.Success) {
-            _displayName.value = userInfo.result.nickname
-        } else {
-            _displayName.value = ""
-        }
-    }
 
     fun setWelcomeText(welcomeTextArray: Array<String>) {
         _welcomeText.value = showWelcomeTextUseCase(welcomeTextArray)
