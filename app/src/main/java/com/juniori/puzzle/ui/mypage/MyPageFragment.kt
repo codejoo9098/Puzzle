@@ -44,7 +44,7 @@ class MyPageFragment : Fragment() {
         )
     }
 
-    private val activityResult: ActivityResultLauncher<Intent> =
+    private val withdrawLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val task: Task<GoogleSignInAccount> =
@@ -133,7 +133,7 @@ class MyPageFragment : Fragment() {
                     setDisplayName(binding.userNickname, userInfoEntity.data.nickname)
                 }
                 else {
-                    setDisplayName(binding.userNickname, "")
+                    setDisplayName(binding.userNickname, getString(R.string.cannot_find_user))
                 }
 
             }
@@ -155,7 +155,7 @@ class MyPageFragment : Fragment() {
         warningDialog
             .buildAlertDialog({
                 val signInIntent = googleSignInClient.signInIntent
-                activityResult.launch(signInIntent)
+                withdrawLauncher.launch(signInIntent)
             },{
 
             }).setMessage(getString(R.string.withdraw_remind))

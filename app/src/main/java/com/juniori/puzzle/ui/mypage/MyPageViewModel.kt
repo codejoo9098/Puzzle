@@ -3,7 +3,6 @@ package com.juniori.puzzle.ui.mypage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.auth.UserInfo
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
@@ -76,8 +75,4 @@ class MyPageViewModel @Inject constructor(
             }
         }
     }
-
-//    fun updateUserNickname(newNickname: String) {
-//        _userNickname.value = newNickname
-//    }
 }
