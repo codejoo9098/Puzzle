@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 interface AuthRepository {
     fun getCurrentUserInfo(): MutableStateFlow<TempAPIResponse<UserInfoEntity>>
-    suspend fun requestLogin(acct: GoogleSignInAccount): TempAPIResponse<UserInfoEntity>
+    suspend fun requestLogin(idToken: String): TempAPIResponse<UserInfoEntity>
     suspend fun requestLogout(): APIResponse<Unit>
-    suspend fun requestWithdraw(acct: GoogleSignInAccount): APIResponse<Unit>
+    suspend fun requestWithdraw(idToken: String): APIResponse<Unit>
     suspend fun updateNickname(newNickname: String): TempAPIResponse<UserInfoEntity>
 }

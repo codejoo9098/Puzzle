@@ -5,5 +5,5 @@ import com.juniori.puzzle.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class RequestWithdrawUseCase @Inject constructor(private val authRepository: AuthRepository) {
-    suspend operator fun invoke(acct: GoogleSignInAccount) = authRepository.requestWithdraw(acct)
+    suspend operator fun invoke(idToken: String) = authRepository.requestWithdraw(idToken)
 }

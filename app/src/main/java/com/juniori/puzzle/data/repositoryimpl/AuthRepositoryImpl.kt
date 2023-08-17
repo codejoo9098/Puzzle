@@ -25,11 +25,11 @@ class AuthRepositoryImpl @Inject constructor(
         return result
     }
 
-    override suspend fun requestLogin(acct: GoogleSignInAccount) = authDataSource.requestLogin(acct)
+    override suspend fun requestLogin(idToken: String) = authDataSource.requestLogin(idToken)
 
     override suspend fun requestLogout() = authDataSource.requestLogout()
 
-    override suspend fun requestWithdraw(acct: GoogleSignInAccount) = authDataSource.requestWithdraw(acct)
+    override suspend fun requestWithdraw(idToken: String) = authDataSource.requestWithdraw(idToken)
 
     companion object {
         val userInfo: MutableStateFlow<TempAPIResponse<UserInfoEntity>> = MutableStateFlow(TempAPIResponse.Failure(APIErrorType.NO_CONTENT))

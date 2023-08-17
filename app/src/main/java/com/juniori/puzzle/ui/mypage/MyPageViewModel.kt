@@ -67,11 +67,11 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun requestWithdraw(acct: GoogleSignInAccount) {
+    fun requestWithdraw(idToken: String) {
         viewModelScope.launch {
             _requestWithdrawFlow.emit(APIResponse.Loading)
             withContext(Dispatchers.IO) {
-                _requestWithdrawFlow.emit(requestWithdrawUseCase(acct))
+                _requestWithdrawFlow.emit(requestWithdrawUseCase(idToken))
             }
         }
     }

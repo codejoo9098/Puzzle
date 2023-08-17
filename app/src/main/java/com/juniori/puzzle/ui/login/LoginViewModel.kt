@@ -24,8 +24,8 @@ class LoginViewModel @Inject constructor(
     private val _loginFlow = getUserInfoUseCase()
     val loginFlow: StateFlow<TempAPIResponse<UserInfoEntity>?> = _loginFlow
 
-    fun loginUser(account: GoogleSignInAccount) = viewModelScope.launch {
-        val result = requestLoginUseCase(account).apply {
+    fun loginUser(idToken: String) = viewModelScope.launch {
+        val result = requestLoginUseCase(idToken).apply {
             if (this is TempAPIResponse.Success) {
                 postUserInfoUseCase(data.uid, data.nickname, data.profileImage)
             }

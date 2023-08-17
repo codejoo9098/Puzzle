@@ -5,5 +5,5 @@ import com.juniori.puzzle.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class RequestLoginUseCase @Inject constructor(private val authRepository: AuthRepository) {
-    suspend operator fun invoke(account: GoogleSignInAccount) = authRepository.requestLogin(account)
+    suspend operator fun invoke(idToken: String) = authRepository.requestLogin(idToken)
 }
