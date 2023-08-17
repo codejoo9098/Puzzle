@@ -1,16 +1,15 @@
 package com.juniori.puzzle.data.datasource.firebaseauth
 
 import android.util.Log
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.app.util.extensions.await
 import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse
 import java.io.IOException
+import java.lang.Exception
 import javax.inject.Inject
 
 class AuthDataSource @Inject constructor(
@@ -62,23 +61,25 @@ class AuthDataSource @Inject constructor(
         } catch (e: IOException) {
             e.printStackTrace()
             TempAPIResponse.Failure(APIErrorType.NOT_CONNECTED)
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
             TempAPIResponse.Failure(APIErrorType.SERVER_ERROR)
         }
     }
 
-    fun requestLogout(): APIResponse<Unit> {
+    fun requestLogout(): TempAPIResponse<Unit> {
         return try {
             firebaseAuth.signOut()
 
-            APIResponse.Success(Unit)
+            TempAPIResponse.Success(Unit)
+        } catch (exception: IOException) {
+            TempAPIResponse.Failure(APIErrorType.NOT_CONNECTED)
         } catch (exception: Exception) {
-            APIResponse.Failure(exception)
+            TempAPIResponse.Failure(APIErrorType.SERVER_ERROR)
         }
     }
 
-    suspend fun requestWithdraw(idToken: String): APIResponse<Unit> {
+    suspend fun requestWithdraw(idToken: String): TempAPIResponse<Unit> {
         return try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             firebaseAuth.currentUser?.reauthenticate(credential)?.await()
@@ -91,12 +92,14 @@ class AuthDataSource @Inject constructor(
                     else {
                         Log.d("Withdrawal", "User account NOT deleted.")
                     }
-                } ?: throw java.lang.Exception()
+                } ?: TempAPIResponse.Failure(APIErrorType.NO_CONTENT)
 
-            APIResponse.Success(Unit)
-        }
-        catch (e: java.lang.Exception) {
-            APIResponse.Failure(Exception())
+
+            TempAPIResponse.Success(Unit)
+        } catch (e: IOException) {
+            TempAPIResponse.Failure(APIErrorType.NOT_CONNECTED)
+        } catch (e: Exception) {
+            TempAPIResponse.Failure(APIErrorType.SERVER_ERROR)
         }
     }
 }
