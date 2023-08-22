@@ -1,4 +1,4 @@
-package com.juniori.puzzle.domain.usecase
+package com.juniori.puzzle.domain.usecase.mypage
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.juniori.puzzle.domain.repository.AuthRepository

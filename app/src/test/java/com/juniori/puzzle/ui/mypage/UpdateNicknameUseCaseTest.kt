@@ -4,7 +4,7 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.repository.AuthRepository
 import com.juniori.puzzle.domain.repository.VideoRepository
-import com.juniori.puzzle.domain.usecase.UpdateNicknameUseCase
+import com.juniori.puzzle.domain.usecase.mypage.UpdateNicknameUseCase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.resetMain

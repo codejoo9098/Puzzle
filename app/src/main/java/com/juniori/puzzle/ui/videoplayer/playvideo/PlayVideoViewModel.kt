@@ -9,7 +9,7 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.ChangeVideoScopeUseCase
 import com.juniori.puzzle.domain.usecase.DeleteVideoUseCase
 import com.juniori.puzzle.domain.usecase.GetUserInfoByUidUseCase
-import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.UpdateLikeStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

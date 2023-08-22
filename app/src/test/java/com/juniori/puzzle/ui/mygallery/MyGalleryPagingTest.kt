@@ -5,7 +5,7 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
-import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
 import com.juniori.puzzle.getVideoListMockData
 import com.juniori.puzzle.getOrAwaitValue
 import com.juniori.puzzle.ui.gallery.mygallery.MyGalleryViewModel

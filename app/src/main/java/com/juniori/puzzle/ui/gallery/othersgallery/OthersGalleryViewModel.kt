@@ -8,7 +8,7 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetSearchedSocialVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSocialVideoListUseCase
-import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
 import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PagingConst.ITEM_CNT
 import com.juniori.puzzle.domain.customtype.GallerySortType

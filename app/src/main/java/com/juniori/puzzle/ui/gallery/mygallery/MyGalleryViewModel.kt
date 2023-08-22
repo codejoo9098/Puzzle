@@ -9,7 +9,7 @@ import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
-import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
 import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PagingConst.ITEM_CNT
 import dagger.hilt.android.lifecycle.HiltViewModel

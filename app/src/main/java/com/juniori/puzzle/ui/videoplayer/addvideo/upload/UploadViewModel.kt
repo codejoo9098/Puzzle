@@ -12,11 +12,10 @@ import com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS
 import com.arthenica.mobileffmpeg.FFmpeg
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
-import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.PostVideoUseCase
 import com.juniori.puzzle.app.util.extensions.deleteIfFileUri
 import com.juniori.puzzle.domain.TempAPIResponse
-import com.juniori.puzzle.domain.entity.UserInfoEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
