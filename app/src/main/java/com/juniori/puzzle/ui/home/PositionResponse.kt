@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource.position
+package com.juniori.puzzle.ui.home
 
 data class PositionResponse(
     val lat:Double,

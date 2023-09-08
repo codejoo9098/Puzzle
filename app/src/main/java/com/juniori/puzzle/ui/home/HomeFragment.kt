@@ -22,11 +22,8 @@ import androidx.lifecycle.lifecycleScope
 import com.juniori.puzzle.R
 import com.juniori.puzzle.app.util.extensions.toAddressString
 import com.juniori.puzzle.ui.adapter.WeatherRecyclerViewAdapter
-import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.databinding.FragmentHomeBinding
 import com.juniori.puzzle.domain.TempAPIResponse
-import com.juniori.puzzle.domain.customtype.WeatherException
 import com.juniori.puzzle.ui.adapter.setDisplayName
 import com.juniori.puzzle.ui.sensor.SensorActivity
 import com.juniori.puzzle.ui.common_ui.StateManager
