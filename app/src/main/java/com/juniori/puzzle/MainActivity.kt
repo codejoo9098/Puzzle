@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui
+package com.juniori.puzzle
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.juniori.puzzle.R
 import com.juniori.puzzle.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
