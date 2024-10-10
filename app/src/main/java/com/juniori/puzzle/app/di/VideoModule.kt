@@ -2,7 +2,7 @@ package com.juniori.puzzle.app.di
 
 import com.juniori.puzzle.data.repositoryimpl.VideoRepositoryImpl
 import com.juniori.puzzle.domain.repository.VideoRepository
-import com.juniori.puzzle.ui.videoplayer.VideoMetaDataUtil
+import com.juniori.puzzle.app.util.VideoMetaDataUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

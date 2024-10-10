@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.videoplayer.addvideo.upload
+package com.juniori.puzzle.ui.addvideo.upload
 
 import android.os.Build
 import android.os.Bundle
@@ -16,9 +16,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentUploadStep2Binding
-import com.juniori.puzzle.ui.common_ui.ProgressDialog
-import com.juniori.puzzle.ui.common_ui.PuzzleDialog
-import com.juniori.puzzle.ui.common_ui.StateManager
+import com.juniori.puzzle.app.util.common_ui.ProgressDialog
+import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
+import com.juniori.puzzle.app.util.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.videoplayer.playvideo
+package com.juniori.puzzle.ui.playvideo
 
 import android.os.Build
 import android.os.Bundle
@@ -24,8 +24,8 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_DELETE
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_NOTTING
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_TO_PRIVATE
-import com.juniori.puzzle.ui.common_ui.PuzzleDialog
-import com.juniori.puzzle.ui.common_ui.StateManager
+import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
+import com.juniori.puzzle.app.util.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

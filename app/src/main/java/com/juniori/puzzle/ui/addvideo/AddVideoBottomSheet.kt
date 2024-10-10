@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.videoplayer.addvideo
+package com.juniori.puzzle.ui.addvideo
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -17,9 +17,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.databinding.BottomsheetAddvideoBinding
-import com.juniori.puzzle.ui.videoplayer.addvideo.camera.CameraActivity
-import com.juniori.puzzle.ui.videoplayer.addvideo.upload.UploadStep1Fragment.Companion.THUMBNAIL_BYTE_ARRAY
-import com.juniori.puzzle.ui.videoplayer.addvideo.upload.UploadStep1Fragment.Companion.VIDEO_FILE_PATH_KEY
+import com.juniori.puzzle.ui.addvideo.camera.CameraActivity
+import com.juniori.puzzle.ui.addvideo.upload.UploadStep1Fragment.Companion.THUMBNAIL_BYTE_ARRAY
+import com.juniori.puzzle.ui.addvideo.upload.UploadStep1Fragment.Companion.VIDEO_FILE_PATH_KEY
 import com.juniori.puzzle.app.util.extensions.readBytes
 import com.juniori.puzzle.app.util.extensions.saveInFile
 import dagger.hilt.android.AndroidEntryPoint

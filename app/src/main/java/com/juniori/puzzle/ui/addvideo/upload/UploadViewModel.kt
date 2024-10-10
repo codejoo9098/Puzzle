@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.videoplayer.addvideo.upload
+package com.juniori.puzzle.ui.addvideo.upload
 
 import android.content.Context
 import android.media.MediaPlayer

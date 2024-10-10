@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.videoplayer
+package com.juniori.puzzle.app.util
 
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.videoplayer.playvideo
+package com.juniori.puzzle.ui.playvideo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
