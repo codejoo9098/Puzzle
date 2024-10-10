@@ -2,6 +2,8 @@ package com.juniori.puzzle.ui.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
@@ -20,11 +22,11 @@ class MyPageViewModel @Inject constructor(
     private val requestWithdrawUseCase: RequestWithdrawUseCase,
     val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
-    private val _requestLogoutFlow = MutableSharedFlow<TempAPIResponse<Unit>>()
-    val requestLogoutFlow: SharedFlow<TempAPIResponse<Unit>> = _requestLogoutFlow
+    private val _requestLogoutFlow = MutableSharedFlow<APIResponse<Unit>>()
+    val requestLogoutFlow: SharedFlow<APIResponse<Unit>> = _requestLogoutFlow
 
-    private val _requestWithdrawFlow = MutableSharedFlow<TempAPIResponse<Unit>>()
-    val requestWithdrawFlow: SharedFlow<TempAPIResponse<Unit>> = _requestWithdrawFlow
+    private val _requestWithdrawFlow = MutableSharedFlow<APIResponse<Unit>>()
+    val requestWithdrawFlow: SharedFlow<APIResponse<Unit>> = _requestWithdrawFlow
 
     private val _currentUserInfo = getUserInfoUseCase()
     val currentUserInfo: StateFlow<TempAPIResponse<UserInfoEntity>> = _currentUserInfo
@@ -58,6 +60,7 @@ class MyPageViewModel @Inject constructor(
 
     fun requestLogout() {
         viewModelScope.launch {
+            _requestLogoutFlow.emit(APIResponse.Loading)
             withContext(Dispatchers.IO) {
                 _requestLogoutFlow.emit(requestLogoutUseCase())
             }
@@ -66,6 +69,7 @@ class MyPageViewModel @Inject constructor(
 
     fun requestWithdraw(idToken: String) {
         viewModelScope.launch {
+            _requestWithdrawFlow.emit(APIResponse.Loading)
             withContext(Dispatchers.IO) {
                 _requestWithdrawFlow.emit(requestWithdrawUseCase(idToken))
             }

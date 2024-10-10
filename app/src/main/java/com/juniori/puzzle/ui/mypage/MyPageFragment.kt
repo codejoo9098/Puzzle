@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.juniori.puzzle.R
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentMypageBinding
-import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.ui.adapter.setDisplayName
 import com.juniori.puzzle.ui.login.LoginActivity
@@ -76,18 +75,18 @@ class MyPageFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.requestLogoutFlow.collect { result ->
-                stateManager.showLoadingDialog()
-
                 when(result) {
-                    is TempAPIResponse.Success -> {
+                    is APIResponse.Success<Unit> -> {
                         stateManager.dismissLoadingDialog()
                         val intent = Intent(context, LoginActivity::class.java)
                         activity?.finishAffinity()
                         startActivity(intent)
                     }
-                    is TempAPIResponse.Failure -> {
+                    is APIResponse.Loading -> {
+                        stateManager.showLoadingDialog()
+                    }
+                    is APIResponse.Failure -> {
                         stateManager.dismissLoadingDialog()
-                        showErrorToastMessage(result.errorType)
                     }
                 }
             }
@@ -95,16 +94,16 @@ class MyPageFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.requestWithdrawFlow.collect { result ->
-                stateManager.showLoadingDialog()
-
                 when(result) {
-                    is TempAPIResponse.Success -> {
+                    is APIResponse.Success<Unit> -> {
                         stateManager.dismissLoadingDialog()
                         activity?.finishAffinity()
                     }
-                    is TempAPIResponse.Failure -> {
+                    is APIResponse.Loading -> {
+                        stateManager.showLoadingDialog()
+                    }
+                    is APIResponse.Failure -> {
                         stateManager.dismissLoadingDialog()
-                        showErrorToastMessage(result.errorType)
                     }
                 }
             }
@@ -163,14 +162,6 @@ class MyPageFragment : Fragment() {
             }).setMessage(getString(R.string.withdraw_remind))
             .setTitle(getString(R.string.withdraw))
             .showDialog()
-    }
-
-    private fun showErrorToastMessage(errorType: APIErrorType) {
-        when(errorType) {
-            APIErrorType.NOT_CONNECTED -> Toast.makeText(requireContext(), getString(R.string.not_connected), Toast.LENGTH_SHORT).show()
-            APIErrorType.NO_CONTENT -> Toast.makeText(requireContext(), getString(R.string.empty_data), Toast.LENGTH_SHORT).show()
-            APIErrorType.SERVER_ERROR -> Toast.makeText(requireContext(), getString(R.string.server_error), Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onDestroyView() {

@@ -116,7 +116,6 @@
     <string name="nickname_change_impossible">Nickname cannot be changed.</string>
     <string name="complete">Complete!</string>
     <string name="cannot_find_user">Cannot find user</string>
-    <string name="fail_to_withdraw">Fail to withdraw</string>
 
     <!--my gallery-->
     <string name="mygallery_add_video_text">Take a nice putting video!</string>
@@ -143,8 +142,4 @@
     <string name="play_delete_title">Delete</string>
     <string name="play_delete_message">Are you sure you want to delete the video?</string>
 
-    <!--API Error-->
-    <string name="server_error">Server error occurred</string>
-    <string name="not_connected">Network not connected</string>
-    <string name="empty_data">Cannot get data from server</string>
 </resources>
