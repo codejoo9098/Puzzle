@@ -2,6 +2,7 @@ package com.juniori.puzzle.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val showWelcomeTextUseCase: ShowWelcomeTextUseCase,
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
-    getUserInfoUseCase: GetUserInfoUseCase
+    private val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
     private val _currentUserInfo = getUserInfoUseCase()
     val currentUserInfo: StateFlow<TempAPIResponse<UserInfoEntity>> = _currentUserInfo
@@ -49,7 +50,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             setWeatherStateLoading()
 
-            when (val response = getCurrentWeatherUseCase(position.lat, position.lon)) {
+            when (val response = getCurrentWeatherUseCase(position)) {
                 is TempAPIResponse.Success<Pair<WeatherEntity, List<WeatherEntity>>> -> {
                     _weatherMainInfo.value = response.data.first
                     _weatherSubList.value = response.data.second
