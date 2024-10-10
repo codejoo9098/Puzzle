@@ -76,15 +76,17 @@ class MyPageFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.requestLogoutFlow.collect { result ->
-                stateManager.dismissLoadingDialog()
+                stateManager.showLoadingDialog()
 
                 when(result) {
                     is TempAPIResponse.Success -> {
+                        stateManager.dismissLoadingDialog()
                         val intent = Intent(context, LoginActivity::class.java)
                         activity?.finishAffinity()
                         startActivity(intent)
                     }
                     is TempAPIResponse.Failure -> {
+                        stateManager.dismissLoadingDialog()
                         showErrorToastMessage(result.errorType)
                     }
                 }
@@ -93,13 +95,15 @@ class MyPageFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.requestWithdrawFlow.collect { result ->
-                stateManager.dismissLoadingDialog()
+                stateManager.showLoadingDialog()
 
                 when(result) {
                     is TempAPIResponse.Success -> {
+                        stateManager.dismissLoadingDialog()
                         activity?.finishAffinity()
                     }
                     is TempAPIResponse.Failure -> {
+                        stateManager.dismissLoadingDialog()
                         showErrorToastMessage(result.errorType)
                     }
                 }
@@ -141,7 +145,6 @@ class MyPageFragment : Fragment() {
     private fun makeLogoutDialog() {
         warningDialog
             .buildAlertDialog({
-                stateManager.showLoadingDialog()
                 viewModel.requestLogout()
             },{
 
@@ -153,7 +156,6 @@ class MyPageFragment : Fragment() {
     private fun makeWithdrawDialog() {
         warningDialog
             .buildAlertDialog({
-                stateManager.showLoadingDialog()
                 val signInIntent = googleSignInClient.signInIntent
                 withdrawLauncher.launch(signInIntent)
             },{
