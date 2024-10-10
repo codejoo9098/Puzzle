@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource
+package com.juniori.puzzle.data.auth
 
 import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -7,13 +7,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
+import com.juniori.puzzle.domain.repository.AuthRepository
 import com.juniori.puzzle.util.await
 import javax.inject.Inject
 
-class AuthDataSource @Inject constructor(
+class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-) {
-    fun updateNickname(newNickname: String): APIResponse<UserInfoEntity> {
+) : AuthRepository {
+
+    override suspend fun updateNickname(newNickname: String): APIResponse<UserInfoEntity> {
         val newProfile = UserProfileChangeRequest.Builder()
             .setDisplayName(newNickname)
             .build()
@@ -29,7 +31,7 @@ class AuthDataSource @Inject constructor(
         } ?: kotlin.run { APIResponse.Failure(Exception()) }
     }
 
-    fun getCurrentUserInfo(): APIResponse<UserInfoEntity> {
+    override fun getCurrentUserInfo(): APIResponse<UserInfoEntity> {
         return firebaseAuth.currentUser?.let { firebaseUser ->
             APIResponse.Success(
                 UserInfoEntity(
@@ -41,7 +43,7 @@ class AuthDataSource @Inject constructor(
         } ?: kotlin.run { APIResponse.Failure(Exception()) }
     }
 
-    suspend fun requestLogin(acct: GoogleSignInAccount): APIResponse<UserInfoEntity> {
+    override suspend fun requestLogin(acct: GoogleSignInAccount): APIResponse<UserInfoEntity> {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
 
         return try {
@@ -62,17 +64,16 @@ class AuthDataSource @Inject constructor(
         }
     }
 
-    fun requestLogout(): APIResponse<Unit> {
+    override suspend fun requestLogout(): APIResponse<Unit> {
         return try {
             firebaseAuth.signOut()
-
             APIResponse.Success(Unit)
         } catch (exception: Exception) {
             APIResponse.Failure(exception)
         }
     }
 
-    suspend fun requestWithdraw(acct: GoogleSignInAccount): APIResponse<Unit> {
+    override suspend fun requestWithdraw(acct: GoogleSignInAccount): APIResponse<Unit> {
         return try {
             val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
             firebaseAuth.currentUser?.reauthenticate(credential)?.await()
