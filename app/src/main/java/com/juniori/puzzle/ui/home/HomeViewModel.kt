@@ -11,7 +11,6 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
-import com.juniori.puzzle.domain.usecase.home.ShowWelcomeTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +20,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val showWelcomeTextUseCase: ShowWelcomeTextUseCase,
     private val getAddressUseCase: GetAddressUseCase,
     private val registerLocationListenerUseCase: RegisterLocationListenerUseCase,
     private val unregisterLocationListenerUseCase: UnregisterLocationListenerUseCase,
@@ -69,8 +67,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setWelcomeText(welcomeTextArray: Array<String>) {
-        _welcomeText.value = showWelcomeTextUseCase(welcomeTextArray)
+    fun setWelcomeText(text: String) {
+        _welcomeText.value = text
     }
 
     private fun setWeatherFailTextId(id: Int) {
