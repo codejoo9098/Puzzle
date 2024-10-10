@@ -1,7 +1,7 @@
-package com.juniori.puzzle.data.datasource.weather
+package com.juniori.puzzle.app.util
 
-import com.juniori.puzzle.app.util.WEATHER_ICON_URL
 import com.juniori.puzzle.app.util.extensions.toDate
+import com.juniori.puzzle.data.datasource.weather.WeatherResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import kotlin.math.roundToInt
 
