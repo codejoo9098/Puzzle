@@ -8,9 +8,8 @@ import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.getVideoListMockData
-import com.juniori.puzzle.ui.gallery.GalleryState
+import com.juniori.puzzle.app.util.GalleryState
 import com.juniori.puzzle.app.util.getOrAwaitValue
-import com.juniori.puzzle.ui.gallery.mygallery.MyGalleryViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain

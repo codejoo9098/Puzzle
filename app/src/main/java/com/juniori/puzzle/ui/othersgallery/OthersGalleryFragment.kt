@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.gallery.mygallery
+package com.juniori.puzzle.ui.othersgallery
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,27 +11,29 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
-import com.juniori.puzzle.databinding.FragmentMygalleryBinding
+import com.juniori.puzzle.databinding.FragmentOthersgalleryBinding
 import com.juniori.puzzle.ui.playvideo.PlayVideoActivity
-import com.juniori.puzzle.ui.gallery.GalleryState
+import com.juniori.puzzle.app.util.GalleryState
 import com.juniori.puzzle.app.util.PlayResultConst.RESULT_DELETE
+import com.juniori.puzzle.app.util.PlayResultConst.RESULT_TO_PRIVATE
+import com.juniori.puzzle.app.util.PuzzleDialog
+import com.juniori.puzzle.app.util.SortType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyGalleryFragment : Fragment() {
+class OthersGalleryFragment : Fragment() {
 
-    private var _binding: FragmentMygalleryBinding? = null
+    private var _binding: FragmentOthersgalleryBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val viewModel: MyGalleryViewModel by viewModels()
+    private val viewModel: OthersGalleryViewModel by viewModels()
     private val activityResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if(it.resultCode==RESULT_DELETE) {
-                viewModel.getMyData()
+            if (it.resultCode == RESULT_TO_PRIVATE || it.resultCode == RESULT_DELETE) {
+                viewModel.getMainData()
             }
         }
 
@@ -42,16 +44,14 @@ class MyGalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMygalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentOthersgalleryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getMyData()
-
-        val recyclerAdapter = MyGalleryAdapter(viewModel) {
+        val recyclerAdapter = OtherGalleryAdapter(viewModel) {
             activityResult.launch(
                 Intent(
                     requireContext(),
@@ -61,12 +61,12 @@ class MyGalleryFragment : Fragment() {
                 })
         }
 
-        binding.recycleMyGallery.apply {
+        binding.recycleOtherGallery.apply {
             adapter = recyclerAdapter
-            val gridLayoutManager = object : GridLayoutManager(requireContext(),resources.getInteger(R.integer.grid_column)){
+            val gridLayoutManager = object : GridLayoutManager(requireContext(), resources.getInteger(R.integer.grid_column)){
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams?): Boolean {
-                    if(lp!=null){
-                        if(lp.height < height/3) {
+                    if (lp != null) {
+                        if (lp.height < height / 3) {
                             lp.height = height / 3
                         }
                     }
@@ -76,25 +76,20 @@ class MyGalleryFragment : Fragment() {
             layoutManager = gridLayoutManager
         }
 
+        binding.otherGallerySwipeRefresh.setOnRefreshListener {
+            viewModel.getMainData()
+        }
+
         viewModel.list.observe(viewLifecycleOwner) { dataList ->
-            binding.mygallerySwipeRefresh.isRefreshing = false
+            binding.otherGallerySwipeRefresh.isRefreshing = false
 
             recyclerAdapter.submitList(dataList)
 
-            binding.mygalleryAddVideoBtn.isVisible = dataList.isEmpty()
-            binding.mygalleryAddVideoText.isVisible = dataList.isEmpty()
-        }
-
-        binding.mygalleryAddVideoBtn.setOnClickListener {
-            view.findNavController().navigate(R.id.bottomsheet_main_addvideo)
-        }
-
-        binding.mygallerySwipeRefresh.setOnRefreshListener {
-            viewModel.getMyData()
+            binding.textOtherGalleryNotFound.isVisible = dataList.isEmpty()
         }
 
         viewModel.refresh.observe(viewLifecycleOwner) { isRefresh ->
-            binding.progressMyGallery.isVisible = isRefresh
+            binding.progressOtherGallery.isVisible = isRefresh
         }
 
         viewModel.state.observe(viewLifecycleOwner) { state ->
@@ -125,13 +120,13 @@ class MyGalleryFragment : Fragment() {
                             Snackbar.LENGTH_INDEFINITE
                         )
                             .setAction(R.string.gallery_retry) {
-                                viewModel.getPaging(recyclerAdapter.itemCount)
+                                viewModel.getPaging()
                             }
                     snackBar?.show()
                 }
 
                 GalleryState.NETWORK_ERROR_BASE -> {
-                    binding.mygallerySwipeRefresh.isRefreshing = false
+                    binding.otherGallerySwipeRefresh.isRefreshing = false
                     snackBar =
                         Snackbar.make(
                             view,
@@ -139,7 +134,7 @@ class MyGalleryFragment : Fragment() {
                             Snackbar.LENGTH_INDEFINITE
                         )
                             .setAction(R.string.gallery_retry) {
-                                viewModel.getMyData()
+                                viewModel.getMainData()
                             }
                     snackBar?.show()
                 }
@@ -147,7 +142,46 @@ class MyGalleryFragment : Fragment() {
 
         }
 
-        binding.searchMyGallery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        viewModel.list.value.also { list ->
+            if (list == null || list.isEmpty()) {
+                viewModel.getMainData()
+            }
+        }
+
+        setListener()
+    }
+
+    private fun setListener() {
+        val items = resources.getStringArray(R.array.other_order_type)
+        val popup =
+            PuzzleDialog(requireContext()).buildListPopup(binding.spinnerOtherGallery, items)
+
+        popup.setListPopupItemListener { parent, view, position, id ->
+            binding.spinnerOtherGallery.text = items[position]
+            when (position) {
+                0 -> {
+                    if (viewModel.setOrderType(SortType.NEW)) {
+                        binding.recycleOtherGallery.scrollToPosition(RECYCLER_TOP)
+                    }
+
+                }
+
+                1 -> {
+                    if (viewModel.setOrderType(SortType.LIKE)) {
+                        binding.recycleOtherGallery.scrollToPosition(RECYCLER_TOP)
+                    }
+                }
+            }
+
+            popup.dismissPopupList()
+        }
+
+        binding.spinnerOtherGallery.text = items[0]
+        binding.spinnerOtherGallery.setOnClickListener {
+            popup.showPopupList()
+        }
+
+        binding.searchOtherGallery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.setQueryText(query)
                 return true
@@ -168,6 +202,9 @@ class MyGalleryFragment : Fragment() {
     }
 
     companion object {
+
+        const val RECYCLER_TOP = 0
         const val VIDEO_EXTRA_NAME = "videoInfo"
+
     }
 }

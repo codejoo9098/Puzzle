@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.gallery.othersgallery
+package com.juniori.puzzle.ui.othersgallery
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.juniori.puzzle.databinding.ItemGalleryRecyclerBinding
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
-import com.juniori.puzzle.ui.gallery.GalleryDiffCallBack
+import com.juniori.puzzle.app.util.GalleryDiffCallBack
 
 class OtherGalleryAdapter(
     val viewModel: OthersGalleryViewModel,
