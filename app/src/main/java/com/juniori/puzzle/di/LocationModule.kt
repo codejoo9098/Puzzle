@@ -1,8 +1,8 @@
 package com.juniori.puzzle.di
 
-import com.juniori.puzzle.data.datasource.location.LocationDataSource
-import com.juniori.puzzle.data.datasource.location.LocationDataSourceImpl
-import com.juniori.puzzle.data.repositoryimpl.LocationRepositoryImpl
+import com.juniori.puzzle.data.location.LocationDataSource
+import com.juniori.puzzle.data.location.LocationDataSourceImpl
+import com.juniori.puzzle.data.location.LocationRepositoryImpl
 import com.juniori.puzzle.domain.repository.LocationRepository
 import dagger.Module
 import dagger.Provides

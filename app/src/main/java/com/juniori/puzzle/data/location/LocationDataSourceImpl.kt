@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource.location
+package com.juniori.puzzle.data.location
 
 import android.annotation.SuppressLint
 import android.content.Context

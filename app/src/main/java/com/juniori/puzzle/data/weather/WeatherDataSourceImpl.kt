@@ -1,7 +1,8 @@
-package com.juniori.puzzle.data.datasource.weather
+package com.juniori.puzzle.data.weather
 
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
+import com.juniori.puzzle.network.WeatherService
 import com.juniori.puzzle.util.WEATHER_SERVICE_KEY
 import com.juniori.puzzle.util.toItem
 import java.util.*

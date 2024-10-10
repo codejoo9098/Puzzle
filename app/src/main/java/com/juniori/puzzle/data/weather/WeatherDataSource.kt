@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource.weather
+package com.juniori.puzzle.data.weather
 
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity

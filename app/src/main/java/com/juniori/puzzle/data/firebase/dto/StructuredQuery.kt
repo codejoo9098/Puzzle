@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource.firebasedatasource.response
+package com.juniori.puzzle.data.firebase.dto
 
 data class StructuredQuery(
     val from: List<CollectionSelector> = listOf(

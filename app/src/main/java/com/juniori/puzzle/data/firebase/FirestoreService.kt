@@ -1,11 +1,11 @@
-package com.juniori.puzzle.data.datasource.firebasedatasource
+package com.juniori.puzzle.data.firebase
 
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.RunQueryRequestDTO
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.RunQueryResponseDTO
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserDetail
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserItem
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoDetail
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoItem
+import com.juniori.puzzle.data.firebase.dto.RunQueryRequestDTO
+import com.juniori.puzzle.data.firebase.dto.RunQueryResponseDTO
+import com.juniori.puzzle.data.firebase.dto.UserDetail
+import com.juniori.puzzle.data.firebase.dto.UserItem
+import com.juniori.puzzle.data.firebase.dto.VideoDetail
+import com.juniori.puzzle.data.firebase.dto.VideoItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource.firebasedatasource
+package com.juniori.puzzle.data.firebase
 
 import okhttp3.RequestBody
 import retrofit2.Response

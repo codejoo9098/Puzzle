@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.juniori.puzzle.R
 import com.juniori.puzzle.adapter.WeatherRecyclerViewAdapter
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.data.datasource.location.LocationResponse
+import com.juniori.puzzle.data.location.LocationInfo
 import com.juniori.puzzle.databinding.FragmentHomeBinding
 import com.juniori.puzzle.ui.sensor.SensorActivity
 import com.juniori.puzzle.util.StateManager
@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
     private val locationListener = object : LocationListenerCompat {
         override fun onLocationChanged(loc: Location) {
             homeViewModel.cancelTimer()
-            homeViewModel.getWeather(LocationResponse(loc.latitude, loc.longitude))
+            homeViewModel.getWeather(LocationInfo(loc.latitude, loc.longitude))
         }
 
         override fun onProviderDisabled(provider: String) {
