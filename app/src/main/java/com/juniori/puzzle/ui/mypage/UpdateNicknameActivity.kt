@@ -10,7 +10,6 @@ import com.juniori.puzzle.ui.MainActivity
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityUpdateNicknameBinding
-import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.ui.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,10 +29,8 @@ class UpdateNicknameActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.finalUserInfo.collect { result ->
-                stateManager.showLoadingDialog()
-
                 when(result) {
-                    is TempAPIResponse.Success<UserInfoEntity> -> {
+                    is APIResponse.Success<UserInfoEntity> -> {
                         stateManager.dismissLoadingDialog()
 
                         val intent = Intent(this@UpdateNicknameActivity, MainActivity::class.java).apply {
@@ -43,9 +40,12 @@ class UpdateNicknameActivity : AppCompatActivity() {
                         setResult(RESULT_OK, intent)
                         finish()
                     }
-                    is TempAPIResponse.Failure -> {
+                    is APIResponse.Failure -> {
                         stateManager.dismissLoadingDialog()
                         Toast.makeText(this@UpdateNicknameActivity, getString(R.string.nickname_change_impossible), Toast.LENGTH_SHORT).show()
+                    }
+                    is APIResponse.Loading -> {
+                        stateManager.showLoadingDialog()
                     }
                 }
             }

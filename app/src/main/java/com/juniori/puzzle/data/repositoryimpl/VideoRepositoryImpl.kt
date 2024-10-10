@@ -3,7 +3,6 @@ package com.juniori.puzzle.data.repositoryimpl
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.firebasedatasource.FirestoreDataSource
 import com.juniori.puzzle.data.datasource.firebasedatasource.StorageDataSource
-import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository
@@ -80,7 +79,7 @@ class VideoRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): TempAPIResponse<UserInfoEntity> {
+    override suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): APIResponse<UserInfoEntity> {
         return firestoreDataSource.changeUserNickname(
             userInfoEntity.uid,
             userInfoEntity.nickname,

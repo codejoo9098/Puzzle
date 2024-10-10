@@ -3,10 +3,7 @@ package com.juniori.puzzle.ui.mypage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.auth.UserInfo
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.domain.TempAPIResponse
-import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.RequestLogoutUseCase
 import com.juniori.puzzle.domain.usecase.RequestWithdrawUseCase
@@ -29,8 +26,8 @@ class MyPageViewModel @Inject constructor(
     private val _requestWithdrawFlow = MutableSharedFlow<APIResponse<Unit>>()
     val requestWithdrawFlow: SharedFlow<APIResponse<Unit>> = _requestWithdrawFlow
 
-    private val _currentUserInfo = getUserInfoUseCase()
-    val currentUserInfo: StateFlow<TempAPIResponse<UserInfoEntity>> = _currentUserInfo
+    private val _userNickname = MutableStateFlow("")
+    val userNickname: StateFlow<String> = _userNickname
 
     private val _makeLogoutDialogFlow = MutableSharedFlow<Unit>()
     val makeLogoutDialogFlow: SharedFlow<Unit> = _makeLogoutDialogFlow
@@ -40,6 +37,10 @@ class MyPageViewModel @Inject constructor(
 
     private val _navigateToUpdateNicknamePageFlow = MutableSharedFlow<Unit>()
     val navigateToUpdateNicknameFlow: SharedFlow<Unit> = _navigateToUpdateNicknamePageFlow
+
+    init {
+        updateUserInfo()
+    }
 
     fun makeLogoutDialog() {
         viewModelScope.launch {
@@ -77,7 +78,20 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-//    fun updateUserNickname(newNickname: String) {
-//        _userNickname.value = newNickname
-//    }
+    fun updateUserInfo() {
+        viewModelScope.launch {
+            val data = getUserInfoUseCase()
+
+            if (data is APIResponse.Success) {
+                _userNickname.value = data.result.nickname
+            }
+            else {
+                _userNickname.value = ""
+            }
+        }
+    }
+
+    fun updateUserNickname(newNickname: String) {
+        _userNickname.value = newNickname
+    }
 }

@@ -3,7 +3,6 @@ package com.juniori.puzzle.ui.videoplayer.playvideo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.ChangeVideoScopeUseCase
@@ -25,8 +24,8 @@ class PlayVideoViewModel @Inject constructor(
     private val changeVideoScopeUseCase: ChangeVideoScopeUseCase,
     private val getUserInfoByUidUseCase: GetUserInfoByUidUseCase
 ) : ViewModel() {
-    private val _getLoginInfoFlow = getUserInfoUseCase()
-    val getLoginInfoFlow: StateFlow<TempAPIResponse<UserInfoEntity>?> = _getLoginInfoFlow
+    private val _getLoginInfoFlow = MutableStateFlow<APIResponse<UserInfoEntity>?>(null)
+    val getLoginInfoFlow: StateFlow<APIResponse<UserInfoEntity>?> = _getLoginInfoFlow
 
     private val _getPublisherInfoFlow = MutableStateFlow<APIResponse<UserInfoEntity>?>(null)
     val getPublisherInfoFlow: StateFlow<APIResponse<UserInfoEntity>?> = _getPublisherInfoFlow
@@ -40,6 +39,10 @@ class PlayVideoViewModel @Inject constructor(
     private val _likeState = MutableStateFlow(false)
     val likeState: StateFlow<Boolean>
         get() = _likeState
+
+    init {
+        _getLoginInfoFlow.value = getUserInfoUseCase()
+    }
 
     fun initVideoFlow(currentVideo: VideoInfoEntity) {
         viewModelScope.launch {

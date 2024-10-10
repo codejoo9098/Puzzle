@@ -19,7 +19,6 @@ import com.juniori.puzzle.ui.MainActivity
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityLoginBinding
-import com.juniori.puzzle.domain.TempAPIResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -62,8 +61,8 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                loginViewModel.loginFlow.collectLatest { userInfoEntity ->
-                    if (userInfoEntity is TempAPIResponse.Success) {
+                loginViewModel.loginFlow.collectLatest {
+                    if (it is APIResponse.Success) {
                         binding.signInBtn.isVisible = false
                         moveToMainActivity()
                     } else {

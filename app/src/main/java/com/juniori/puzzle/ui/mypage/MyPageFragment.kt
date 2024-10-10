@@ -20,8 +20,6 @@ import com.google.android.gms.tasks.Task
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentMypageBinding
-import com.juniori.puzzle.domain.TempAPIResponse
-import com.juniori.puzzle.ui.adapter.setDisplayName
 import com.juniori.puzzle.ui.login.LoginActivity
 import com.juniori.puzzle.ui.common_ui.PuzzleDialog
 import com.juniori.puzzle.ui.common_ui.StateManager
@@ -75,7 +73,7 @@ class MyPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         updateActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-//                viewModel.updateUserNickname(result.data?.getStringExtra(NEW_NICKNAME) ?: "")
+                viewModel.updateUserNickname(result.data?.getStringExtra(NEW_NICKNAME) ?: "")
             }
         }
 
@@ -131,18 +129,6 @@ class MyPageFragment : Fragment() {
             viewModel.navigateToUpdateNicknameFlow.collect {
                 val intent = Intent(context, UpdateNicknameActivity::class.java)
                 updateActivityLauncher.launch(intent)
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            viewModel.currentUserInfo.collect { userInfoEntity ->
-                if (userInfoEntity is TempAPIResponse.Success) {
-                    setDisplayName(binding.userNickname, userInfoEntity.data.nickname)
-                }
-                else {
-                    setDisplayName(binding.userNickname, "")
-                }
-
             }
         }
     }

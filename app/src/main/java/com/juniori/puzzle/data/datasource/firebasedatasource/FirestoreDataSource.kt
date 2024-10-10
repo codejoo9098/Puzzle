@@ -18,9 +18,6 @@ import com.juniori.puzzle.domain.customtype.GallerySortType
 import com.juniori.puzzle.app.util.extensions.toLocationKeyword
 import com.juniori.puzzle.data.converter.toUserInfoEntity
 import com.juniori.puzzle.data.converter.toVideoInfoEntity
-import com.juniori.puzzle.domain.APIErrorType
-import com.juniori.puzzle.domain.TempAPIResponse
-import java.io.IOException
 import javax.inject.Inject
 
 class FirestoreDataSource @Inject constructor(
@@ -296,7 +293,7 @@ class FirestoreDataSource @Inject constructor(
         uid: String,
         newNickname: String,
         profileImage: String
-    ): TempAPIResponse<UserInfoEntity> {
+    ): APIResponse<UserInfoEntity> {
         return try {
             service.patchUserItemDocument(
                 uid,
@@ -307,12 +304,11 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                TempAPIResponse.Success(it.toUserInfoEntity())
+                APIResponse.Success(it.toUserInfoEntity())
             }
-        } catch (e: IOException) {
-            TempAPIResponse.Failure(APIErrorType.NOT_CONNECTED)
-        } catch (e: java.lang.Exception) {
-            TempAPIResponse.Failure(APIErrorType.SERVER_ERROR)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            APIResponse.Failure(e)
         }
     }
 }
