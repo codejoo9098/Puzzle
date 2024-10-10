@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.juniori.puzzle.R
-import com.juniori.puzzle.ui.adapter.WeatherRecyclerViewAdapter
+import com.juniori.puzzle.adapter.WeatherRecyclerViewAdapter
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.databinding.FragmentHomeBinding

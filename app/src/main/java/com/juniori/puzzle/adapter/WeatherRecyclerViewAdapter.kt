@@ -1,4 +1,4 @@
-package com.juniori.puzzle.ui.adapter
+package com.juniori.puzzle.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
