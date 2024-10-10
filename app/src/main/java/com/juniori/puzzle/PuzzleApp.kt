@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app
+package com.juniori.puzzle
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.di
+package com.juniori.puzzle.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.juniori.puzzle.domain.repository.AuthRepository

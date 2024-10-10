@@ -6,8 +6,8 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.StorageDataSource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.repository.VideoRepository
-import com.juniori.puzzle.app.util.PagingConst.ITEM_CNT
-import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.util.PagingConst.ITEM_CNT
+import com.juniori.puzzle.util.SortType
 import javax.inject.Inject
 
 class VideoRepositoryImpl @Inject constructor(

@@ -3,7 +3,7 @@ package com.juniori.puzzle.domain.repository
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
-import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.util.SortType
 
 interface VideoRepository {
     suspend fun getMyVideoList(uid: String, index: Int): APIResponse<List<VideoInfoEntity>>

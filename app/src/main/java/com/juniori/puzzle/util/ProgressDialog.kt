@@ -1,14 +1,12 @@
-package com.juniori.puzzle.app.util
+package com.juniori.puzzle.util
 
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.Window
-import androidx.annotation.RequiresApi
 import com.juniori.puzzle.databinding.DialogProgressBinding
 
 class ProgressDialog(context: Context) : Dialog(context) {
@@ -22,7 +20,6 @@ class ProgressDialog(context: Context) : Dialog(context) {
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     fun setProgress(progress: Int) {
         binding.progressText.text = "$progress%"

@@ -21,11 +21,11 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityPlayvideoBinding
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
-import com.juniori.puzzle.app.util.PlayResultConst.RESULT_DELETE
-import com.juniori.puzzle.app.util.PlayResultConst.RESULT_NOTTING
-import com.juniori.puzzle.app.util.PlayResultConst.RESULT_TO_PRIVATE
-import com.juniori.puzzle.app.util.PuzzleDialog
-import com.juniori.puzzle.app.util.StateManager
+import com.juniori.puzzle.util.PlayResultConst.RESULT_DELETE
+import com.juniori.puzzle.util.PlayResultConst.RESULT_NOTTING
+import com.juniori.puzzle.util.PlayResultConst.RESULT_TO_PRIVATE
+import com.juniori.puzzle.util.PuzzleDialog
+import com.juniori.puzzle.util.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

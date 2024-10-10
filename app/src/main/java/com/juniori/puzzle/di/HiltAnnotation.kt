@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.di
+package com.juniori.puzzle.di
 
 import javax.inject.Qualifier
 

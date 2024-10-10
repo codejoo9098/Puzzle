@@ -17,11 +17,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.databinding.FragmentOthersgalleryBinding
 import com.juniori.puzzle.ui.playvideo.PlayVideoActivity
-import com.juniori.puzzle.app.util.GalleryState
-import com.juniori.puzzle.app.util.PlayResultConst.RESULT_DELETE
-import com.juniori.puzzle.app.util.PlayResultConst.RESULT_TO_PRIVATE
-import com.juniori.puzzle.app.util.PuzzleDialog
-import com.juniori.puzzle.app.util.SortType
+import com.juniori.puzzle.util.GalleryState
+import com.juniori.puzzle.util.PlayResultConst.RESULT_DELETE
+import com.juniori.puzzle.util.PlayResultConst.RESULT_TO_PRIVATE
+import com.juniori.puzzle.util.PuzzleDialog
+import com.juniori.puzzle.util.SortType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

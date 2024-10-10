@@ -18,7 +18,7 @@ import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.databinding.FragmentHomeBinding
 import com.juniori.puzzle.ui.sensor.SensorActivity
-import com.juniori.puzzle.app.util.StateManager
+import com.juniori.puzzle.util.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.random.Random
