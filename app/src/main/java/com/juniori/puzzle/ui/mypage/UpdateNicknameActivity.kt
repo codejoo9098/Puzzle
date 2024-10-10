@@ -1,11 +1,14 @@
 package com.juniori.puzzle.ui.mypage
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.juniori.puzzle.ui.MainActivity
 import com.juniori.puzzle.R
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.ActivityUpdateNicknameBinding
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
@@ -32,6 +35,12 @@ class UpdateNicknameActivity : AppCompatActivity() {
                 when(result) {
                     is TempAPIResponse.Success<UserInfoEntity> -> {
                         stateManager.dismissLoadingDialog()
+
+                        val intent = Intent(this@UpdateNicknameActivity, MainActivity::class.java).apply {
+                            putExtra(MyPageFragment.NEW_NICKNAME, currentNickname)
+                        }
+
+                        setResult(RESULT_OK, intent)
                         finish()
                     }
                     is TempAPIResponse.Failure -> {

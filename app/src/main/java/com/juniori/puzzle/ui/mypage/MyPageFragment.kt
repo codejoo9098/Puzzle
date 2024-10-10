@@ -1,5 +1,6 @@
 package com.juniori.puzzle.ui.mypage
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,6 +33,7 @@ class MyPageFragment : Fragment() {
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MyPageViewModel by viewModels()
+    private lateinit var updateActivityLauncher: ActivityResultLauncher<Intent>
     @Inject lateinit var stateManager: StateManager
     private val warningDialog: PuzzleDialog by lazy { PuzzleDialog(requireContext()) }
 
@@ -71,6 +73,11 @@ class MyPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+//                viewModel.updateUserNickname(result.data?.getStringExtra(NEW_NICKNAME) ?: "")
+            }
+        }
 
         lifecycleScope.launchWhenStarted {
             viewModel.requestLogoutFlow.collect { result ->
@@ -123,7 +130,7 @@ class MyPageFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.navigateToUpdateNicknameFlow.collect {
                 val intent = Intent(context, UpdateNicknameActivity::class.java)
-                startActivity(intent)
+                updateActivityLauncher.launch(intent)
             }
         }
 
@@ -166,5 +173,9 @@ class MyPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val NEW_NICKNAME = "NEW_NICKNAME"
     }
 }
