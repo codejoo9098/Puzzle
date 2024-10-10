@@ -115,7 +115,6 @@
     <string name="input_nickname_again">닉네임을 다시 입력하세요.</string>
     <string name="nickname_change_impossible">닉네임을 변경할 수 없습니다!</string>
     <string name="complete">완료</string>
-    <string name="cannot_find_user">사용자를 확인할 수 없습니다.</string>
 
     <!--my gallery-->
     <string name="mygallery_add_video_text">멋진 퍼팅 영상을 촬영해 보세요!</string>

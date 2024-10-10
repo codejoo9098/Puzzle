@@ -115,7 +115,6 @@
     <string name="input_nickname_again">Please re-enter.</string>
     <string name="nickname_change_impossible">Nickname cannot be changed.</string>
     <string name="complete">Complete!</string>
-    <string name="cannot_find_user">Cannot find user</string>
 
     <!--my gallery-->
     <string name="mygallery_add_video_text">Take a nice putting video!</string>
