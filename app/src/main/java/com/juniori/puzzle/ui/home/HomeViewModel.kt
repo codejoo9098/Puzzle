@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.R
 import com.juniori.puzzle.util.toAddressString
 import com.juniori.puzzle.data.APIResponse
-import com.juniori.puzzle.data.datasource.position.PositionResponse
+import com.juniori.puzzle.data.datasource.location.LocationResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
     val weatherFailTextId: LiveData<Int> = _weatherFailTextId
 
     private val _lastLocationInfo =
-        MutableStateFlow(PositionResponse(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY))
+        MutableStateFlow(LocationResponse(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY))
 
     private var locationTimerJob: Job? = null
 
@@ -108,7 +108,7 @@ class HomeViewModel @Inject constructor(
         locationTimerJob?.cancel()
     }
 
-    fun getWeather(loc: PositionResponse) {
+    fun getWeather(loc: LocationResponse) {
         _lastLocationInfo.value = loc
         viewModelScope.launch {
             when (val result = getWeatherUseCase(loc.lat, loc.lon)) {

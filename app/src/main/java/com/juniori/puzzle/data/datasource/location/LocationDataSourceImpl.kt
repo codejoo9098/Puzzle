@@ -1,4 +1,4 @@
-package com.juniori.puzzle.data.datasource.position
+package com.juniori.puzzle.data.datasource.location
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,9 +9,9 @@ import androidx.core.location.LocationListenerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class PositionDataSourceImpl @Inject constructor(
+class LocationDataSourceImpl @Inject constructor(
     @ApplicationContext context: Context
-) : PositionDataSource {
+) : LocationDataSource {
     private val locationManager: LocationManager =
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     private val geoCoder = Geocoder(context)

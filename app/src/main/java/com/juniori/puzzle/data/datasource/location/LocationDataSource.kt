@@ -1,9 +1,9 @@
-package com.juniori.puzzle.data.datasource.position
+package com.juniori.puzzle.data.datasource.location
 
 import android.location.Address
 import androidx.core.location.LocationListenerCompat
 
-interface PositionDataSource {
+interface LocationDataSource {
     fun registerLocationListener(listener: LocationListenerCompat): Boolean
     fun unregisterLocationListener()
     fun getCurrentAddress(lat: Double, long: Double): List<Address>
