@@ -13,7 +13,6 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringFiel
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValue
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.StructuredQuery
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.Where
-import com.juniori.puzzle.domain.customtype.GallerySortType
 
 object QueryUtil {
     fun getMyVideoQuery(uid: String, offset: Int?, limit: Int?) = StructuredQuery(
@@ -74,7 +73,7 @@ object QueryUtil {
 
 
     fun getPublicVideoQuery(
-        orderBy: GallerySortType,
+        orderBy: SortType,
         offset: Int?,
         limit: Int?,
         latestData: Long?,
@@ -107,8 +106,8 @@ object QueryUtil {
             ),
             Order(
                 field = FieldReference(when(orderBy){
-                    GallerySortType.NEW -> GallerySortType.LIKE.value
-                    GallerySortType.LIKE -> GallerySortType.NEW.value
+                    SortType.NEW -> SortType.LIKE.value
+                    SortType.LIKE -> SortType.NEW.value
                 }),
                 direction = "DESCENDING"
             )
@@ -118,7 +117,7 @@ object QueryUtil {
     )
 
     fun getPublicVideoWithKeywordQuery(
-        orderBy: GallerySortType,
+        orderBy: SortType,
         toSearch: String,
         keyword: String,
         latestData: Long?,
@@ -161,8 +160,8 @@ object QueryUtil {
             ),
             Order(
                 field = FieldReference(when(orderBy){
-                    GallerySortType.NEW -> GallerySortType.LIKE.value
-                    GallerySortType.LIKE -> GallerySortType.NEW.value
+                    SortType.NEW -> SortType.LIKE.value
+                    SortType.LIKE -> SortType.NEW.value
                 }),
                 direction = "DESCENDING"
             )

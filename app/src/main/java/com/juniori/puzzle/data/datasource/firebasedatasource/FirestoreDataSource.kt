@@ -15,7 +15,7 @@ import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.GCS_OPEN_URL
 import com.juniori.puzzle.app.util.QueryUtil
-import com.juniori.puzzle.domain.customtype.GallerySortType
+import com.juniori.puzzle.app.util.SortType
 import com.juniori.puzzle.app.util.extensions.toLocationKeyword
 import javax.inject.Inject
 
@@ -199,7 +199,7 @@ class FirestoreDataSource @Inject constructor(
     }
 
     suspend fun getPublicVideoItemsOrderBy(
-        orderBy: GallerySortType,
+        orderBy: SortType,
         latestData: Long?,
         offset: Int? = null,
         limit: Int? = null,
@@ -224,7 +224,7 @@ class FirestoreDataSource @Inject constructor(
     }
 
     suspend fun getPublicVideoItemsWithKeywordOrderBy(
-        orderBy: GallerySortType,
+        orderBy: SortType,
         toSearch: String,
         keyword: String,
         latestData: Long?,

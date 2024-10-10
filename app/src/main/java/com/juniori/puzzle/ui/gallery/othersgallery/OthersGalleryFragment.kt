@@ -21,7 +21,7 @@ import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_DELETE
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_TO_PRIVATE
 import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
-import com.juniori.puzzle.domain.customtype.GallerySortType
+import com.juniori.puzzle.app.util.SortType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -160,14 +160,14 @@ class OthersGalleryFragment : Fragment() {
             binding.spinnerOtherGallery.text = items[position]
             when (position) {
                 0 -> {
-                    if (viewModel.setOrderType(GallerySortType.NEW)) {
+                    if (viewModel.setOrderType(SortType.NEW)) {
                         binding.recycleOtherGallery.scrollToPosition(RECYCLER_TOP)
                     }
 
                 }
 
                 1 -> {
-                    if (viewModel.setOrderType(GallerySortType.LIKE)) {
+                    if (viewModel.setOrderType(SortType.LIKE)) {
                         binding.recycleOtherGallery.scrollToPosition(RECYCLER_TOP)
                     }
                 }
