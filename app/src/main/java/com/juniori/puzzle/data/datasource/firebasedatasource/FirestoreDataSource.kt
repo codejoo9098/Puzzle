@@ -9,14 +9,13 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValu
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValues
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserDetail
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoDetail
-import com.juniori.puzzle.data.converter.toVideoInfoEntityList
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.getVideoInfoEntity
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.toStringValues
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.GCS_OPEN_URL
 import com.juniori.puzzle.domain.customtype.GallerySortType
 import com.juniori.puzzle.app.util.extensions.toLocationKeyword
-import com.juniori.puzzle.data.converter.toVideoInfoEntity
 import javax.inject.Inject
 
 class FirestoreDataSource @Inject constructor(
@@ -53,7 +52,7 @@ class FirestoreDataSource @Inject constructor(
                     }
                 )
             ).let {
-                APIResponse.Success(it.toVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -85,7 +84,7 @@ class FirestoreDataSource @Inject constructor(
                     }
                 )
             ).let {
-                APIResponse.Success(it.toVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -117,7 +116,7 @@ class FirestoreDataSource @Inject constructor(
                     }
                 )
             ).let {
-                APIResponse.Success(it.toVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -150,7 +149,7 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                APIResponse.Success(it.toVideoInfoEntity())
+                APIResponse.Success(it.getVideoInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -169,7 +168,7 @@ class FirestoreDataSource @Inject constructor(
                     RunQueryRequestDTO(
                         FirebaseQueryUtils.getMyVideoQuery(uid, offset, limit)
                     )
-                ).toVideoInfoEntityList()
+                ).getVideoInfoEntity()
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -190,7 +189,7 @@ class FirestoreDataSource @Inject constructor(
                     RunQueryRequestDTO(
                         FirebaseQueryUtils.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
                     )
-                ).toVideoInfoEntityList()
+                ).getVideoInfoEntity()
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -215,7 +214,7 @@ class FirestoreDataSource @Inject constructor(
                             limit = limit
                         )
                     )
-                ).toVideoInfoEntityList()
+                ).getVideoInfoEntity()
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -244,7 +243,7 @@ class FirestoreDataSource @Inject constructor(
                             limit,
                         )
                     )
-                ).toVideoInfoEntityList()
+                ).getVideoInfoEntity()
             )
         } catch (e: Exception) {
             e.printStackTrace()
