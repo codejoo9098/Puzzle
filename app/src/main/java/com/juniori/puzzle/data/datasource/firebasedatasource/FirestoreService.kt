@@ -2,8 +2,8 @@ package com.juniori.puzzle.data.datasource.firebasedatasource
 
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.RunQueryRequestDTO
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.RunQueryResponseDTO
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.FirebaseUserDetail
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.FirebaseUserItem
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserDetail
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserItem
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoDetail
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoItem
 import retrofit2.http.Body
@@ -40,17 +40,17 @@ interface FirestoreService {
     @GET("databases/(default)/documents/userReal/{documentId}")
     suspend fun getUserItemDocument(
         @Path("documentId") documentId: String,
-    ): FirebaseUserItem
+    ): UserItem
 
     @PATCH("databases/(default)/documents/userReal/{documentId}")
     suspend fun patchUserItemDocument(
         @Path("documentId") documentId: String,
-        @Body fields: Map<String, FirebaseUserDetail>
-    ): FirebaseUserItem
+        @Body fields: Map<String, UserDetail>
+    ): UserItem
 
     @POST("databases/(default)/documents/userReal")
     suspend fun createUserItemDocument(
         @Query("documentId") documentId: String,
-        @Body fields: Map<String, FirebaseUserDetail>
-    ): FirebaseUserItem
+        @Body fields: Map<String, UserDetail>
+    ): UserItem
 }

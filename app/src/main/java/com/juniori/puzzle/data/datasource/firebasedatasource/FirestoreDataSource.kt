@@ -7,7 +7,7 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.IntegerVal
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.RunQueryRequestDTO
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValue
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.StringValues
-import com.juniori.puzzle.data.datasource.firebasedatasource.response.FirebaseUserDetail
+import com.juniori.puzzle.data.datasource.firebasedatasource.response.UserDetail
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.VideoDetail
 import com.juniori.puzzle.data.converter.toVideoInfoEntityList
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.toStringValues
@@ -275,7 +275,7 @@ class FirestoreDataSource @Inject constructor(
             service.createUserItemDocument(
                 uid,
                 mapOf(
-                    "fields" to FirebaseUserDetail(
+                    "fields" to UserDetail(
                         nickname = StringValue(nickname),
                         profileImage = StringValue(profileImage)
                     )
@@ -298,7 +298,7 @@ class FirestoreDataSource @Inject constructor(
             service.patchUserItemDocument(
                 uid,
                 mapOf(
-                    "fields" to FirebaseUserDetail(
+                    "fields" to UserDetail(
                         nickname = StringValue(newNickname),
                         profileImage = StringValue(profileImage)
                     )
