@@ -15,7 +15,7 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.Structured
 import com.juniori.puzzle.data.datasource.firebasedatasource.response.Where
 import com.juniori.puzzle.domain.customtype.GallerySortType
 
-object FirebaseQueryFactory {
+object FirebaseQueryUtils {
     fun getMyVideoQuery(uid: String, offset: Int?, limit: Int?) = StructuredQuery(
         where = Filter(
             fieldFilter = StringFieldFilter(
