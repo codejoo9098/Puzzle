@@ -44,8 +44,8 @@ class AuthDataSource @Inject constructor(
         } ?: kotlin.run { TempAPIResponse.Failure(APIErrorType.NO_CONTENT) }
     }
 
-    suspend fun requestLogin(idToken: String): TempAPIResponse<UserInfoEntity> {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
+    suspend fun requestLogin(acct: GoogleSignInAccount): TempAPIResponse<UserInfoEntity> {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
 
         return try {
             val result = firebaseAuth.signInWithCredential(credential).await()
@@ -78,9 +78,9 @@ class AuthDataSource @Inject constructor(
         }
     }
 
-    suspend fun requestWithdraw(idToken: String): APIResponse<Unit> {
+    suspend fun requestWithdraw(acct: GoogleSignInAccount): APIResponse<Unit> {
         return try {
-            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
             firebaseAuth.currentUser?.reauthenticate(credential)?.await()
 
             firebaseAuth.currentUser?.delete()

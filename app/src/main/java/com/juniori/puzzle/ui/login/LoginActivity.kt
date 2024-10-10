@@ -24,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -46,8 +45,8 @@ class LoginActivity : AppCompatActivity() {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 runCatching {
-                    val idToken = task.getResult(ApiException::class.java).idToken ?: throw Exception()
-                    loginViewModel.loginUser(idToken)
+                    val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+                    loginViewModel.loginUser(account)
                 }
             }
         }

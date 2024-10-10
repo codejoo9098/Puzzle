@@ -25,7 +25,6 @@ import com.juniori.puzzle.ui.login.LoginActivity
 import com.juniori.puzzle.ui.common_ui.PuzzleDialog
 import com.juniori.puzzle.ui.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,8 +50,8 @@ class MyPageFragment : Fragment() {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 runCatching {
-                    val idToken = task.getResult(ApiException::class.java).idToken ?: throw Exception()
-                    viewModel.requestWithdraw(idToken)
+                    val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+                    viewModel.requestWithdraw(account)
                 }
             }
         }
