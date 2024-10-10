@@ -1,4 +1,4 @@
-package com.juniori.puzzle
+package com.juniori.puzzle.mock
 
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 
