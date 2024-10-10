@@ -1,7 +1,7 @@
 package com.juniori.puzzle.ui.login
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.PostUserInfoUseCase
@@ -43,14 +43,14 @@ class LoginViewModelTest {
 
             setupUseCase()
 
-            Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Failure(Exception()))
-            Mockito.`when`(mockRequestLoginUseCase(mockAccount)).thenReturn(APIResponse.Success(mockUserInfoEntity))
-            Mockito.`when`(mockPostUserInfoUseCase(mockUserInfoEntity.uid, mockUserInfoEntity.nickname, mockUserInfoEntity.profileImage)).thenReturn(APIResponse.Success(mockUserInfoEntity))
+            Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Failure(Exception()))
+            Mockito.`when`(mockRequestLoginUseCase(mockAccount)).thenReturn(Resource.Success(mockUserInfoEntity))
+            Mockito.`when`(mockPostUserInfoUseCase(mockUserInfoEntity.uid, mockUserInfoEntity.nickname, mockUserInfoEntity.profileImage)).thenReturn(Resource.Success(mockUserInfoEntity))
 
             loginViewModel = LoginViewModel(mockGetUserInfoUseCase, mockRequestLoginUseCase, mockPostUserInfoUseCase)
             loginViewModel.loginUser(mockAccount).join()
 
-            assertEquals(APIResponse.Success(mockUserInfoEntity), loginViewModel.loginFlow.value)
+            assertEquals(Resource.Success(mockUserInfoEntity), loginViewModel.loginFlow.value)
         }
     }
 
@@ -60,14 +60,14 @@ class LoginViewModelTest {
 
         setupUseCase()
 
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Failure(Exception()))
-        Mockito.`when`(mockRequestLoginUseCase(mockAccount)).thenReturn(APIResponse.Failure(Exception()))
-        Mockito.`when`(mockPostUserInfoUseCase(mockUserInfoEntity.uid, mockUserInfoEntity.nickname, mockUserInfoEntity.profileImage)).thenReturn(APIResponse.Success(mockUserInfoEntity))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Failure(Exception()))
+        Mockito.`when`(mockRequestLoginUseCase(mockAccount)).thenReturn(Resource.Failure(Exception()))
+        Mockito.`when`(mockPostUserInfoUseCase(mockUserInfoEntity.uid, mockUserInfoEntity.nickname, mockUserInfoEntity.profileImage)).thenReturn(Resource.Success(mockUserInfoEntity))
 
         loginViewModel = LoginViewModel(mockGetUserInfoUseCase, mockRequestLoginUseCase, mockPostUserInfoUseCase)
         loginViewModel.loginUser(mockAccount).join()
 
-        assertTrue(loginViewModel.loginFlow.value is APIResponse.Failure)
+        assertTrue(loginViewModel.loginFlow.value is Resource.Failure)
     }
 
     @Test
@@ -76,14 +76,14 @@ class LoginViewModelTest {
 
         setupUseCase()
 
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Failure(Exception()))
-        Mockito.`when`(mockRequestLoginUseCase(mockAccount)).thenReturn(APIResponse.Success(mockUserInfoEntity))
-        Mockito.`when`(mockPostUserInfoUseCase(mockUserInfoEntity.uid, mockUserInfoEntity.nickname, mockUserInfoEntity.profileImage)).thenReturn(APIResponse.Failure(Exception()))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Failure(Exception()))
+        Mockito.`when`(mockRequestLoginUseCase(mockAccount)).thenReturn(Resource.Success(mockUserInfoEntity))
+        Mockito.`when`(mockPostUserInfoUseCase(mockUserInfoEntity.uid, mockUserInfoEntity.nickname, mockUserInfoEntity.profileImage)).thenReturn(Resource.Failure(Exception()))
 
         loginViewModel = LoginViewModel(mockGetUserInfoUseCase, mockRequestLoginUseCase, mockPostUserInfoUseCase)
         loginViewModel.loginUser(mockAccount).join()
 
-        assertTrue(loginViewModel.loginFlow.value is APIResponse.Failure)
+        assertTrue(loginViewModel.loginFlow.value is Resource.Failure)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

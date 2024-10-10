@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.juniori.puzzle.R
 import com.juniori.puzzle.adapter.WeatherRecyclerViewAdapter
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.data.location.LocationInfo
 import com.juniori.puzzle.databinding.FragmentHomeBinding
 import com.juniori.puzzle.ui.sensor.SensorActivity
@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isPermitted ->
-        homeViewModel.setUiState(APIResponse.Loading)
+        homeViewModel.setUiState(Resource.Loading)
         if (isPermitted.not()) {
             homeViewModel.setWeatherInfoText(getString(R.string.location_permission))
         } else {
@@ -104,15 +104,15 @@ class HomeFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             homeViewModel.uiState.collect { resource ->
                 when (resource) {
-                    is APIResponse.Success -> {
+                    is Resource.Success -> {
                         stateManager.dismissLoadingDialog()
                         showWeather()
                     }
-                    is APIResponse.Failure -> {
+                    is Resource.Failure -> {
                         stateManager.dismissLoadingDialog()
                         hideWeather(resource.exception.message ?: getString(R.string.network_fail))
                     }
-                    is APIResponse.Loading -> {
+                    is Resource.Loading -> {
                         stateManager.showLoadingDialog()
                     }
                 }

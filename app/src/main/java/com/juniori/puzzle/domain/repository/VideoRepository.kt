@@ -1,35 +1,35 @@
 package com.juniori.puzzle.domain.repository
 
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.util.SortType
 
 interface VideoRepository {
-    suspend fun getMyVideoList(uid: String, index: Int): APIResponse<List<VideoInfoEntity>>
-    suspend fun getSearchedMyVideoList(uid: String, index: Int, keyword: String): APIResponse<List<VideoInfoEntity>>
+    suspend fun getMyVideoList(uid: String, index: Int): Resource<List<VideoInfoEntity>>
+    suspend fun getSearchedMyVideoList(uid: String, index: Int, keyword: String): Resource<List<VideoInfoEntity>>
 
     suspend fun getSocialVideoList(
         index: Int,
         sortType: SortType,
         latestData: Long?
-    ): APIResponse<List<VideoInfoEntity>>
+    ): Resource<List<VideoInfoEntity>>
 
     suspend fun getSearchedSocialVideoList(
         index: Int,
         sortType: SortType,
         keyword: String,
         latestData: Long?
-    ): APIResponse<List<VideoInfoEntity>>
+    ): Resource<List<VideoInfoEntity>>
 
     suspend fun updateLikeStatus(
         documentInfo: VideoInfoEntity,
         uid: String,
         isLiked: Boolean
-    ): APIResponse<VideoInfoEntity>
+    ): Resource<VideoInfoEntity>
 
-    suspend fun deleteVideo(documentId: String): APIResponse<Unit>
-    suspend fun changeVideoScope(documentInfo: VideoInfoEntity): APIResponse<VideoInfoEntity>
+    suspend fun deleteVideo(documentId: String): Resource<Unit>
+    suspend fun changeVideoScope(documentInfo: VideoInfoEntity): Resource<VideoInfoEntity>
     suspend fun uploadVideo(
         uid: String,
         videoName: String,
@@ -38,14 +38,14 @@ interface VideoRepository {
         memo: String,
         videoByteArray: ByteArray,
         imageByteArray: ByteArray
-    ): APIResponse<VideoInfoEntity>
+    ): Resource<VideoInfoEntity>
 
-    suspend fun getUserInfoByUidUseCase(uid: String): APIResponse<UserInfoEntity>
+    suspend fun getUserInfoByUidUseCase(uid: String): Resource<UserInfoEntity>
     suspend fun postUserInfoInFirestore(
         uid: String,
         nickname: String,
         profileImage: String
-    ): APIResponse<UserInfoEntity>
+    ): Resource<UserInfoEntity>
 
-    suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): APIResponse<UserInfoEntity>
+    suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): Resource<UserInfoEntity>
 }

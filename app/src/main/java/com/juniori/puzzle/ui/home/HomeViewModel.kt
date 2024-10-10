@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.R
 import com.juniori.puzzle.util.toAddressString
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.data.location.LocationInfo
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
@@ -27,8 +27,8 @@ class HomeViewModel @Inject constructor(
     private val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<APIResponse<List<WeatherEntity>>>(APIResponse.Loading)
-    val uiState: StateFlow<APIResponse<List<WeatherEntity>>> = _uiState
+    private val _uiState = MutableStateFlow<Resource<List<WeatherEntity>>>(Resource.Loading)
+    val uiState: StateFlow<Resource<List<WeatherEntity>>> = _uiState
 
     private val _welcomeText = MutableStateFlow("")
     val welcomeText: StateFlow<String> = _welcomeText
@@ -54,13 +54,13 @@ class HomeViewModel @Inject constructor(
 
     private var locationTimerJob: Job? = null
 
-    fun setUiState(state: APIResponse<List<WeatherEntity>>) {
+    fun setUiState(state: Resource<List<WeatherEntity>>) {
         _uiState.value = state
     }
 
     fun setDisplayName() {
         val userInfo = getUserInfoUseCase()
-        if (userInfo is APIResponse.Success) {
+        if (userInfo is Resource.Success) {
             _displayName.value = userInfo.result.nickname
         } else {
             _displayName.value = ""
@@ -76,7 +76,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun setWeatherInfoText(text: String) {
-        _uiState.value = APIResponse.Failure(Exception(text))
+        _uiState.value = Resource.Failure(Exception(text))
     }
 
     private fun setCurrentAddress(lat: Double, long: Double) {
@@ -112,17 +112,17 @@ class HomeViewModel @Inject constructor(
         _lastLocationInfo.value = loc
         viewModelScope.launch {
             when (val result = getWeatherUseCase(loc.lat, loc.lon)) {
-                is APIResponse.Success<List<WeatherEntity>> -> {
+                is Resource.Success<List<WeatherEntity>> -> {
                     val list = result.result
                     _weatherMainList.value = list[1]
                     _weatherList.value = list.subList(2, list.size)
                     setCurrentAddress(loc.lat, loc.lon)
-                    _uiState.value = APIResponse.Success(list)
+                    _uiState.value = Resource.Success(list)
                 }
-                is APIResponse.Failure -> {
+                is Resource.Failure -> {
                     setWeatherFailTextId(R.string.network_fail)
                 }
-                is APIResponse.Loading -> _uiState.value = APIResponse.Loading
+                is Resource.Loading -> _uiState.value = Resource.Loading
             }
         }
     }
@@ -131,7 +131,7 @@ class HomeViewModel @Inject constructor(
         if (_weatherList.value.size < 3) {
             setWeatherFailTextId(R.string.location_empty)
         } else {
-            _uiState.value = APIResponse.Success(_weatherList.value)
+            _uiState.value = Resource.Success(_weatherList.value)
         }
     }
 

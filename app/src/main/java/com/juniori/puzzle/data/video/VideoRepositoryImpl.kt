@@ -1,6 +1,6 @@
 package com.juniori.puzzle.data.video
 
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.data.firebase.FirestoreDataSource
 import com.juniori.puzzle.data.firebase.StorageDataSource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
@@ -17,7 +17,7 @@ class VideoRepositoryImpl @Inject constructor(
     /** 내 비디오 목록 가져오기
      * @param uid: 사용자 uid
      * @param index: 가져오기 시작할 바디오 index*/
-    override suspend fun getMyVideoList(uid: String, index: Int): APIResponse<List<VideoInfoEntity>> {
+    override suspend fun getMyVideoList(uid: String, index: Int): Resource<List<VideoInfoEntity>> {
         return firestoreDataSource.getMyVideoItems(
             uid = uid,
             offset = index,
@@ -33,7 +33,7 @@ class VideoRepositoryImpl @Inject constructor(
         uid: String,
         index: Int,
         keyword: String
-    ): APIResponse<List<VideoInfoEntity>> {
+    ): Resource<List<VideoInfoEntity>> {
         return firestoreDataSource.getMyVideoItemsWithKeyword(
             uid = uid,
             toSearch = "location_keyword",
@@ -50,7 +50,7 @@ class VideoRepositoryImpl @Inject constructor(
         index: Int,
         sortType: SortType,
         latestData: Long?
-    ): APIResponse<List<VideoInfoEntity>> {
+    ): Resource<List<VideoInfoEntity>> {
         return firestoreDataSource.getPublicVideoItemsOrderBy(
             orderBy = sortType,
             latestData = latestData,
@@ -68,7 +68,7 @@ class VideoRepositoryImpl @Inject constructor(
         sortType: SortType,
         keyword: String,
         latestData: Long?
-    ): APIResponse<List<VideoInfoEntity>> {
+    ): Resource<List<VideoInfoEntity>> {
         return firestoreDataSource.getPublicVideoItemsWithKeywordOrderBy(
             orderBy = sortType,
             toSearch = "location_keyword",
@@ -79,7 +79,7 @@ class VideoRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): APIResponse<UserInfoEntity> {
+    override suspend fun updateServerNickname(userInfoEntity: UserInfoEntity): Resource<UserInfoEntity> {
         return firestoreDataSource.changeUserNickname(
             userInfoEntity.uid,
             userInfoEntity.nickname,
@@ -91,7 +91,7 @@ class VideoRepositoryImpl @Inject constructor(
         documentInfo: VideoInfoEntity,
         uid: String,
         isLiked: Boolean
-    ): APIResponse<VideoInfoEntity> {
+    ): Resource<VideoInfoEntity> {
         return if (isLiked) {
             firestoreDataSource.removeVideoItemLike(documentInfo, uid)
         } else {
@@ -99,20 +99,20 @@ class VideoRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteVideo(documentId: String): APIResponse<Unit> {
+    override suspend fun deleteVideo(documentId: String): Resource<Unit> {
         return if (storageDataSource.deleteVideo(documentId).isSuccess && storageDataSource.deleteThumbnail(
                 documentId
             ).isSuccess
         ) {
             firestoreDataSource.deleteVideoItem(documentId)
         } else {
-            APIResponse.Failure(Exception("delete video and thumbnail in Storage failed"))
+            Resource.Failure(Exception("delete video and thumbnail in Storage failed"))
         }
     }
 
     override suspend fun changeVideoScope(
         documentInfo: VideoInfoEntity
-    ): APIResponse<VideoInfoEntity> {
+    ): Resource<VideoInfoEntity> {
         return firestoreDataSource.changeVideoItemPrivacy(documentInfo)
     }
 
@@ -124,7 +124,7 @@ class VideoRepositoryImpl @Inject constructor(
         memo: String,
         videoByteArray: ByteArray,
         imageByteArray: ByteArray
-    ): APIResponse<VideoInfoEntity> {
+    ): Resource<VideoInfoEntity> {
         return if (storageDataSource.insertVideo(
                 videoName,
                 videoByteArray
@@ -135,11 +135,11 @@ class VideoRepositoryImpl @Inject constructor(
         ) {
             firestoreDataSource.postVideoItem(uid, videoName, isPrivate, location, memo)
         } else {
-            APIResponse.Failure(Exception("upload video and thumbnail in Storage failed"))
+            Resource.Failure(Exception("upload video and thumbnail in Storage failed"))
         }
     }
 
-    override suspend fun getUserInfoByUidUseCase(uid: String): APIResponse<UserInfoEntity> {
+    override suspend fun getUserInfoByUidUseCase(uid: String): Resource<UserInfoEntity> {
         return firestoreDataSource.getUserItem(uid)
     }
 
@@ -147,7 +147,7 @@ class VideoRepositoryImpl @Inject constructor(
         uid: String,
         nickname: String,
         profileImage: String
-    ): APIResponse<UserInfoEntity> {
+    ): Resource<UserInfoEntity> {
         return firestoreDataSource.postUserItem(uid, nickname, profileImage)
     }
 }

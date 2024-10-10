@@ -1,6 +1,6 @@
 package com.juniori.puzzle.ui.home
 
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
 import kotlinx.coroutines.*
@@ -46,7 +46,7 @@ class HomeViewModelTest {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NEGATIVE_LOCATION, NEGATIVE_LOCATION))
         homeViewModel.getWeather().join()
 
-        assertTrue(homeViewModel.uiState.value is APIResponse.Failure)
+        assertTrue(homeViewModel.uiState.value is Resource.Failure)
     }
 
     @Test
@@ -55,27 +55,27 @@ class HomeViewModelTest {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
         Mockito.`when`(getAddressUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(emptyList())
         val mockWeatherList = listOf(mockWeatherEntity, mockWeatherEntity, mockWeatherEntity, mockWeatherEntity)
-        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Success(mockWeatherList))
+        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(Resource.Success(mockWeatherList))
 
-        assertEquals(APIResponse.Success(mockWeatherList), homeViewModel.uiState.value)
+        assertEquals(Resource.Success(mockWeatherList), homeViewModel.uiState.value)
     }
 
     @Test
     fun emptyWeatherTest(): Unit = runBlocking {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
-        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Success(emptyList()))
+        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(Resource.Success(emptyList()))
 
         homeViewModel.getWeather().join()
-        assertTrue(homeViewModel.uiState.value is APIResponse.Failure)
+        assertTrue(homeViewModel.uiState.value is Resource.Failure)
     }
 
     @Test
     fun failWeatherTest(): Unit = runBlocking {
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
-        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Failure(Exception()))
+        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(Resource.Failure(Exception()))
 
         homeViewModel.getWeather().join()
-        assertTrue(homeViewModel.uiState.value is APIResponse.Failure)
+        assertTrue(homeViewModel.uiState.value is Resource.Failure)
     }
 
     @Test
@@ -84,10 +84,10 @@ class HomeViewModelTest {
         val mockWeatherList = listOf(mockWeatherEntity)
 
         Mockito.`when`(getLocationUseCase()).thenReturn(Pair(NORMAL_LOCATION, NORMAL_LOCATION))
-        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(APIResponse.Success(mockWeatherList))
+        Mockito.`when`(getWeatherUseCase(NORMAL_LOCATION, NORMAL_LOCATION)).thenReturn(Resource.Success(mockWeatherList))
 
         homeViewModel.getWeather().join()
-        assertTrue(homeViewModel.uiState.value is APIResponse.Success)
+        assertTrue(homeViewModel.uiState.value is Resource.Success)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

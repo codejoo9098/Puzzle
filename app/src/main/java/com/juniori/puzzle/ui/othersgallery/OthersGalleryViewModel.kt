@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetSearchedSocialVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSocialVideoListUseCase
@@ -75,7 +75,7 @@ class OthersGalleryViewModel @Inject constructor(
                 order = sortType
             )
 
-            if (data is APIResponse.Success) {
+            if (data is Resource.Success) {
                 val result = data.result
                 if (result.isNullOrEmpty().not()) {
                     result.last().also {
@@ -108,7 +108,7 @@ class OthersGalleryViewModel @Inject constructor(
                 order = sortType
             )
 
-            if (data is APIResponse.Success) {
+            if (data is Resource.Success) {
                 val result = data.result
                 if (result.isNullOrEmpty().not()) {
                     result.last().also {
@@ -153,7 +153,7 @@ class OthersGalleryViewModel @Inject constructor(
                     }
                 )
             }
-            if (data is APIResponse.Success) {
+            if (data is Resource.Success) {
                 val result = data.result
                 if (result.isNullOrEmpty()) {
                     viewModelScope.launch(Dispatchers.IO) {

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
@@ -66,7 +66,7 @@ class MyGalleryViewModel @Inject constructor(
             viewModelScope.launch {
                 _refresh.value = true
                 val data = getSearchedMyVideoUseCase(uid, 0, query)
-                if (data is APIResponse.Success) {
+                if (data is Resource.Success) {
                     _state.value = GalleryState.NONE
 
                     val result = data.result
@@ -100,7 +100,7 @@ class MyGalleryViewModel @Inject constructor(
             viewModelScope.launch {
                 _refresh.value = true
                 val data = getMyVideoListUseCase(uid, 0)
-                if (data is APIResponse.Success) {
+                if (data is Resource.Success) {
                     _state.value = GalleryState.NONE
 
                     val result = data.result
@@ -136,7 +136,7 @@ class MyGalleryViewModel @Inject constructor(
                     getSearchedMyVideoUseCase(uid, start, query)
                 }
 
-                if (data is APIResponse.Success) {
+                if (data is Resource.Success) {
                     val result = data.result
                     if (result.isNullOrEmpty()) {
                         viewModelScope.launch(Dispatchers.IO) {
@@ -168,7 +168,7 @@ class MyGalleryViewModel @Inject constructor(
 
     private fun getUid(): String? {
         val userInfo = getUserInfoUseCase()
-        val uid: String? = if (userInfo is APIResponse.Success) {
+        val uid: String? = if (userInfo is Resource.Success) {
             userInfo.result.uid
         } else {
             null

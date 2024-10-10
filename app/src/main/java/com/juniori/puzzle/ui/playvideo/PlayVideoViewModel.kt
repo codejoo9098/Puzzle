@@ -2,7 +2,7 @@ package com.juniori.puzzle.ui.playvideo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.ChangeVideoScopeUseCase
@@ -24,17 +24,17 @@ class PlayVideoViewModel @Inject constructor(
     private val changeVideoScopeUseCase: ChangeVideoScopeUseCase,
     private val getUserInfoByUidUseCase: GetUserInfoByUidUseCase
 ) : ViewModel() {
-    private val _getLoginInfoFlow = MutableStateFlow<APIResponse<UserInfoEntity>?>(null)
-    val getLoginInfoFlow: StateFlow<APIResponse<UserInfoEntity>?> = _getLoginInfoFlow
+    private val _getLoginInfoFlow = MutableStateFlow<Resource<UserInfoEntity>?>(null)
+    val getLoginInfoFlow: StateFlow<Resource<UserInfoEntity>?> = _getLoginInfoFlow
 
-    private val _getPublisherInfoFlow = MutableStateFlow<APIResponse<UserInfoEntity>?>(null)
-    val getPublisherInfoFlow: StateFlow<APIResponse<UserInfoEntity>?> = _getPublisherInfoFlow
+    private val _getPublisherInfoFlow = MutableStateFlow<Resource<UserInfoEntity>?>(null)
+    val getPublisherInfoFlow: StateFlow<Resource<UserInfoEntity>?> = _getPublisherInfoFlow
 
-    private val _deleteFlow = MutableStateFlow<APIResponse<Unit>?>(null)
-    val deleteFlow: StateFlow<APIResponse<Unit>?> = _deleteFlow
+    private val _deleteFlow = MutableStateFlow<Resource<Unit>?>(null)
+    val deleteFlow: StateFlow<Resource<Unit>?> = _deleteFlow
 
-    private val _videoFlow = MutableStateFlow<APIResponse<VideoInfoEntity>?>(null)
-    val videoFlow: StateFlow<APIResponse<VideoInfoEntity>?> = _videoFlow
+    private val _videoFlow = MutableStateFlow<Resource<VideoInfoEntity>?>(null)
+    val videoFlow: StateFlow<Resource<VideoInfoEntity>?> = _videoFlow
 
     private val _likeState = MutableStateFlow(false)
     val likeState: StateFlow<Boolean>
@@ -46,7 +46,7 @@ class PlayVideoViewModel @Inject constructor(
 
     fun initVideoFlow(currentVideo: VideoInfoEntity) {
         viewModelScope.launch {
-            _videoFlow.emit(APIResponse.Success(currentVideo))
+            _videoFlow.emit(Resource.Success(currentVideo))
         }
     }
 
@@ -64,9 +64,9 @@ class PlayVideoViewModel @Inject constructor(
 
     fun changeLikeStatus(currentVideo: VideoInfoEntity, currentUid: String) {
         viewModelScope.launch {
-            _videoFlow.emit(APIResponse.Loading)
+            _videoFlow.emit(Resource.Loading)
             val result = updateLikeStatusUseCase(currentVideo, currentUid, likeState.value)
-            if (result is APIResponse.Success) {
+            if (result is Resource.Success) {
                 _videoFlow.emit(result)
                 _likeState.emit(likeState.value.not())
             }
@@ -74,12 +74,12 @@ class PlayVideoViewModel @Inject constructor(
     }
 
     fun deleteVideo(documentId: String) = viewModelScope.launch {
-        _deleteFlow.emit(APIResponse.Loading)
+        _deleteFlow.emit(Resource.Loading)
         _deleteFlow.emit(deleteVideoUseCase(documentId))
     }
 
     fun updateVideoPrivacy(documentInfo: VideoInfoEntity) = viewModelScope.launch {
-        _videoFlow.emit(APIResponse.Loading)
+        _videoFlow.emit(Resource.Loading)
         _videoFlow.emit(changeVideoScopeUseCase(documentInfo))
     }
 }

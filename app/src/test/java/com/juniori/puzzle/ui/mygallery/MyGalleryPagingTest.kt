@@ -1,7 +1,7 @@
 package com.juniori.puzzle.ui.mygallery
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
 import com.juniori.puzzle.domain.usecase.GetSearchedMyVideoUseCase
@@ -52,9 +52,9 @@ class MyGalleryPagingTest {
 
     @Test
     fun endPagingTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(emptyList()))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(emptyList()))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -65,9 +65,9 @@ class MyGalleryPagingTest {
 
     @Test
     fun singlePagingTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(extraList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -78,13 +78,13 @@ class MyGalleryPagingTest {
 
     @Test
     fun multiPagingTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 4)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 5)).thenReturn(APIResponse.Success(extraList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 4)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 5)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -105,11 +105,11 @@ class MyGalleryPagingTest {
 
     @Test
     fun shortPagingDataTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(APIResponse.Success(firstVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(Resource.Success(firstVideoList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -126,11 +126,11 @@ class MyGalleryPagingTest {
 
     @Test
     fun shortFirstDataTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(APIResponse.Success(firstVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(Resource.Success(firstVideoList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -147,12 +147,12 @@ class MyGalleryPagingTest {
 
     @Test
     fun pagingWithFailureTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
         Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1))
-            .thenReturn(APIResponse.Failure(Exception()))
-            .thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(firstVideoList))
+            .thenReturn(Resource.Failure(Exception()))
+            .thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(firstVideoList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -169,12 +169,12 @@ class MyGalleryPagingTest {
 
     @Test
     fun pagingWithEmptyDataSameIndexTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
         Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1))
-            .thenReturn(APIResponse.Success(emptyList()))
-            .thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
+            .thenReturn(Resource.Success(emptyList()))
+            .thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -191,10 +191,10 @@ class MyGalleryPagingTest {
 
     @Test
     fun pagingWithEmptyDataSkippingIndexTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(emptyList()))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(emptyList()))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -209,12 +209,12 @@ class MyGalleryPagingTest {
 
     @Test
     fun pagingSkippingNumberTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 4)).thenReturn(APIResponse.Success(extraList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 3)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 4)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -229,10 +229,10 @@ class MyGalleryPagingTest {
 
     @Test
     fun pagingWithFirstEmptyDataTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(emptyList()))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(emptyList()))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -247,12 +247,12 @@ class MyGalleryPagingTest {
 
     @Test
     fun pagingWithFirstFailureTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
         Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0))
-            .thenReturn(APIResponse.Failure(Exception()))
-            .thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(APIResponse.Success(firstVideoList))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(APIResponse.Success(extraList))
+            .thenReturn(Resource.Failure(Exception()))
+            .thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 1)).thenReturn(Resource.Success(firstVideoList))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 2)).thenReturn(Resource.Success(extraList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()

@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.juniori.puzzle.MainActivity
 import com.juniori.puzzle.R
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.databinding.ActivityUpdateNicknameBinding
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.util.StateManager
@@ -30,7 +30,7 @@ class UpdateNicknameActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.finalUserInfo.collect { result ->
                 when(result) {
-                    is APIResponse.Success<UserInfoEntity> -> {
+                    is Resource.Success<UserInfoEntity> -> {
                         stateManager.dismissLoadingDialog()
 
                         val intent = Intent(this@UpdateNicknameActivity, MainActivity::class.java).apply {
@@ -40,11 +40,11 @@ class UpdateNicknameActivity : AppCompatActivity() {
                         setResult(RESULT_OK, intent)
                         finish()
                     }
-                    is APIResponse.Failure -> {
+                    is Resource.Failure -> {
                         stateManager.dismissLoadingDialog()
                         Toast.makeText(this@UpdateNicknameActivity, getString(R.string.nickname_change_impossible), Toast.LENGTH_SHORT).show()
                     }
-                    is APIResponse.Loading -> {
+                    is Resource.Loading -> {
                         stateManager.showLoadingDialog()
                     }
                 }

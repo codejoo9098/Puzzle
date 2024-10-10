@@ -3,7 +3,7 @@ package com.juniori.puzzle.ui.mypage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.RequestLogoutUseCase
 import com.juniori.puzzle.domain.usecase.RequestWithdrawUseCase
@@ -20,11 +20,11 @@ class MyPageViewModel @Inject constructor(
     private val requestWithdrawUseCase: RequestWithdrawUseCase,
     val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
-    private val _requestLogoutFlow = MutableSharedFlow<APIResponse<Unit>>()
-    val requestLogoutFlow: SharedFlow<APIResponse<Unit>> = _requestLogoutFlow
+    private val _requestLogoutFlow = MutableSharedFlow<Resource<Unit>>()
+    val requestLogoutFlow: SharedFlow<Resource<Unit>> = _requestLogoutFlow
 
-    private val _requestWithdrawFlow = MutableSharedFlow<APIResponse<Unit>>()
-    val requestWithdrawFlow: SharedFlow<APIResponse<Unit>> = _requestWithdrawFlow
+    private val _requestWithdrawFlow = MutableSharedFlow<Resource<Unit>>()
+    val requestWithdrawFlow: SharedFlow<Resource<Unit>> = _requestWithdrawFlow
 
     private val _userNickname = MutableStateFlow("")
     val userNickname: StateFlow<String> = _userNickname
@@ -62,7 +62,7 @@ class MyPageViewModel @Inject constructor(
 
     fun requestLogout() {
         viewModelScope.launch {
-            _requestLogoutFlow.emit(APIResponse.Loading)
+            _requestLogoutFlow.emit(Resource.Loading)
             withContext(Dispatchers.IO) {
                 _requestLogoutFlow.emit(requestLogoutUseCase())
             }
@@ -71,7 +71,7 @@ class MyPageViewModel @Inject constructor(
 
     fun requestWithdraw(acct: GoogleSignInAccount) {
         viewModelScope.launch {
-            _requestWithdrawFlow.emit(APIResponse.Loading)
+            _requestWithdrawFlow.emit(Resource.Loading)
             withContext(Dispatchers.IO) {
                 _requestWithdrawFlow.emit(requestWithdrawUseCase(acct))
             }
@@ -82,7 +82,7 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             val data = getUserInfoUseCase()
 
-            if (data is APIResponse.Success) {
+            if (data is Resource.Success) {
                 _userNickname.value = data.result.nickname
             }
             else {

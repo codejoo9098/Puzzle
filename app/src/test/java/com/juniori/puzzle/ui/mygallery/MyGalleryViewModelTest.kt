@@ -1,7 +1,7 @@
 package com.juniori.puzzle.ui.mygallery
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.domain.usecase.GetMyVideoListUseCase
@@ -58,8 +58,8 @@ class MyGalleryViewModelTest {
 
     @Test
     fun getNormalFirstDataWithoutQueryAndPagingTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(mockVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(mockVideoList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -72,8 +72,8 @@ class MyGalleryViewModelTest {
     fun getNormalFirstDataWithQueryTest(): Unit = runBlocking {
         val mockVideoList = mockVideoList.filter { it.location.contains("서대문구") }
 
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetSearchedMyVideoUseCase("aaa", 0, "서대문구")).thenReturn(APIResponse.Success(mockVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetSearchedMyVideoUseCase("aaa", 0, "서대문구")).thenReturn(Resource.Success(mockVideoList))
 
         mockMyGalleryViewModel.setQueryText("서대문구")
         mockMyGalleryViewModel.getMyData()
@@ -83,8 +83,8 @@ class MyGalleryViewModelTest {
 
     @Test
     fun getFirstDataWithoutUidTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Failure(Exception()))
-        Mockito.`when`(mockGetSearchedMyVideoUseCase("aaa", 0, "서대문구")).thenReturn(APIResponse.Success(mockVideoList))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Failure(Exception()))
+        Mockito.`when`(mockGetSearchedMyVideoUseCase("aaa", 0, "서대문구")).thenReturn(Resource.Success(mockVideoList))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -94,8 +94,8 @@ class MyGalleryViewModelTest {
 
     @Test
     fun emptyDataTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Success(emptyList()))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Success(emptyList()))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()
@@ -105,8 +105,8 @@ class MyGalleryViewModelTest {
 
     @Test
     fun failureDataTest(): Unit = runBlocking {
-        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(APIResponse.Success(mockUserEntity))
-        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(APIResponse.Failure(Exception()))
+        Mockito.`when`(mockGetUserInfoUseCase()).thenReturn(Resource.Success(mockUserEntity))
+        Mockito.`when`(mockGetMyVideoListUseCase("aaa", 0)).thenReturn(Resource.Failure(Exception()))
 
         mockMyGalleryViewModel.setQueryText(null)
         mockMyGalleryViewModel.getMyData()

@@ -1,5 +1,6 @@
 package com.juniori.puzzle.ui.playvideo
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -17,7 +18,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
 import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.databinding.ActivityPlayvideoBinding
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
@@ -133,7 +134,7 @@ class PlayVideoActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getLoginInfoFlow.collectLatest { resource ->
-                    if (resource is APIResponse.Success) {
+                    if (resource is Resource.Success) {
                         currentUserInfo = resource.result
                         viewModel.setCurrentLikeStatus(currentVideoItem, currentUserInfo.uid)
                         setMenuItems()
@@ -159,7 +160,7 @@ class PlayVideoActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getPublisherInfoFlow.collectLatest { resource ->
-                    if (resource is APIResponse.Success) {
+                    if (resource is Resource.Success) {
                         publisherUserInfo = resource.result
                         binding.materialToolbar.title = publisherUserInfo.nickname
                     }
@@ -172,15 +173,15 @@ class PlayVideoActivity : AppCompatActivity() {
                 viewModel.deleteFlow.collectLatest { resource ->
                     if (resource != null) {
                         when (resource) {
-                            is APIResponse.Success -> {
+                            is Resource.Success -> {
                                 stateManager.dismissLoadingDialog()
                                 setResult(RESULT_DELETE)
                                 finish()
                             }
-                            is APIResponse.Loading -> {
+                            is Resource.Loading -> {
                                 stateManager.showLoadingDialog()
                             }
-                            is APIResponse.Failure -> {
+                            is Resource.Failure -> {
                                 stateManager.dismissLoadingDialog()
                                 resource.exception.printStackTrace()
                                 Snackbar.make(
@@ -200,7 +201,7 @@ class PlayVideoActivity : AppCompatActivity() {
                 viewModel.videoFlow.collectLatest { resource ->
                     if (resource != null) {
                         when (resource) {
-                            is APIResponse.Success -> {
+                            is Resource.Success -> {
                                 stateManager.dismissLoadingDialog()
                                 currentVideoItem = resource.result
                                 if(currentVideoItem.isPrivate){
@@ -210,10 +211,10 @@ class PlayVideoActivity : AppCompatActivity() {
                                 }
                                 setMenuItems()
                             }
-                            is APIResponse.Loading -> {
+                            is Resource.Loading -> {
                                 stateManager.showLoadingDialog()
                             }
-                            is APIResponse.Failure -> {
+                            is Resource.Failure -> {
                                 stateManager.dismissLoadingDialog()
                                 resource.exception.printStackTrace()
                                 Snackbar.make(

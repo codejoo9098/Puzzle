@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
-import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.data.Resource
 import com.juniori.puzzle.databinding.FragmentUploadStep2Binding
 import com.juniori.puzzle.util.ProgressDialog
 import com.juniori.puzzle.util.PuzzleDialog
@@ -88,16 +90,16 @@ class UploadStep2Fragment : Fragment() {
                 viewModel.uploadFlow.collectLatest { resource ->
                     if (resource == null) return@collectLatest
                     when (resource) {
-                        is APIResponse.Success -> {
+                        is Resource.Success -> {
                             stateManager.dismissLoadingDialog()
                             showUploadStateFeedback(getString(R.string.upload_complete))
                             findNavController().popBackStack(R.id.fragment_upload_step1, true)
                         }
-                        is APIResponse.Failure -> {
+                        is Resource.Failure -> {
                             stateManager.dismissLoadingDialog()
                             showUploadStateFeedback(getString(R.string.upload_fail))
                         }
-                        is APIResponse.Loading -> {
+                        is Resource.Loading -> {
                             progressDialog.dismiss()
                             stateManager.showLoadingDialog()
                         }
