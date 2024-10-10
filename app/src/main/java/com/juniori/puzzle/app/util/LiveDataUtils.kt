@@ -1,4 +1,4 @@
-package com.juniori.puzzle
+package com.juniori.puzzle.app.util
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
