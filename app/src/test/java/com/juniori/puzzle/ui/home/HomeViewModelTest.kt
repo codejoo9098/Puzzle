@@ -3,7 +3,6 @@ package com.juniori.puzzle.ui.home
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
-import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain

@@ -2,9 +2,10 @@ package com.juniori.puzzle.ui.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.TempAPIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
-import com.juniori.puzzle.domain.usecase.mypage.UpdateNicknameUseCase
+import com.juniori.puzzle.domain.usecase.UpdateNicknameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

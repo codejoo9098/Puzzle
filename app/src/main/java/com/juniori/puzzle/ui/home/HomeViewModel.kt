@@ -1,13 +1,18 @@
 package com.juniori.puzzle.ui.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juniori.puzzle.R
+import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse
+import com.juniori.puzzle.domain.customtype.WeatherException
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.WeatherEntity
-import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.*
 import com.juniori.puzzle.domain.usecase.home.GetCurrentWeatherUseCase
 import com.juniori.puzzle.domain.usecase.home.ShowWelcomeTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

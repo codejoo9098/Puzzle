@@ -3,7 +3,7 @@ package com.juniori.puzzle.ui.login
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.domain.entity.UserInfoEntity
-import com.juniori.puzzle.domain.usecase.common.GetUserInfoUseCase
+import com.juniori.puzzle.domain.usecase.GetUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.PostUserInfoUseCase
 import com.juniori.puzzle.domain.usecase.RequestLoginUseCase
 import kotlinx.coroutines.*

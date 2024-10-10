@@ -1,4 +1,4 @@
-package com.juniori.puzzle.domain.usecase.mypage
+package com.juniori.puzzle.domain.usecase
 
 import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse

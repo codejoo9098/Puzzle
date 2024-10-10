@@ -1,4 +1,4 @@
-package com.juniori.puzzle.domain.usecase.common
+package com.juniori.puzzle.domain.usecase
 
 import com.juniori.puzzle.domain.repository.AuthRepository
 import javax.inject.Inject
