@@ -14,6 +14,7 @@ import com.juniori.puzzle.data.datasource.firebasedatasource.response.toStringVa
 import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.GCS_OPEN_URL
+import com.juniori.puzzle.app.util.QueryUtil
 import com.juniori.puzzle.domain.customtype.GallerySortType
 import com.juniori.puzzle.app.util.extensions.toLocationKeyword
 import javax.inject.Inject
@@ -166,7 +167,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getMyVideoQuery(uid, offset, limit)
+                        QueryUtil.getMyVideoQuery(uid, offset, limit)
                     )
                 ).getVideoInfoEntity()
             )
@@ -187,7 +188,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
+                        QueryUtil.getMyVideoWithKeywordQuery(uid, toSearch, keyword, offset, limit)
                     )
                 ).getVideoInfoEntity()
             )
@@ -207,7 +208,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getPublicVideoQuery(
+                        QueryUtil.getPublicVideoQuery(
                             orderBy = orderBy,
                             latestData = latestData,
                             offset = offset,
@@ -234,7 +235,7 @@ class FirestoreDataSource @Inject constructor(
             APIResponse.Success(
                 service.getFirebaseItemByQuery(
                     RunQueryRequestDTO(
-                        FirebaseQueryUtils.getPublicVideoWithKeywordQuery(
+                        QueryUtil.getPublicVideoWithKeywordQuery(
                             orderBy,
                             toSearch,
                             keyword,
