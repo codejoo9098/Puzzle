@@ -24,8 +24,8 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.PlayResultConst.RESULT_DELETE
 import com.juniori.puzzle.app.util.PlayResultConst.RESULT_NOTTING
 import com.juniori.puzzle.app.util.PlayResultConst.RESULT_TO_PRIVATE
-import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
-import com.juniori.puzzle.app.util.common_ui.StateManager
+import com.juniori.puzzle.app.util.PuzzleDialog
+import com.juniori.puzzle.app.util.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

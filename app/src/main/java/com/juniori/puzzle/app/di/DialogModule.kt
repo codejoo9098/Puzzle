@@ -1,7 +1,7 @@
 package com.juniori.puzzle.app.di
 
 import android.content.Context
-import com.juniori.puzzle.app.util.common_ui.StateManager
+import com.juniori.puzzle.app.util.StateManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

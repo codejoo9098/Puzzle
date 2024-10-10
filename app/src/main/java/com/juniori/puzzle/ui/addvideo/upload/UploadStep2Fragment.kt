@@ -16,9 +16,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.juniori.puzzle.R
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.databinding.FragmentUploadStep2Binding
-import com.juniori.puzzle.app.util.common_ui.ProgressDialog
-import com.juniori.puzzle.app.util.common_ui.PuzzleDialog
-import com.juniori.puzzle.app.util.common_ui.StateManager
+import com.juniori.puzzle.app.util.ProgressDialog
+import com.juniori.puzzle.app.util.PuzzleDialog
+import com.juniori.puzzle.app.util.StateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
