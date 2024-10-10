@@ -8,12 +8,9 @@ import com.juniori.puzzle.domain.entity.UserInfoEntity
 import com.juniori.puzzle.app.util.extensions.await
 import com.juniori.puzzle.domain.APIErrorType
 import com.juniori.puzzle.domain.TempAPIResponse
-import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 class AuthDataSource @Inject constructor(
     private val firebaseAuth: FirebaseAuth
@@ -85,25 +82,20 @@ class AuthDataSource @Inject constructor(
     suspend fun requestWithdraw(idToken: String): TempAPIResponse<Unit> {
         return try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
-            suspendCancellableCoroutine { continuation ->
-                firebaseAuth.currentUser?.reauthenticate(credential)
-                    ?.addOnSuccessListener {
-                        continuation.resume(Unit)
-                    }
-                    ?.addOnFailureListener {
-                        continuation.resumeWithException(Exception())
-                    } ?: continuation.resumeWithException(Exception())
-            }
+            firebaseAuth.currentUser?.reauthenticate(credential)?.await()
 
-            suspendCancellableCoroutine { continuation ->
-                firebaseAuth.currentUser?.delete()
-                    ?.addOnSuccessListener {
-                        continuation.resume(TempAPIResponse.Success(Unit))
+            firebaseAuth.currentUser?.delete()
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("Withdrawal", "User account deleted.")
                     }
-                    ?.addOnFailureListener {
-                        continuation.resumeWithException(Exception())
-                    } ?: continuation.resumeWithException(Exception())
-            }
+                    else {
+                        Log.d("Withdrawal", "User account NOT deleted.")
+                    }
+                } ?: TempAPIResponse.Failure(APIErrorType.NO_CONTENT)
+
+
+            TempAPIResponse.Success(Unit)
         } catch (e: IOException) {
             TempAPIResponse.Failure(APIErrorType.NOT_CONNECTED)
         } catch (e: Exception) {
