@@ -1,4 +1,4 @@
-package com.juniori.puzzle.app.util.extensions
+package com.juniori.puzzle.app.util
 
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.ExperimentalCoroutinesApi

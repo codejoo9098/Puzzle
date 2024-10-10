@@ -2,7 +2,6 @@ package com.juniori.puzzle.app.util
 
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
-import com.juniori.puzzle.app.util.extensions.compressToBytes
 
 object VideoMetaDataUtil {
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.R
-import com.juniori.puzzle.app.util.extensions.toAddressString
+import com.juniori.puzzle.app.util.toAddressString
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
 import com.juniori.puzzle.domain.entity.WeatherEntity
