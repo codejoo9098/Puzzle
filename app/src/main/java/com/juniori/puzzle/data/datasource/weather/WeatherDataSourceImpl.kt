@@ -1,6 +1,9 @@
 package com.juniori.puzzle.data.datasource.weather
 
+import com.juniori.puzzle.data.APIResponse
+import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.app.util.WEATHER_SERVICE_KEY
+import com.juniori.puzzle.data.converter.toWeatherEntity
 import java.util.*
 import javax.inject.Inject
 
@@ -20,9 +23,19 @@ class WeatherDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getWeather(lat: Double, lon: Double): WeatherResponse? {
-        val response = service.getWeather(lat, lon, WEATHER_SERVICE_KEY, language)
-        return if (response.code() >= 400) null
-        else response.body()
+    override suspend fun getWeather(lat: Double, lon: Double): APIResponse<List<WeatherEntity>> {
+        if (lat < -90 || lat > 90 || lon < -180 || lon > 180) return APIResponse.Failure(Exception())
+
+        return try {
+            val response = service.getWeather(lat, lon, WEATHER_SERVICE_KEY, language)
+            val result = response.body()?.toWeatherEntity() ?: emptyList()
+            if (result.size >= 3) {
+                APIResponse.Success(result)
+            } else {
+                APIResponse.Failure(Exception())
+            }
+        } catch (e: Exception) {
+            APIResponse.Failure(Exception())
+        }
     }
 }

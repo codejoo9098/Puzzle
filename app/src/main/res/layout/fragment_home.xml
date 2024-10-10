@@ -207,7 +207,7 @@
             <TextView
                 android:id="@+id/weather_main_currentDate_tv"
                 style="@style/Theme.Puzzle.TextSmall.Bold"
-                setFullDate="@{vm.weatherMainInfo.date}"
+                setFullDate="@{vm.weatherMainList.date}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_vertical_margin"
@@ -216,11 +216,11 @@
 
             <ImageView
                 android:id="@+id/weather_main_icon_iv"
-                setImage="@{vm.weatherMainInfo.icon}"
+                setImage="@{vm.weatherMainList.icon}"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="@dimen/text_vertical_margin"
-                android:contentDescription="@{@string/weather_icon_description(vm.weatherMainInfo.temp,vm.weatherMainInfo.description)}"
+                android:contentDescription="@{@string/weather_icon_description(vm.weatherMainList.temp,vm.weatherMainList.description)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/weather_main_currentDate_tv"
                 tools:src="@drawable/ic_launcher_foreground" />
@@ -231,7 +231,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/text_horizontal_margin"
-                android:text="@{@string/weather_temp_format(vm.weatherMainInfo.temp)}"
+                android:text="@{@string/weather_temp_format(vm.weatherMainList.temp)}"
                 app:layout_constraintBottom_toBottomOf="@id/weather_main_icon_iv"
                 app:layout_constraintStart_toEndOf="@id/weather_main_icon_iv"
                 app:layout_constraintTop_toTopOf="@id/weather_main_icon_iv"
@@ -242,7 +242,7 @@
                 style="@style/Theme.Puzzle.TextSmall.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.weatherMainInfo.description}"
+                android:text="@{vm.weatherMainList.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/weather_main_icon_iv"
                 tools:text="맑음" />
@@ -253,7 +253,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
-                android:text="@{@string/weather_temp_format(vm.weatherMainInfo.maxTemp)}"
+                android:text="@{@string/weather_temp_format(vm.weatherMainList.maxTemp)}"
                 app:layout_constraintBottom_toBottomOf="@id/weather_main_slash_tv"
                 app:layout_constraintEnd_toStartOf="@id/weather_main_slash_tv"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -277,7 +277,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_vertical_margin"
-                android:text="@{@string/weather_temp_format(vm.weatherMainInfo.minTemp)}"
+                android:text="@{@string/weather_temp_format(vm.weatherMainList.minTemp)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/weather_main_description_tv"
                 tools:text="17" />
@@ -287,14 +287,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_vertical_margin"
-                android:text="@{@string/weather_feels_like_temp_format(vm.weatherMainInfo.feelsLike)}"
+                android:text="@{@string/weather_feels_like_temp_format(vm.weatherMainList.feelsLike)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/weather_main_min_temp_tv"
                 tools:text="체감온도 19" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/weather_detail_recyclerView"
-                setAdapter="@{vm.weatherSubList}"
+                setAdapter="@{vm.weatherList}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_vertical_margin"
@@ -349,15 +349,15 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="@dimen/text_vertical_margin"
                 android:src="@drawable/home_refresh_icon"
-                app:layout_constraintBottom_toBottomOf="@id/error_reason_text"
+                app:layout_constraintBottom_toBottomOf="@id/info_text"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toStartOf="@id/error_reason_text"
+                app:layout_constraintEnd_toStartOf="@id/info_text"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/error_reason_text" />
+                app:layout_constraintTop_toTopOf="@id/info_text" />
 
             <TextView
-                android:id="@+id/error_reason_text"
+                android:id="@+id/info_text"
                 style="@style/Theme.Puzzle.TextMedium.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

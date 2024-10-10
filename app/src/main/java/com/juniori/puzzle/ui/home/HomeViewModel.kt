@@ -1,16 +1,16 @@
 package com.juniori.puzzle.ui.home
 
+import androidx.core.location.LocationListenerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.R
+import com.juniori.puzzle.app.util.extensions.toAddressString
 import com.juniori.puzzle.data.APIResponse
 import com.juniori.puzzle.data.datasource.position.PositionResponse
-import com.juniori.puzzle.domain.customtype.WeatherException
 import com.juniori.puzzle.domain.entity.WeatherEntity
 import com.juniori.puzzle.domain.usecase.*
-import com.juniori.puzzle.domain.usecase.home.GetCurrentWeatherUseCase
 import com.juniori.puzzle.domain.usecase.home.ShowWelcomeTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -22,11 +22,15 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val showWelcomeTextUseCase: ShowWelcomeTextUseCase,
-    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
+    private val getAddressUseCase: GetAddressUseCase,
+    private val registerLocationListenerUseCase: RegisterLocationListenerUseCase,
+    private val unregisterLocationListenerUseCase: UnregisterLocationListenerUseCase,
+    private val getWeatherUseCase: GetWeatherUseCase,
     private val getUserInfoUseCase: GetUserInfoUseCase
 ) : ViewModel() {
-    private val _weatherState = MutableStateFlow<APIResponse<Unit>>(APIResponse.Loading)
-    val weatherState: StateFlow<APIResponse<Unit>> = _weatherState
+
+    private val _uiState = MutableStateFlow<APIResponse<List<WeatherEntity>>>(APIResponse.Loading)
+    val uiState: StateFlow<APIResponse<List<WeatherEntity>>> = _uiState
 
     private val _welcomeText = MutableStateFlow("")
     val welcomeText: StateFlow<String> = _welcomeText
@@ -37,12 +41,24 @@ class HomeViewModel @Inject constructor(
     private val _currentAddress = MutableStateFlow("")
     val currentAddress: StateFlow<String> = _currentAddress
 
-    private val _weatherSubList = MutableStateFlow<List<WeatherEntity>>(emptyList())
-    val weatherSubList: StateFlow<List<WeatherEntity>> = _weatherSubList
+    private val _weatherList = MutableStateFlow<List<WeatherEntity>>(emptyList())
+    val weatherList: StateFlow<List<WeatherEntity>> = _weatherList
 
-    private val _weatherMainInfo =
+    private val _weatherMainList =
         MutableStateFlow(WeatherEntity(Date(), 0, 0, 0, 0, "", ""))
-    val weatherMainInfo: StateFlow<WeatherEntity> = _weatherMainInfo
+    val weatherMainList: StateFlow<WeatherEntity> = _weatherMainList
+
+    private val _weatherFailTextId = MutableLiveData(R.string.location_empty)
+    val weatherFailTextId: LiveData<Int> = _weatherFailTextId
+
+    private val _lastLocationInfo =
+        MutableStateFlow(PositionResponse(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY))
+
+    private var locationTimerJob: Job? = null
+
+    fun setUiState(state: APIResponse<List<WeatherEntity>>) {
+        _uiState.value = state
+    }
 
     fun setDisplayName() {
         val userInfo = getUserInfoUseCase()
@@ -57,39 +73,68 @@ class HomeViewModel @Inject constructor(
         _welcomeText.value = showWelcomeTextUseCase(welcomeTextArray)
     }
 
-    fun getNewWeatherData(position: PositionResponse) {
-        viewModelScope.launch {
-            _weatherState.value = APIResponse.Loading
+    private fun setWeatherFailTextId(id: Int) {
+        _weatherFailTextId.value = id
+    }
 
-            when (val weatherInfo = getCurrentWeatherUseCase(position)) {
-                is APIResponse.Success<Pair<WeatherEntity, List<WeatherEntity>>> -> {
-                    _weatherMainInfo.value = weatherInfo.result.first
-                    _weatherSubList.value = weatherInfo.result.second
-                    _weatherState.value = APIResponse.Success(Unit)
-                }
-                is APIResponse.Failure -> {
-                    _weatherState.value = weatherInfo
-                }
-                is APIResponse.Loading -> {
-                    _weatherState.value = APIResponse.Loading
+    fun setWeatherInfoText(text: String) {
+        _uiState.value = APIResponse.Failure(Exception(text))
+    }
+
+    private fun setCurrentAddress(lat: Double, long: Double) {
+        val address = getAddressUseCase(lat, long)
+        if (address.isNotEmpty()) {
+            _currentAddress.value = address[0].toAddressString()
+        }
+    }
+
+    fun registerListener(listener: LocationListenerCompat) {
+        val result = registerLocationListenerUseCase(listener)
+        if (result.not()) {
+            setWeatherFailTextId(R.string.location_service_off)
+        } else {
+            locationTimerJob = CoroutineScope(Dispatchers.IO).launch {
+                delay(3000)
+                withContext(Dispatchers.Main) {
+                    showWeather()
                 }
             }
         }
     }
 
-    fun setWeatherStateSuccess() {
-        _weatherState.value = APIResponse.Success(Unit)
+    fun unregisterListener() {
+        unregisterLocationListenerUseCase()
     }
 
-    fun setWeatherStateError(exception: java.lang.Exception) {
-        _weatherState.value = APIResponse.Failure(exception)
+    fun cancelTimer() {
+        locationTimerJob?.cancel()
     }
 
-    fun setWeatherStateLoading() {
-        _weatherState.value = APIResponse.Loading
+    fun getWeather(loc: PositionResponse) {
+        _lastLocationInfo.value = loc
+        viewModelScope.launch {
+            when (val result = getWeatherUseCase(loc.lat, loc.lon)) {
+                is APIResponse.Success<List<WeatherEntity>> -> {
+                    val list = result.result
+                    _weatherMainList.value = list[1]
+                    _weatherList.value = list.subList(2, list.size)
+                    setCurrentAddress(loc.lat, loc.lon)
+                    _uiState.value = APIResponse.Success(list)
+                }
+                is APIResponse.Failure -> {
+                    setWeatherFailTextId(R.string.network_fail)
+                }
+                is APIResponse.Loading -> _uiState.value = APIResponse.Loading
+            }
+        }
     }
 
-    fun setCurrentAddress(address: String) {
-        _currentAddress.value = address
+    fun showWeather() {
+        if (_weatherList.value.size < 3) {
+            setWeatherFailTextId(R.string.location_empty)
+        } else {
+            _uiState.value = APIResponse.Success(_weatherList.value)
+        }
     }
+
 }
