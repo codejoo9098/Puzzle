@@ -16,7 +16,6 @@ import com.juniori.puzzle.domain.entity.VideoInfoEntity
 import com.juniori.puzzle.app.util.GCS_OPEN_URL
 import com.juniori.puzzle.domain.customtype.GallerySortType
 import com.juniori.puzzle.app.util.extensions.toLocationKeyword
-import com.juniori.puzzle.data.converter.toUserInfoEntity
 import com.juniori.puzzle.data.converter.toVideoInfoEntity
 import javax.inject.Inject
 
@@ -258,7 +257,7 @@ class FirestoreDataSource @Inject constructor(
     ): APIResponse<UserInfoEntity> {
         return try {
             service.getUserItemDocument(uid).let {
-                APIResponse.Success(it.toUserInfoEntity())
+                APIResponse.Success(it.getUserInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -281,7 +280,7 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                APIResponse.Success(it.toUserInfoEntity())
+                APIResponse.Success(it.getUserInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -304,7 +303,7 @@ class FirestoreDataSource @Inject constructor(
                     )
                 )
             ).let {
-                APIResponse.Success(it.toUserInfoEntity())
+                APIResponse.Success(it.getUserInfoEntity())
             }
         } catch (e: Exception) {
             e.printStackTrace()
