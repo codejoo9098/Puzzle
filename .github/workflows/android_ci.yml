@@ -27,6 +27,9 @@ jobs:
     - name: Create Const
       run: echo '${{ secrets.CONST }}' > ./app/src/main/java/com/juniori/puzzle/app/util/Const.kt
 
+    - name: Create GOOGLE_SERVICES_JSON
+      run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > ./app/google-services.json
+
     # Build Debug App
     - name: Build with Gradle
       run: ./gradlew assembleDebug
