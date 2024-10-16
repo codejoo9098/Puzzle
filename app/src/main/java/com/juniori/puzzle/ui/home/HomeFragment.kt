@@ -190,7 +190,9 @@ class HomeFragment : Fragment() {
         val geoCoder = Geocoder(applicationContext)
 
         try {
-            val address = geoCoder.getFromLocation(currentPosition.lat, currentPosition.lon, ADDRESS_MAX_RESULT)[0].toAddressString()
+            val address = geoCoder.getFromLocation(currentPosition.lat, currentPosition.lon, ADDRESS_MAX_RESULT)
+                ?.get(0)
+                ?.toAddressString() ?: ""
             homeViewModel.setCurrentAddress(address)
         } catch (e: Exception) {
             homeViewModel.setCurrentAddress(getString(R.string.location_fail))

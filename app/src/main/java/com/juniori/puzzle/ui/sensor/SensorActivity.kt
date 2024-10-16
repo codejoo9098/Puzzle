@@ -12,7 +12,7 @@ class SensorActivity : AppCompatActivity() {
     private val sensorManager: SensorManager by lazy {
         getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
-    private lateinit var sensor: Sensor
+    private var sensor: Sensor? = null
     private lateinit var binding: ActivitySensorBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
