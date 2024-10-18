@@ -11,7 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -26,6 +28,7 @@ import com.juniori.puzzle.ui.login.LoginActivity
 import com.juniori.puzzle.ui.common_ui.PuzzleDialog
 import com.juniori.puzzle.ui.common_ui.StateManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
