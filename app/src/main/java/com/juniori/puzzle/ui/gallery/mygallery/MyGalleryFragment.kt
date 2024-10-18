@@ -11,6 +11,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +24,7 @@ import com.juniori.puzzle.ui.videoplayer.playvideo.PlayVideoActivity
 import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PlayResultConst.RESULT_DELETE
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyGalleryFragment : Fragment() {
@@ -76,13 +80,78 @@ class MyGalleryFragment : Fragment() {
             layoutManager = gridLayoutManager
         }
 
-        viewModel.list.observe(viewLifecycleOwner) { dataList ->
-            binding.mygallerySwipeRefresh.isRefreshing = false
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.list.collect { dataList ->
+                    binding.mygallerySwipeRefresh.isRefreshing = false
 
-            recyclerAdapter.submitList(dataList)
+                    recyclerAdapter.submitList(dataList)
 
-            binding.mygalleryAddVideoBtn.isVisible = dataList.isEmpty()
-            binding.mygalleryAddVideoText.isVisible = dataList.isEmpty()
+                    binding.mygalleryAddVideoBtn.isVisible = dataList.isEmpty()
+                    binding.mygalleryAddVideoText.isVisible = dataList.isEmpty()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.refresh.collect { isRefresh ->
+                    binding.progressMyGallery.isVisible = isRefresh
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    when (state) {
+                        GalleryState.NONE -> {
+                            snackBar?.dismiss()
+                        }
+
+                        GalleryState.END_PAGING -> {
+                            snackBar = Snackbar.make(
+                                view,
+                                R.string.gallery_end_paging,
+                                Snackbar.LENGTH_SHORT
+                            ).apply {
+                                setAction(R.string.gallery_check) {
+                                    dismiss()
+                                }
+                            }
+
+                            snackBar?.show()
+                        }
+
+                        GalleryState.NETWORK_ERROR_PAGING -> {
+                            snackBar =
+                                Snackbar.make(
+                                    view,
+                                    R.string.gallery_paging_error,
+                                    Snackbar.LENGTH_INDEFINITE
+                                )
+                                    .setAction(R.string.gallery_retry) {
+                                        viewModel.getPaging(recyclerAdapter.itemCount)
+                                    }
+                            snackBar?.show()
+                        }
+
+                        GalleryState.NETWORK_ERROR_BASE -> {
+                            binding.mygallerySwipeRefresh.isRefreshing = false
+                            snackBar =
+                                Snackbar.make(
+                                    view,
+                                    R.string.gallery_init_load_error,
+                                    Snackbar.LENGTH_INDEFINITE
+                                )
+                                    .setAction(R.string.gallery_retry) {
+                                        viewModel.getMyData()
+                                    }
+                            snackBar?.show()
+                        }
+                    }
+                }
+            }
         }
 
         binding.mygalleryAddVideoBtn.setOnClickListener {
@@ -91,60 +160,6 @@ class MyGalleryFragment : Fragment() {
 
         binding.mygallerySwipeRefresh.setOnRefreshListener {
             viewModel.getMyData()
-        }
-
-        viewModel.refresh.observe(viewLifecycleOwner) { isRefresh ->
-            binding.progressMyGallery.isVisible = isRefresh
-        }
-
-        viewModel.state.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                GalleryState.NONE -> {
-                    snackBar?.dismiss()
-                }
-
-                GalleryState.END_PAGING -> {
-                    snackBar = Snackbar.make(
-                        view,
-                        R.string.gallery_end_paging,
-                        Snackbar.LENGTH_SHORT
-                    ).apply {
-                        setAction(R.string.gallery_check) {
-                            dismiss()
-                        }
-                    }
-
-                    snackBar?.show()
-                }
-
-                GalleryState.NETWORK_ERROR_PAGING -> {
-                    snackBar =
-                        Snackbar.make(
-                            view,
-                            R.string.gallery_paging_error,
-                            Snackbar.LENGTH_INDEFINITE
-                        )
-                            .setAction(R.string.gallery_retry) {
-                                viewModel.getPaging(recyclerAdapter.itemCount)
-                            }
-                    snackBar?.show()
-                }
-
-                GalleryState.NETWORK_ERROR_BASE -> {
-                    binding.mygallerySwipeRefresh.isRefreshing = false
-                    snackBar =
-                        Snackbar.make(
-                            view,
-                            R.string.gallery_init_load_error,
-                            Snackbar.LENGTH_INDEFINITE
-                        )
-                            .setAction(R.string.gallery_retry) {
-                                viewModel.getMyData()
-                            }
-                    snackBar?.show()
-                }
-            }
-
         }
 
         binding.searchMyGallery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

@@ -1,7 +1,5 @@
 package com.juniori.puzzle.ui.gallery.mygallery
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniori.puzzle.data.APIResponse
@@ -14,7 +12,10 @@ import com.juniori.puzzle.ui.gallery.GalleryState
 import com.juniori.puzzle.domain.constant.PagingConst.ITEM_CNT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,16 +25,16 @@ class MyGalleryViewModel @Inject constructor(
     val getUserInfoUseCase: GetUserInfoUseCase,
     val getSearchedMyVideoUseCase: GetSearchedMyVideoUseCase
 ) : ViewModel() {
-    private val _list = MutableLiveData<List<VideoInfoEntity>>()
-    val list: LiveData<List<VideoInfoEntity>>
+    private val _list = MutableStateFlow<List<VideoInfoEntity>>(emptyList())
+    val list: StateFlow<List<VideoInfoEntity>>
         get() = _list
 
-    private val _refresh = MutableLiveData(false)
-    val refresh: LiveData<Boolean>
+    private val _refresh = MutableStateFlow(false)
+    val refresh: StateFlow<Boolean>
         get() = _refresh
 
-    private val _state = MutableLiveData(GalleryState.NONE)
-    val state: LiveData<GalleryState>
+    private val _state = MutableStateFlow(GalleryState.NONE)
+    val state: StateFlow<GalleryState>
         get() = _state
 
     private var query = ""
@@ -52,9 +53,10 @@ class MyGalleryViewModel @Inject constructor(
         getMyData()
     }
 
-    private fun getQueryData() {
+    private fun getQueryData() = viewModelScope.launch {
         if (refresh.value == true) {
-            return
+            cancel()
+            return@launch
         }
         val uid = getUid()
 
@@ -64,31 +66,30 @@ class MyGalleryViewModel @Inject constructor(
         if (uid == null) {
             _state.value = GalleryState.NETWORK_ERROR_BASE
         } else {
-            viewModelScope.launch {
-                _refresh.value = true
-                val data = getSearchedMyVideoUseCase(uid, 0, query)
-                if (data is APIResponse.Success) {
-                    _state.value = GalleryState.NONE
+            _refresh.value = true
+            val data = getSearchedMyVideoUseCase(uid, 0, query)
+            if (data is APIResponse.Success) {
+                _state.value = GalleryState.NONE
 
-                    val result = data.result
-                    if (result.isNullOrEmpty().not()) {
-                        if (result.size < ITEM_CNT) {
-                            pagingEndFlag = true
-                        }
-                        _list.value = result
+                val result = data.result
+                if (result.isEmpty().not()) {
+                    if (result.size < ITEM_CNT) {
+                        pagingEndFlag = true
                     }
-                } else {
-                    _state.value = GalleryState.NETWORK_ERROR_BASE
+                    _list.value = result
                 }
-
-                _refresh.value = false
+            } else {
+                _state.value = GalleryState.NETWORK_ERROR_BASE
             }
+
+            _refresh.value = false
         }
     }
 
-    private fun getBaseData() {
+    private fun getBaseData() = viewModelScope.launch {
         if (refresh.value == true) {
-            return
+            cancel()
+            return@launch
         }
         val uid = getUid()
 
@@ -98,68 +99,63 @@ class MyGalleryViewModel @Inject constructor(
         if (uid == null) {
             _state.value = GalleryState.NETWORK_ERROR_BASE
         } else {
-            viewModelScope.launch {
-                _refresh.value = true
-                val data = getMyVideoListUseCase(uid, 0)
-                if (data is APIResponse.Success) {
-                    _state.value = GalleryState.NONE
+            _refresh.value = true
+            val data = getMyVideoListUseCase(uid, 0)
+            if (data is APIResponse.Success) {
+                _state.value = GalleryState.NONE
 
-                    val result = data.result
-                    if (result.isNullOrEmpty().not()) {
-                        if (result.size < ITEM_CNT) {
-                            pagingEndFlag = true
-                        }
-                        _list.value = result
+                val result = data.result
+                if (result.isEmpty().not()) {
+                    if (result.size < ITEM_CNT) {
+                        pagingEndFlag = true
                     }
-                } else {
-                    _state.value = GalleryState.NETWORK_ERROR_BASE
+                    _list.value = result
                 }
-
-                _refresh.value = false
+            } else {
+                _state.value = GalleryState.NETWORK_ERROR_BASE
             }
+
+            _refresh.value = false
         }
     }
 
-    fun getPaging(start: Int) {
+    fun getPaging(start: Int) = viewModelScope.launch {
         if (refresh.value == true || pagingEndFlag) {
-            return
+            cancel()
+            return@launch
         }
 
         val uid = getUid()
         if (uid == null) {
             _state.value = GalleryState.NETWORK_ERROR_PAGING
         } else {
-            viewModelScope.launch {
-                _refresh.value = true
-                val data = if (query.isBlank()) {
-                    getMyVideoListUseCase(uid, start)
-                } else {
-                    getSearchedMyVideoUseCase(uid, start, query)
-                }
-
-                if (data is APIResponse.Success) {
-                    val result = data.result
-                    if (result.isNullOrEmpty()) {
-                        viewModelScope.launch(Dispatchers.IO) {
-                            _state.postValue(GalleryState.END_PAGING)
-                            delay(1000)
-                            _state.postValue(GalleryState.NONE)
-                        }
-                        pagingEndFlag = true
-                    } else {
-                        _state.value = GalleryState.NONE
-                        addItems(result)
-                    }
-                } else {
-                    _state.value = GalleryState.NETWORK_ERROR_PAGING
-                }
-
-                _refresh.value = false
+            _refresh.value = true
+            val data = if (query.isBlank()) {
+                getMyVideoListUseCase(uid, start)
+            } else {
+                getSearchedMyVideoUseCase(uid, start, query)
             }
+
+            if (data is APIResponse.Success) {
+                val result = data.result
+                if (result.isEmpty()) {
+                    _state.value = GalleryState.END_PAGING
+                    delay(1000)
+                    _state.value = GalleryState.NONE
+                    pagingEndFlag = true
+                } else {
+                    _state.value = GalleryState.NONE
+                    addItems(result)
+                }
+            } else {
+                _state.value = GalleryState.NETWORK_ERROR_PAGING
+            }
+
+            _refresh.value = false
         }
     }
 
-    fun getMyData() {
+    fun getMyData() = viewModelScope.launch {
         if (query.isEmpty()) {
             getBaseData()
         } else {
